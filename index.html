@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeserAds - Deine Marketing Agentur aus dem Weserbergland</title>
+
+  <!-- ============================================ -->
+  <!--  WESERADS - WEBSITE                          -->
+  <!-- ============================================ -->
+
+    <style>
+    /* ================================================== */
+    /*  WESERADS - DESIGN                                 */
+    /* ================================================== */
+
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+    /* ---------- FARBEN ---------- */
+    :root {
+      --dunkelblau: #0A1931;
+      --dunkelblau-hell: #13294B;
+      --weser-blau: #0EA5A0;
+      --weser-blau-hell: #99F6E4;
+      --hell: #F8FAFC;
+      --orange: #FF6B2C;
+      --orange-dunkel: #E85A1A;
+      --text: #0F172A;
+      --grau-text: #64748B;
+      --weiss: #FFFFFF;
+      --rahmen: #E2E8F0;
+    }
+
+    /* ---------- GRUNDLAGEN ---------- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Manrope', Arial, sans-serif;
+      background: var(--hell);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    h1, h2, h3, .logo { font-family: 'Sora', Arial, sans-serif; letter-spacing: -0.02em; }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1150px; margin: 0 auto; padding: 0 22px; }
+    h1 { font-size: 52px; line-height: 1.08; font-weight: 800; }
+    h2 { font-size: 36px; font-weight: 800; margin-bottom: 10px; }
+    h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    p { color: var(--grau-text); }
+
+    /* ---------- KNOPFE ---------- */
+    .knopf-orange {
+      display: inline-block; background: var(--orange); color: white;
+      padding: 15px 26px; border-radius: 999px; font-weight: 800; font-size: 15px;
+      box-shadow: 0 10px 25px rgba(255,107,44,.35);
+      transition: transform .15s;
+    }
+    .knopf-orange:hover { transform: translateY(-2px); background: var(--orange-dunkel); }
+    .knopf-weiss {
+      display: inline-block; background: white; color: var(--dunkelblau);
+      padding: 15px 26px; border-radius: 999px; font-weight: 800; font-size: 15px;
+      border: 1px solid var(--rahmen);
+    }
+    .knopf-dunkel {
+      display: inline-block; background: var(--dunkelblau); color: white;
+      padding: 13px 22px; border-radius: 999px; font-weight: 800; font-size: 15px;
+    }
+
+    /* ---------- KOPFZEILE ---------- */
+    header {
+      background: rgba(255,255,255,.95); border-bottom: 1px solid var(--rahmen);
+      position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px);
+    }
+    .kopf-zeile { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; }
+    .logo { font-size: 28px; font-weight: 800; color: var(--dunkelblau); }
+    .logo span { color: var(--weser-blau); }
+    nav a { margin: 0 14px; font-weight: 700; font-size: 15px; color: #334155; }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      background: radial-gradient(900px 400px at 85% 10%, #134E4A 0%, transparent 60%), var(--dunkelblau);
+      color: white; padding: 78px 0 68px 0; border-radius: 0 0 28px 28px;
+    }
+    .hero h1 { color: white; max-width: 820px; }
+    .hero h1 em { color: var(--weser-blau-hell); font-style: normal; }
+    .hero p { color: #CBD5E1; font-size: 19px; margin: 18px 0 28px 0; max-width: 720px; }
+    .badge {
+      display: inline-block; background: #134E4A; color: var(--weser-blau-hell);
+      padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 700;
+      margin-bottom: 18px; border: 1px solid #1E6B66;
+    }
+    .hero-knopfe { display: flex; gap: 12px; flex-wrap: wrap; }
+    .vertrauen { display: flex; gap: 10px 20px; flex-wrap: wrap; margin-top: 30px; font-size: 14px; color: #CBD5E1; font-weight: 600; }
+
+    /* ---------- SEKTIONEN ---------- */
+    .sektion { padding: 68px 0; }
+    .sektion-weiss { background: white; }
+    .untertitel { margin-bottom: 30px; max-width: 720px; font-size: 17px; }
+
+    /* ---------- KARTEN ---------- */
+    .karten { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .karte {
+      background: white; border: 1px solid var(--rahmen); border-radius: 20px;
+      padding: 26px; box-shadow: 0 6px 24px rgba(15,23,42,.05);
+      transition: transform .15s;
+    }
+    .karte:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(15,23,42,.09); }
+    .sektion-weiss .karte { background: var(--hell); }
+    .karte .icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: #E0F7F5; display: flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 14px;
+    }
+
+    /* ---------- PAKETE ---------- */
+    .pakete { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; align-items: stretch; }
+    .paket {
+      background: white; border: 1px solid var(--rahmen); border-radius: 22px;
+      padding: 28px; box-shadow: 0 8px 28px rgba(15,23,42,.06);
+    }
+    .paket.beliebt {
+      background: linear-gradient(180deg, #13294B, #0A1931); color: white;
+      border: 2px solid var(--orange); transform: scale(1.02);
+      box-shadow: 0 18px 40px rgba(10,25,49,.28);
+    }
+    .paket.beliebt p { color: #CBD5E1; }
+    .preis { font-size: 38px; font-weight: 800; margin: 10px 0; font-family: 'Sora', sans-serif; }
+    .paket ul { list-style: none; margin: 18px 0; }
+    .paket li { padding: 8px 0; border-bottom: 1px solid #F1F5F9; font-size: 15px; font-weight: 600; }
+    .paket.beliebt li { border-color: #1E3A5F; }
+    .hinweis { text-align: center; margin-top: 20px; font-size: 14px; }
+    .beliebt-label {
+      display: inline-block; background: var(--orange); color: white;
+      font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 999px; margin-bottom: 8px;
+    }
+
+    /* ---------- UEBER MICH ---------- */
+    .ueber-mich {
+      display: grid; grid-template-columns: 220px 1fr; gap: 28px;
+      background: white; border: 1px solid var(--rahmen); border-radius: 22px;
+      padding: 30px; box-shadow: 0 8px 28px rgba(15,23,42,.06);
+    }
+    .foto-platzhalter {
+      width: 200px; height: 200px; border-radius: 18px;
+      background: linear-gradient(135deg, #0EA5A0, #0A1931); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 64px; font-weight: 800; font-family: 'Sora', sans-serif;
+    }
+    .stichpunkte { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .chip {
+      background: #F1F5F9; border: 1px solid var(--rahmen);
+      padding: 7px 14px; border-radius: 999px; font-size: 14px; font-weight: 700;
+    }
+
+    /* ---------- KONTAKT ---------- */
+    .kontakt-box {
+      background: radial-gradient(600px 300px at 90% 0%, #134E4A 0%, transparent 60%), var(--dunkelblau);
+      color: white; border-radius: 22px; padding: 34px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+    }
+    .kontakt-box p { color: #CBD5E1; }
+    .kontakt-box input, .kontakt-box textarea {
+      width: 100%; padding: 13px 14px; margin-bottom: 10px; border-radius: 12px;
+      border: 1px solid #334155; background: #0F2440; color: white; font-family: inherit;
+    }
+    .kontakt-box input::placeholder, .kontakt-box textarea::placeholder { color: #94A3B8; }
+
+    footer { padding: 32px 0; text-align: center; color: var(--grau-text); font-size: 14px; }
+
+    /* ---------- HANDY ---------- */
+    @media (max-width: 820px) {
+      h1 { font-size: 34px; } h2 { font-size: 28px; }
+      .karten, .pakete, .kontakt-box, .ueber-mich { grid-template-columns: 1fr; }
+      nav { display: none; }
+      .foto-platzhalter { width: 120px; height: 120px; font-size: 40px; }
+      .paket.beliebt { transform: none; }
+    }
+
+    /* ================================================== */
+    /*  SANFTE ÜBERGÄNGE & VERLÄUFE  */
+    /* ================================================== */
+
+    /* Sanftes Scrollen, wenn man auf einen Menü-Link klickt */
+    html { scroll-behavior: smooth; }
+
+    /* Alle Buttons und Karten: weich, nicht hart */
+    .knopf-orange, .knopf-weiss, .knopf-dunkel, .karte, .paket {
+      transition: all 0.3s ease; /* 0.3s = sanft, ease = erst schnell, dann langsam auslaufen */
+    }
+
+    /* ---------- NAVBAR MIT SANFTEM VERLAUF ---------- */
+    header {
+      /* Oben weiß, nach unten wird es langsam durchsichtig */
+      background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.85) 60%, rgba(255,255,255,0.70) 100%);
+      backdrop-filter: blur(12px); /* Das ist der Milchglas-Effekt */
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(226,232,240,0.6);
+      box-shadow: 0 4px 20px rgba(10,25,49,0.04);
+    }
+    /* Menü-Links: Unterstrich wächst sanft, wenn man drüber fährt */
+    nav a { position: relative; padding-bottom: 4px; }
+    nav a::after {
+      content: ""; position: absolute; left: 0; bottom: 0;
+      width: 0; height: 2px; background: var(--weser-blau);
+      transition: width 0.3s ease;
+    }
+    nav a:hover::after { width: 100%; }
+    nav a:hover { color: var(--weser-blau); }
+
+    /* ---------- HERO MIT SANFTEM VERLAUF ---------- */
+    .hero {
+      /* Drei Farben, die sanft ineinander laufen, plus ein weicher Glow */
+      background:
+        radial-gradient(700px 300px at 85% 0%, rgba(14,165,160,0.35) 0%, transparent 60%),
+        radial-gradient(600px 300px at 10% 100%, rgba(255,107,44,0.12) 0%, transparent 55%),
+        linear-gradient(180deg, #0A1931 0%, #0F2440 55%, #13294B 100%);
+    }
+    /* Hero erscheint sanft, wenn die Seite lädt */
+    .hero .container { animation: sanft-rein 0.8s ease both; }
+    @keyframes sanft-rein {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- KARTEN & PAKETE: SANFTES HOVER ---------- */
+    .karte:hover { transform: translateY(-4px); box-shadow: 0 18px 36px rgba(10,25,49,0.10); }
+    .paket:hover { transform: translateY(-4px); }
+    .paket.beliebt:hover { transform: scale(1.02) translateY(-4px); }
+    .knopf-orange:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 14px 30px rgba(255,107,44,0.45); }
+    .knopf-weiss:hover, .knopf-dunkel:hover { transform: translateY(-2px); }
+
+    /* ---------- SEKTIONEN MIT SANFTEM ÜBERGANG ---------- */
+    .sektion { position: relative; }
+    /* Feine Linie zwischen den Sektionen, die weich ausläuft */
+    .sektion-weiss {
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    }
+
+    /* ---------- KONTAKT-BOX AUCH MIT VERLAUF ---------- */
+    .kontakt-box {
+      background:
+        radial-gradient(600px 280px at 90% 0%, rgba(14,165,160,0.30) 0%, transparent 60%),
+        linear-gradient(180deg, #0F2440 0%, #0A1931 100%);
+      box-shadow: 0 20px 45px rgba(10,25,49,0.22);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ================= KOPFZEILE ================= -->
+  <header>
+    <div class="container">
+      <div class="kopf-zeile">
+        <div class="logo">Weser<span>Ads</span></div>
+        <nav>
+          <a href="#leistungen">Leistungen</a>
+          <a href="#pakete">Pakete</a>
+          <a href="#warum-ich">Warum ich</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+        <a class="knopf-orange" href="#kontakt">Kostenloses Erstgespräch</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO / START ================= -->
+  <section class="hero">
+    <div class="container">
+      <div class="badge">Google Performance Marketing aus dem Weserbergland</div>
+      <h1>Ich sorge dafür, dass Kunden dich bei Google finden - <em>und bei dir anrufen.</em></h1>
+      <p>
+        Kein Agentur-Blabla. Kein A-bis-Z-Versprechen. Nur Google Ads, die sich rechnen.
+        Für Handwerker, Praxen und kleine Unternehmen in Höxter, Paderborn und im ganzen Weserbergland.
+      </p>
+      <div class="hero-knopfe">
+        <a class="knopf-orange" href="#kontakt">Kostenloses Erstgespräch</a>
+        <a class="knopf-weiss" href="#pakete">Pakete ansehen</a>
+      </div>
+      <div class="vertrauen">
+        <span>✓ Ex-Google</span>
+        <span>✓ Bestleistungen als Seller bei Google</span>
+        <span>✓ Jahre Erfahrung in Performance Marketing</span>
+        <span>✓ Aus Höxter, für Höxter</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROBLEM ================= -->
+  <!-- Hier zeigen wir dem Kunden: Ich verstehe dein Problem -->
+  <section class="sektion">
+    <div class="container">
+      <h2>Kennst du das?</h2>
+      <p class="untertitel">Viele kleine Firmen im Weserbergland haben das gleiche Problem.</p>
+      <div class="karten">
+        <div class="karte">
+          <div class="icon">🔍</div>
+          <h3>Du hast eine Website, aber keiner ruft an</h3>
+          <p>Die Seite ist da, aber bei Google findet dich keiner. So bringt sie dir keine Kunden.</p>
+        </div>
+        <div class="karte">
+          <div class="icon">💸</div>
+          <h3>Du schaltest Werbung, weißt aber nicht was sie bringt</h3>
+          <p>Geld geht raus, aber du weißt nicht: Kam dadurch überhaupt ein Anruf rein?</p>
+        </div>
+        <div class="karte">
+          <div class="icon">🏙️</div>
+          <h3>Große Agenturen verstehen dein Geschäft nicht</h3>
+          <p>Agenturen aus Berlin kennen Höxter nicht. Ich schon. Ich wohne hier.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LEISTUNGEN ================= -->
+  <section class="sektion sektion-weiss" id="leistungen">
+    <div class="container">
+      <h2>Google Performance Marketing</h2>
+      <p class="untertitel">Das mache ich. Und das mache ich richtig gut. Nicht Klicks, sondern Anrufe, Anfragen und Aufträge.</p>
+      <div class="karten">
+        <div class="karte">
+          <div class="icon">🎯</div>
+          <h3>Google Ads Search</h3>
+          <p>Wenn einer "Handwerker Höxter" googelt, stehst du oben. Genau dann, wenn er dich braucht.</p>
+        </div>
+        <div class="karte">
+          <div class="icon">⚡</div>
+          <h3>Performance Max</h3>
+          <p>Google verteilt dein Budget intelligent auf Search, YouTube, Maps und Display.</p>
+        </div>
+        <div class="karte">
+          <div class="icon">🛒</div>
+          <h3>Google Shopping</h3>
+          <p>Wenn du einen Shop hast, zeigen wir deine Produkte direkt bei Google an.</p>
+        </div>
+        <div class="karte">
+          <div class="icon">📊</div>
+          <h3>Tracking &amp; Analytics</h3>
+          <p>Du siehst genau: 500€ Werbung = X Anrufe = Y Umsatz. Kein Rätselraten mehr.</p>
+        </div>
+        <div class="karte">
+          <div class="icon">📍</div>
+          <h3>Google Unternehmensprofil</h3>
+          <p>Damit du auf Google Maps gefunden wirst, wenn jemand in deiner Nähe sucht.</p>
+        </div>
+        <div class="karte">
+          <div class="icon">➕</div>
+          <h3>Auf Wunsch: Mehr</h3>
+          <p>Auf Kundenwunsch erweitern wir Schritt für Schritt: Meta, TikTok, LinkedIn, Spotify - nur wenn du es brauchst.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABLAUF ================= -->
+  <section class="sektion">
+    <div class="container">
+      <h2>So läuft's</h2>
+      <p class="untertitel">Einfach. In 3 Schritten.</p>
+      <div class="karten">
+        <div class="karte"><h3>1. Kostenloses Erstgespräch</h3><p>15 Minuten. Wir schauen, ob Google Ads für dich überhaupt Sinn macht. Wenn nicht, sage ich dir das ehrlich.</p></div>
+        <div class="karte"><h3>2. Setup in 7 Tagen</h3><p>Kampagnen, Tracking und Profil werden eingerichtet. Du musst dich um nichts kümmern.</p></div>
+        <div class="karte"><h3>3. Monatlich optimieren</h3><p>Jeden Monat bekommst du einen klaren Report: Was hat es gebracht?</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PAKETE / PREISE ================= -->
+  <section class="sektion sektion-weiss" id="pakete">
+    <div class="container">
+      <h2>Pakete</h2>
+      <p class="untertitel">Klare Preise. Keine versteckten Kosten. Monatlich kündbar.</p>
+      <div class="pakete">
+
+        <!-- Paket 1 -->
+        <div class="paket">
+          <h3>START</h3>
+          <p>Für den Einstieg</p>
+          <div class="preis">349€ <span style="font-size:16px;">/ Monat</span></div>
+          <ul>
+            <li>✓ 1 Google Ads Kampagne</li>
+            <li>✓ Google Unternehmensprofil Optimierung</li>
+            <li>✓ Monats-Report</li>
+            <li>✓ E-Mail Support</li>
+          </ul>
+          <a class="knopf-dunkel" href="#kontakt">START wählen</a>
+        </div>
+
+        <!-- Paket 2 - Beliebtestes -->
+        <div class="paket beliebt">
+          <span class="beliebt-label">⭐ BELIEBTESTES PAKET</span><h3>WACHSTUM</h3>
+          <p>Für Firmen, die wachsen wollen</p>
+          <div class="preis">649€ <span style="font-size:16px;">/ Monat</span></div>
+          <ul>
+            <li>✓ Bis zu 3 Kampagnen</li>
+            <li>✓ Performance Max</li>
+            <li>✓ Landingpage-Check</li>
+            <li>✓ Telefon-Report</li>
+            <li>✓ Monatlicher Call</li>
+          </ul>
+          <a class="knopf-orange" href="#kontakt">WACHSTUM wählen</a>
+        </div>
+
+        <!-- Paket 3 -->
+        <div class="paket">
+          <h3>PROFI</h3>
+          <p>Für Unternehmen mit mehr Budget</p>
+          <div class="preis">949€ <span style="font-size:16px;">/ Monat</span></div>
+          <ul>
+            <li>✓ Bis zu 6 Kampagnen</li>
+            <li>✓ Google Shopping</li>
+            <li>✓ A/B-Tests</li>
+            <li>✓ Prioritäts-Support</li>
+          </ul>
+          <a class="knopf-dunkel" href="#kontakt">PROFI wählen</a>
+        </div>
+
+      </div>
+      <p class="hinweis">Werbebudget an Google zahlst du direkt an Google. Setup einmalig 499€. Monatlich kündbar.</p>
+    </div>
+  </section>
+
+  <!-- ================= WARUM ICH / UEBER MICH ================= -->
+  <section class="sektion" id="warum-ich">
+    <div class="container">
+      <h2>Warum WeserAds? Weil ich weiß, was ich tue.</h2>
+      <div class="ueber-mich">
+        <!-- Foto: Hier kannst du später dein echtes Foto einsetzen -->
+        <div class="foto-platzhalter">RL</div>
+        <div>
+          <p style="color:var(--text); font-size:17px;">
+            Ich bin Ricardo Lemser aus Fürstenberg im Weserbergland.
+          </p>
+          <br>
+          <p>
+            Ich habe bei Google im Ads-Projekt gearbeitet und dort als Seller Bestleistungen erzielt.
+            Seit Jahren mache ich Google Performance Marketing für Unternehmen - nicht als Theorie,
+            sondern in der Praxis: Kampagnen aufsetzen, Budgets sinnvoll steuern, Ergebnisse messen.
+          </p>
+          <br>
+          <p>
+            Dazu baue ich Websites selbst - Backend und Frontend. Ich verstehe also nicht nur Werbung,
+            sondern auch die Technik dahinter. Und ich kann verkaufen, weil ich weiß, was ein Kunde
+            am Ende wirklich braucht: Nicht Klicks. Sondern Anrufe, Anfragen und Aufträge.
+          </p>
+          <br>
+          <p>
+            WeserAds ist meine Agentur für das Weserbergland. Ehrlich, lokal und mit messbaren Ergebnissen.
+          </p>
+          <div class="stichpunkte">
+            <span class="chip">Ex-Google</span>
+            <span class="chip">Backend / Frontend</span>
+            <span class="chip">Sales-Erfahrung</span>
+            <span class="chip">Mac Tier 2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FUER WEN ================= -->
+  <section class="sektion sektion-weiss">
+    <div class="container">
+      <h2>Für wen ist WeserAds?</h2>
+      <div class="karten">
+        <div class="karte"><h3>🔨 Handwerker</h3><p>Dachdecker, Elektriker, Sanitär - alle, die Aufträge aus ihrer Region brauchen.</p></div>
+        <div class="karte"><h3>🩺 Arztpraxen &amp; Therapeuten</h3><p>Wenn Patienten in Höxter eine Praxis suchen, sollen sie dich finden.</p></div>
+        <div class="karte"><h3>🏪 Kleine Läden &amp; Dienstleister</h3><p>Shops, Dienstleister, alle, die lokal gefunden werden wollen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="sektion">
+    <div class="container">
+      <h2>Häufige Fragen</h2>
+      <br>
+      <div class="karte" style="margin-bottom:12px;"><h3>Was kostet Google Ads wirklich?</h3><p>Du zahlst mich für die Betreuung und das Budget direkt an Google. Das Budget bestimmst du. Schon ab 500€ im Monat macht es für viele Firmen Sinn.</p></div>
+      <div class="karte" style="margin-bottom:12px;"><h3>Wie schnell sehe ich Ergebnisse?</h3><p>Die ersten Klicks kommen nach wenigen Tagen. Echte, messbare Ergebnisse nach 2-4 Wochen, wenn wir die Kampagne optimiert haben.</p></div>
+      <div class="karte" style="margin-bottom:12px;"><h3>Muss ich einen Vertrag für 12 Monate abschließen?</h3><p>Nein. Monatlich kündbar. Ich will dich mit Ergebnissen halten, nicht mit einem Vertrag.</p></div>
+      <div class="karte"><h3>Machst du auch Meta / TikTok?</h3><p>Auf Wunsch, Schritt für Schritt. Wir fangen mit Google an, weil das da am meisten bringt. Wenn du mehr willst, nehmen wir es dazu.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= KONTAKT ================= -->
+  <section class="sektion" id="kontakt">
+    <div class="container">
+      <div class="kontakt-box">
+        <div>
+          <h2 style="color:white;">Lass uns 15 Minuten sprechen.</h2>
+          <p>Kostenlos. Ohne Verkaufsdruck. Wir schauen zusammen, ob Google Ads für dich Sinn macht.</p>
+          <br>
+          <p><b style="color:white;">E-Mail:</b> hello@weserads.de</p>
+          <p><b style="color:white;">Ort:</b> Höxter / Weserbergland</p>
+        </div>
+        <!-- Formular: Das ist nur das Aussehen. Das Absenden musst du noch mit Vercel verbinden. -->
+        <form>
+          <input type="text" placeholder="Dein Name">
+          <input type="text" placeholder="Deine Firma">
+          <input type="text" placeholder="Dein Telefon">
+          <textarea rows="4" placeholder="Deine Nachricht"></textarea>
+          <button class="knopf-orange" style="border:none; width:100%; cursor:pointer;">Erstgespräch anfragen</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FUSSZEILE ================= -->
+  <footer>
+    <div class="container">
+      WeserAds - Deine Marketing Agentur aus dem Weserbergland | Impressum | Datenschutz | © 2026 WeserAds
+    </div>
+  </footer>
+
+</body>
+</html>
