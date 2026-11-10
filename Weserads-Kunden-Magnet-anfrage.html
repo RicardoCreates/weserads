@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WeserAds Kunden-Magnet – Einrichtung</title>
+  <style>
+    :root { --navy:#0A1931; --teal:#0EA5A0; --soft:#E0F7F5; --line:#E2E8F0; --text:#0F172A; --muted:#64748B; }
+    * { box-sizing:border-box; } body { margin:0; font:16px/1.6 Arial,sans-serif; background:#F8FAFC; color:var(--text); }
+    header { background:linear-gradient(135deg,var(--navy),#13294B); color:#fff; padding:28px 20px; }
+    main { max-width:680px; margin:0 auto; padding:40px 20px; } .card { background:#fff; border:1px solid var(--line); border-radius:22px; padding:28px; box-shadow:0 12px 30px #0f172a0b; }
+    h1 { margin-top:0; line-height:1.15; } p { color:var(--muted); } label { display:block; margin:18px 0; font-weight:700; }
+    input { display:block; width:100%; margin-top:6px; padding:13px 14px; border:1px solid var(--line); border-radius:11px; font:inherit; }
+    button { border:0; border-radius:999px; padding:14px 22px; background:var(--teal); color:#fff; font-weight:800; cursor:pointer; }
+    #status { margin-top:18px; font-weight:700; } .success { color:#087f5b; } .error { color:#b91c1c; }
+  </style>
+</head>
+<body>
+  <header><strong>WeserAds</strong> · Kunden-Magnet</header>
+  <main>
+    <section class="card">
+      <h1>Ihre Einrichtung für den Kunden-Magnet</h1>
+      <p>Tragen Sie Ihre Firmendaten und den Google-Bewertungslink ein. Wir prüfen die Angaben und schalten Ihren QR-Code nach der Bestätigung frei.</p>
+      <form id="requestForm">
+        <label>Firmenname<input name="firma" required placeholder="Bäckerei Schmidt, Höxter"></label>
+        <label>Google-Bewertungslink<input name="googleUrl" type="url" required placeholder="https://g.page/r/..."></label>
+        <label>Gewünschter Kunden-Slug<input name="slug" required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" placeholder="baeckerei-schmidt"></label>
+        <button type="submit">Einrichtung anfragen</button>
+      </form>
+      <p id="status" role="status"></p>
+    </section>
+  </main>
+  <script>
+    const form = document.getElementById('requestForm');
+    const status = document.getElementById('status');
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      status.className = ''; status.textContent = 'Anfrage wird übermittelt …';
+      try {
+        const response = await fetch('/api/customer', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || 'Die Anfrage konnte nicht gespeichert werden.');
+        form.reset(); status.className = 'success'; status.textContent = 'Vielen Dank. Ihre Anfrage wurde aufgenommen und wird geprüft.';
+      } catch (error) { status.className = 'error'; status.textContent = error.message; }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WeserAds Kunden-Magnet – Admin</title>
+  <style>
+    :root { --navy:#0A1931; --teal:#0EA5A0; --soft:#E0F7F5; --line:#E2E8F0; --text:#0F172A; --muted:#64748B; }
+    * { box-sizing:border-box; } body { margin:0; font:16px/1.5 Arial,sans-serif; background:#F8FAFC; color:var(--text); }
+    header { background:var(--navy); color:#fff; padding:24px; } main { max-width:1100px; margin:0 auto; padding:32px 20px; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:18px; padding:24px; margin-bottom:20px; box-shadow:0 6px 20px #0f172a0b; }
+    h1,h2 { margin-top:0; } label { display:block; font-weight:700; margin:12px 0; } input { display:block; width:100%; padding:12px; border:1px solid var(--line); border-radius:10px; margin-top:5px; }
+    button { border:0; border-radius:999px; padding:11px 18px; background:var(--teal); color:#fff; font-weight:700; cursor:pointer; } button.secondary { background:var(--navy); } button.off { background:#94A3B8; }
+    table { width:100%; border-collapse:collapse; } th,td { text-align:left; padding:12px 8px; border-bottom:1px solid var(--line); vertical-align:top; } .status { font-weight:700; } .active { color:#087f5b; } .pending { color:#b45309; } .inactive { color:#b91c1c; }
+    .message { margin-top:14px; color:var(--muted); } .hidden { display:none; } .actions { display:flex; gap:8px; flex-wrap:wrap; }
+    @media (max-width:700px) { table,thead,tbody,tr,th,td { display:block; } thead { display:none; } td { border:0; padding:6px 0; } tr { border-bottom:1px solid var(--line); padding:12px 0; } }
+  </style>
+</head>
+<body>
+  <header><strong>WeserAds</strong> · Kunden-Magnet Admin</header>
+  <main>
+    <section class="card" id="login">
+      <h1>Admin anmelden</h1>
+      <label>Admin-Passwort<input id="token" type="password" autocomplete="current-password"></label>
+      <button id="loginButton">Dashboard öffnen</button><p class="message" id="loginMessage"></p>
+    </section>
+    <section class="card hidden" id="dashboard">
+      <h1>Kunden verwalten</h1>
+      <p>Neue Anfragen starten inaktiv. Aktiviere sie erst nach deiner Zahlungsbestätigung.</p>
+      <form id="createForm">
+        <label>Firmenname<input name="firma" required placeholder="Bäckerei Schmidt, Höxter"></label>
+        <label>Kunden-Slug<input name="slug" required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" placeholder="baeckerei-schmidt"></label>
+        <label>Google-Bewertungslink<input name="googleUrl" type="url" required placeholder="https://g.page/r/..."></label>
+        <button type="submit">Kundenanfrage anlegen</button>
+      </form>
+      <p class="message" id="dashboardMessage"></p>
+      <div id="customers"></div>
+    </section>
+  </main>
+  <script>
+    const login = document.getElementById('login');
+    const dashboard = document.getElementById('dashboard');
+    const tokenInput = document.getElementById('token');
+    const loginMessage = document.getElementById('loginMessage');
+    const dashboardMessage = document.getElementById('dashboardMessage');
+    let token = sessionStorage.getItem('weserads_admin_token') || '';
+    const headers = () => ({ Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' });
+    async function loadCustomers() {
+      const response = await fetch('/api/customer', { headers: headers() });
+      if (!response.ok) throw new Error((await response.json()).error || 'Laden fehlgeschlagen.');
+      const { customers } = await response.json();
+      document.getElementById('customers').innerHTML = customers.length ? `<table><thead><tr><th>Firma</th><th>Status</th><th>QR-Link</th><th>Aktion</th></tr></thead><tbody>${customers.map(customer => `<tr><td><strong>${escapeHtml(customer.firma)}</strong><br><small>${escapeHtml(customer.slug)}</small></td><td class="status ${customer.status}">${customer.status}</td><td><a href="/r/${encodeURIComponent(customer.slug)}" target="_blank">/r/${escapeHtml(customer.slug)}</a></td><td><div class="actions"><button data-slug="${escapeHtml(customer.slug)}" data-active="${customer.active}">${customer.active ? 'Deaktivieren' : 'Aktivieren'}</button></div></td></tr>`).join('')}</tbody></table>` : '<p>Noch keine Kunden angelegt.</p>';
+      document.querySelectorAll('[data-slug]').forEach(button => button.addEventListener('click', () => setActive(button.dataset.slug, button.dataset.active !== 'true')));
+    }
+    async function setActive(slug, active) {
+      const response = await fetch('/api/customer', { method:'PUT', headers:headers(), body:JSON.stringify({ slug, active }) });
+      dashboardMessage.textContent = response.ok ? 'Status gespeichert.' : (await response.json()).error;
+      await loadCustomers();
+    }
+    function escapeHtml(value) { return String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[character])); }
+    document.getElementById('loginButton').addEventListener('click', async () => {
+      token = tokenInput.value.trim(); sessionStorage.setItem('weserads_admin_token', token);
+      try { await loadCustomers(); login.classList.add('hidden'); dashboard.classList.remove('hidden'); } catch (error) { loginMessage.textContent = error.message; sessionStorage.removeItem('weserads_admin_token'); }
+    });
+    document.getElementById('createForm').addEventListener('submit', async event => {
+      event.preventDefault(); const data = Object.fromEntries(new FormData(event.target));
+      const response = await fetch('/api/customer', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
+      dashboardMessage.textContent = response.ok ? 'Kunde angelegt und zunächst deaktiviert.' : (await response.json()).error;
+      if (response.ok) event.target.reset(); await loadCustomers();
+    });
+    if (token) { tokenInput.value = token; document.getElementById('loginButton').click(); }
+  </script>
+</body>
+</html>

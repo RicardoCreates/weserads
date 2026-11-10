@@ -1,3 +1,6 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/r/:slug", "destination": "/api/redirect?slug=:slug" }
+  ]
 }
