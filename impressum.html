@@ -5,23 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Impressum - WeserAds</title>
   <style>
-    :root { --blau:#0A1931; --teal:#0EA5A0; --hell:#F8FAFC; --text:#0F172A; --grau:#64748B; --rahmen:#E2E8F0; }
+    @font-face {
+      font-family:'Manrope'; font-style:normal; font-weight:400 800; font-display:swap;
+      src:url('assets/fonts/manrope-latin.woff2') format('woff2');
+    }
+    @font-face {
+      font-family:'Sora'; font-style:normal; font-weight:600 800; font-display:swap;
+      src:url('assets/fonts/sora-latin.woff2') format('woff2');
+    }
+    :root { --blau:#0D1B2A; --teal:#13A89E; --hell:#F5F7F9; --text:#122033; --grau:#617083; --rahmen:#DCE3EA; }
     * { box-sizing:border-box; }
-    body { margin:0; font-family:Arial,sans-serif; background:var(--hell); color:var(--text); line-height:1.7; }
-    header { background:white; border-bottom:1px solid var(--rahmen); padding:18px 22px; }
-    .container { max-width:860px; margin:0 auto; padding:0 22px; }
-    .logo { color:var(--blau); font-size:26px; font-weight:800; text-decoration:none; }
-    .logo span { color:var(--teal); }
-    main { padding:64px 0; }
-    h1 { color:var(--blau); font-size:40px; margin:0 0 28px; }
-    h2 { color:var(--blau); font-size:22px; margin-top:34px; }
+    body { margin:0; font-family:'Manrope',Arial,sans-serif; background:var(--hell); color:var(--text); line-height:1.7; }
+    header { background:rgba(255,255,255,.94); border-bottom:1px solid var(--rahmen); padding:18px 22px; box-shadow:0 6px 24px rgba(13,27,42,.06); }
+    .container { max-width:900px; margin:0 auto; padding:0 22px; }
+    .site-logo { display:inline-flex; align-items:center; }
+    .site-logo img { display:block; width:170px; height:auto; }
+    main { padding:74px 0; }
+    h1,h2 { font-family:'Sora',Arial,sans-serif; letter-spacing:-.045em; }
+    h1 { color:var(--blau); font-size:clamp(36px,6vw,58px); line-height:1; margin:0 0 28px; }
+    h2 { color:var(--blau); font-size:22px; margin-top:38px; }
     p { color:var(--grau); }
     a { color:var(--teal); }
-    footer { border-top:1px solid var(--rahmen); padding:28px 0; color:var(--grau); font-size:14px; }
+    footer { border-top:1px solid var(--rahmen); padding:28px 0; color:var(--grau); font-size:14px; background:#fff; }
   </style>
 </head>
 <body>
-  <header><div class="container"><a class="logo" href="index.html" aria-label="WeserAds - Startseite">Weser<span>Ads</span></a></div></header>
+  <header><div class="container"><a class="site-logo" href="index.html" aria-label="WeserAds - Startseite"><img src="assets/weserads-logo.png" alt="" width="280" height="94"></a></div></header>
   <main><div class="container">
     <h1>Impressum</h1>
     <h2>Angaben gemäß § 5 DDG</h2>

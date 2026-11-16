@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WeserAds - Ihre Google Ads Agentur</title>
+  <title>WeserAds | Google Ads mit Mensch &amp; KI</title>
 
   <!-- ============================================ -->
   <!--  WESERADS - WEBSITE                          -->
@@ -19,7 +19,14 @@
     /*  WESERADS - DESIGN                                 */
     /* ================================================== */
 
-    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+    @font-face {
+      font-family:'Manrope'; font-style:normal; font-weight:400 800; font-display:swap;
+      src:url('assets/fonts/manrope-latin.woff2') format('woff2');
+    }
+    @font-face {
+      font-family:'Sora'; font-style:normal; font-weight:600 800; font-display:swap;
+      src:url('assets/fonts/sora-latin.woff2') format('woff2');
+    }
 
     /* ---------- FARBEN ---------- */
     :root {
@@ -79,6 +86,8 @@
     .logo { font-size: 28px; font-weight: 800; color: var(--dunkelblau); }
     .logo span { color: var(--weser-blau); }
     .logo-mark span { color: var(--weser-blau-hell); }
+    .site-logo { display: inline-flex; align-items: center; flex: 0 0 auto; }
+    .site-logo img { display: block; width: 175px; height: auto; }
     nav a { margin: 0 14px; font-weight: 700; font-size: 15px; color: #334155; }
 
     /* ---------- HERO ---------- */
@@ -302,8 +311,544 @@
       border-radius:24px; background:var(--dunkelblau); color:white; font-size:48px;
       box-shadow:0 14px 28px rgba(10,25,49,.2);
     }
+    .vergleich {
+      display:grid; grid-template-columns:1fr 1fr; gap:0; margin-top:30px;
+      border:1px solid #BCE8E4; border-radius:22px; overflow:hidden;
+      box-shadow:0 12px 30px rgba(15,23,42,.06);
+    }
+    .vergleich-spalte { padding:28px; }
+    .vergleich-spalte:first-child { background:#F8FAFC; border-right:1px solid #BCE8E4; }
+    .vergleich-spalte:last-child { background:linear-gradient(145deg,#E0F7F5,#FFFFFF); }
+    .vergleich-spalte h3 { margin-bottom:12px; }
+    .vergleich-spalte ul { list-style:none; }
+    .vergleich-spalte li { padding:9px 0; border-bottom:1px solid rgba(15,23,42,.08); color:#475569; }
+    .vergleich-spalte li:last-child { border-bottom:0; }
+    .testmonat {
+      margin-top:30px; padding:24px 28px; border-radius:18px;
+      background:#FFF4EE; border:1px solid #FFD7C5; color:#7C2D12;
+    }
+    .testmonat p { color:#9A3412; margin-top:6px; }
     @media(max-width:820px){ .kunden-magnet-box{grid-template-columns:1fr;} .kunden-magnet-icon{width:80px; height:80px; font-size:36px;} }
-    @media(max-width:820px){ .hero-grid{grid-template-columns:1fr; gap:28px;} .stats-grid{grid-template-columns:1fr 1fr;} .hero-karte-row{grid-template-columns:1fr 1fr 1fr;} .karten-grid{grid-template-columns:1fr;} }
+    @media(max-width:820px){ .hero-grid{grid-template-columns:1fr; gap:28px;} .stats-grid{grid-template-columns:1fr 1fr;} .hero-karte-row{grid-template-columns:1fr 1fr 1fr;} .karten-grid{grid-template-columns:1fr;} .vergleich{grid-template-columns:1fr;} .vergleich-spalte:first-child{border-right:0; border-bottom:1px solid #BCE8E4;} }
+
+    /* ---------- AKTUELLE WESERADS OBERFLAECHE ---------- */
+    :root {
+      --dunkelblau: #08090C;
+      --dunkelblau-hell: #15171D;
+      --weser-blau: #B9F94A;
+      --weser-blau-hell: #E8FFB8;
+      --hell: #F4F3EE;
+      --orange: #B9F94A;
+      --orange-dunkel: #9BD92F;
+      --text: #111318;
+      --grau-text: #686B73;
+      --rahmen: #D9D8D1;
+    }
+    body { background:#F4F3EE; color:#111318; line-height:1.55; }
+    h1, h2, h3, .logo { letter-spacing:-0.055em; }
+    h1 { font-size:clamp(3.2rem, 7vw, 6.8rem); line-height:.94; max-width:900px; }
+    h2 { font-size:clamp(2.2rem, 4vw, 4.2rem); line-height:1; }
+    h3 { font-size:19px; line-height:1.1; }
+    .container { max-width:1280px; padding:0 32px; }
+    header {
+      background:rgba(8,9,12,.84); border:0; box-shadow:none;
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+    }
+    .kopf-zeile { padding:20px 0; }
+    .logo { color:#fff; font-size:25px; letter-spacing:-.08em; }
+    .logo span { color:var(--weser-blau); }
+    nav a { color:#B8BAC0; font-size:13px; letter-spacing:.01em; }
+    nav a:hover { color:var(--weser-blau); }
+    nav a::after { background:var(--weser-blau); }
+    .knopf-orange, .knopf-weiss, .knopf-dunkel {
+      border-radius:8px; padding:14px 19px; font-size:13px; letter-spacing:-.01em;
+      box-shadow:none; transition:transform .25s ease, background .25s ease, color .25s ease;
+    }
+    .knopf-orange { background:var(--weser-blau); color:#08090C; }
+    .knopf-orange:hover { background:#D2FF78; box-shadow:0 0 30px rgba(185,249,74,.28); }
+    .knopf-weiss { background:transparent; color:#fff; border:1px solid rgba(255,255,255,.25); }
+    .knopf-weiss:hover { background:#fff; color:#08090C; }
+    .knopf-dunkel { background:#111318; color:#fff; border:1px solid #2B2D33; }
+    .knopf-dunkel:hover { background:var(--weser-blau); color:#08090C; }
+    .hero {
+      position:relative; overflow:hidden; min-height:720px; padding:150px 0 100px;
+      border-radius:0; isolation:isolate;
+      background:
+        radial-gradient(circle at 78% 28%, rgba(185,249,74,.17), transparent 0 25%),
+        radial-gradient(circle at 92% 78%, rgba(127,91,255,.2), transparent 0 22%),
+        #08090C;
+    }
+    .hero::before {
+      content:""; position:absolute; inset:0; z-index:-1; opacity:.2;
+      background-image:linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px);
+      background-size:80px 80px; mask-image:linear-gradient(to bottom, black, transparent 85%);
+    }
+    .hero-grid { grid-template-columns:1.15fr .85fr; gap:80px; }
+    .hero h1 { color:#F7F7F2; }
+    .hero h1 .text-orange { color:var(--weser-blau); }
+    .hero p { color:#A5A7AF; font-size:18px; max-width:650px; margin:28px 0 32px; }
+    .hero-badge { background:rgba(185,249,74,.1); border:1px solid rgba(185,249,74,.35); color:var(--weser-blau-hell); border-radius:4px; font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+    .hero-trust { color:#8C8F98; font-size:12px; }
+    .hero-karte { background:rgba(25,27,32,.8); border:1px solid rgba(255,255,255,.15); border-radius:20px; box-shadow:0 30px 100px rgba(0,0,0,.4); transform:rotate(2deg); }
+    .hero-karte-kopf { background:rgba(255,255,255,.04); border-bottom:1px solid rgba(255,255,255,.1); }
+    .hero-karte-kopf span:last-child { color:#A5A7AF !important; }
+    .hero-karte-body { color:#fff; padding:30px; }
+    .hero-karte-label, .hero-karte-row span, .hero-karte-note { color:#81848D; }
+    .hero-karte-big { color:#fff; font-size:34px; letter-spacing:-.06em; }
+    .hero-karte-sub { color:var(--weser-blau); }
+    .hero-bar { background:#2A2D32; }
+    .hero-bar-fill { background:linear-gradient(90deg,var(--weser-blau),#8A6CFF); }
+    .hero-karte-row strong { color:#fff; }
+    .stats { background:#111318; border:0; padding:26px 0; }
+    .stats-grid strong { color:var(--weser-blau); font-size:27px; letter-spacing:-.06em; }
+    .stats-grid span { color:#8C8F98; font-size:12px; }
+    .sektion { padding:110px 0; }
+    .sektion-weiss { background:#F4F3EE; }
+    .eyebrow { color:#6E8D22; font-size:10px; letter-spacing:.16em; }
+    .text-blau { color:#6E8D22; }
+    .text-orange { color:#6E8D22; }
+    .sektion-text, .untertitel { color:#686B73; max-width:700px; font-size:17px; }
+    .karten, .karten-grid { gap:14px; }
+    .karte, .paket, .ueber-mich {
+      background:#FCFCF8; border:1px solid #D9D8D1; border-radius:14px;
+      box-shadow:none; padding:28px; transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+    .karte:hover, .paket:hover { transform:translateY(-6px); border-color:#A7C85C; box-shadow:0 18px 40px rgba(17,19,24,.08); }
+    .sektion-weiss .karte { background:#FCFCF8; }
+    .karte .icon { width:auto; height:auto; background:transparent; color:#6E8D22; font-size:23px; margin-bottom:30px; }
+    .karte-icon { color:#6E8D22; font-size:13px; letter-spacing:.1em; }
+    .karte p, .paket p { font-size:14px; }
+    .vergleich { border:1px solid #D9D8D1; border-radius:14px; box-shadow:none; }
+    .vergleich-spalte:first-child { background:#EAE9E2; border-color:#D9D8D1; }
+    .vergleich-spalte:last-child { background:#E9F9C9; }
+    .vergleich-spalte li { color:#4F535B; border-color:rgba(17,19,24,.12); font-size:14px; }
+    .kunden-magnet-box { background:#E9F9C9; border:1px solid #C5DF8B; border-radius:14px; box-shadow:none; }
+    .kunden-magnet-icon { background:#111318; border-radius:14px; color:var(--weser-blau); }
+    .pakete { gap:14px; }
+    .paket { border-radius:14px; }
+    .paket.beliebt { background:#111318; border:1px solid var(--weser-blau); box-shadow:0 20px 50px rgba(17,19,24,.2); transform:scale(1.035); }
+    .paket.beliebt:hover { transform:scale(1.035) translateY(-6px); }
+    .paket.beliebt h3, .paket.beliebt .preis { color:#fff; }
+    .paket.beliebt li { border-color:#2B2D33; }
+    .beliebt-label { background:var(--weser-blau); color:#08090C; border-radius:4px; font-size:10px; letter-spacing:.08em; }
+    .preis { letter-spacing:-.07em; }
+    .testmonat { background:#E9F9C9; border:1px solid #C5DF8B; border-radius:14px; color:#33420F; }
+    .testmonat p { color:#586B25; }
+    .ueber-mich { padding:18px; }
+    .foto-platzhalter { border-radius:10px; }
+    .chip { background:#EAE9E2; border:0; border-radius:5px; font-size:12px; }
+    .kontakt-box { background:#111318; border:1px solid #2B2D33; border-radius:14px; box-shadow:none; padding:42px; }
+    .kontakt-box input, .kontakt-box textarea { background:#1A1C22; border:1px solid #33363E; border-radius:7px; }
+    footer { background:#111318; color:#73767E; }
+    footer a { color:#B9F94A; }
+    @media(max-width:820px) {
+      .container { padding:0 20px; }
+      .hero { min-height:auto; padding:110px 0 70px; }
+      .hero-grid { gap:55px; }
+      .hero-karte { transform:none; }
+      .paket.beliebt, .paket.beliebt:hover { transform:none; }
+      .sektion { padding:75px 0; }
+    }
+
+    /* ---------- HELLE PREMIUM RICHTUNG ---------- */
+    body { background:#F7F7F3; color:#111318; }
+    header {
+      background:rgba(247,247,243,.84); border-bottom:1px solid rgba(17,19,24,.08);
+      box-shadow:0 8px 30px rgba(17,19,24,.04);
+    }
+    .logo { color:#111318; }
+    nav a { color:#686B73; }
+    nav a:hover { color:#111318; }
+    .knopf-orange { background:#111318; color:#fff; }
+    .knopf-orange:hover { background:#B9F94A; color:#111318; }
+    .knopf-weiss { background:#fff; color:#111318; border-color:#D9D8D1; }
+    .knopf-weiss:hover { background:#111318; color:#fff; }
+    .hero {
+      background:
+        radial-gradient(circle at 74% 14%, rgba(185,249,74,.34), transparent 0 22%),
+        radial-gradient(circle at 93% 78%, rgba(126,91,255,.11), transparent 0 23%),
+        #F7F7F3;
+    }
+    .hero::before { opacity:.11; background-image:linear-gradient(rgba(17,19,24,.16) 1px, transparent 1px),linear-gradient(90deg,rgba(17,19,24,.16) 1px,transparent 1px); }
+    .hero h1 { color:#111318; }
+    .hero h1 .text-orange { color:#789D26; }
+    .hero p { color:#686B73; }
+    .hero-badge { background:#111318; border-color:#111318; color:#E8FFB8; }
+    .hero-trust { color:#686B73; }
+    .stats { background:#fff; border-bottom:1px solid #E5E4DD; }
+    .stats-grid strong { color:#111318; }
+    .stats-grid span { color:#686B73; }
+    .sektion-weiss { background:#fff; }
+    .text-blau, .text-orange, .eyebrow, .karte-icon { color:#789D26; }
+    .karte, .paket, .ueber-mich { background:#fff; }
+    .sektion-weiss .karte { background:#F7F7F3; }
+    .vergleich-spalte:first-child { background:#F1F1EB; }
+    .vergleich-spalte:last-child { background:#E9F9C9; }
+    .kunden-magnet-box, .testmonat { background:#E9F9C9; }
+    .paket.beliebt { background:#111318; }
+    footer { background:#111318; }
+
+    /* ---------- SYNTHWAVE 84 TESTPALETTE ---------- */
+    :root {
+      --dunkelblau:#120B2E;
+      --dunkelblau-hell:#21134F;
+      --weser-blau:#00F0FF;
+      --weser-blau-hell:#B8FAFF;
+      --hell:#171039;
+      --orange:#FF2DAA;
+      --orange-dunkel:#D91B87;
+      --text:#F8F3FF;
+      --grau-text:#B8B0D1;
+      --rahmen:#3C2D70;
+    }
+    body { background:#120B2E; color:#F8F3FF; }
+    header {
+      background:rgba(18,11,46,.86); border-bottom:1px solid rgba(0,240,255,.18);
+      box-shadow:0 8px 30px rgba(0,0,0,.24);
+    }
+    .logo { color:#F8F3FF; }
+    .logo span { color:#00F0FF; }
+    nav a { color:#F8F3FF; }
+    nav a:hover { color:#00F0FF; }
+    .knopf-orange { background:#00F0FF; color:#120B2E; box-shadow:0 0 25px rgba(0,240,255,.28); }
+    .knopf-orange:hover { background:#7BFAFF; color:#120B2E; }
+    .knopf-weiss { background:transparent; color:#F8F3FF; border-color:#594B8B; }
+    .knopf-weiss:hover { background:#00F0FF; color:#120B2E; }
+    .hero {
+      background:
+        radial-gradient(circle at 75% 12%, rgba(255,45,170,.32), transparent 0 24%),
+        radial-gradient(circle at 92% 78%, rgba(0,240,255,.18), transparent 0 23%),
+        linear-gradient(145deg,#120B2E 0%,#1B0E46 58%,#120B2E 100%);
+    }
+    .hero::before { opacity:.2; background-image:linear-gradient(rgba(0,240,255,.2) 1px, transparent 1px),linear-gradient(90deg,rgba(0,240,255,.2) 1px,transparent 1px); }
+    .hero h1 { color:#F8F3FF; }
+    .hero h1 .text-orange { color:#00F0FF; }
+    .hero p { color:#B8B0D1; }
+    .hero-badge { background:rgba(255,45,170,.13); border-color:rgba(255,45,170,.5); color:#FF9AD6; }
+    .hero-trust { color:#B8B0D1; }
+    .hero-karte { background:rgba(26,15,62,.9); border-color:rgba(0,240,255,.35); box-shadow:0 30px 100px rgba(0,0,0,.45); }
+    .hero-karte-kopf { background:rgba(0,240,255,.06); border-color:rgba(0,240,255,.18); }
+    .hero-karte-kopf span:last-child { color:#B8B0D1 !important; }
+    .hero-karte-body { color:#F8F3FF; }
+    .hero-karte-label, .hero-karte-row span, .hero-karte-note { color:#8F86B0; }
+    .hero-karte-big, .hero-karte-row strong { color:#F8F3FF; }
+    .hero-karte-sub { color:#00F0FF; }
+    .hero-bar { background:#33245E; }
+    .hero-bar-fill { background:linear-gradient(90deg,#00F0FF,#FF2DAA); }
+    .stats { background:#0D0824; border-color:#3C2D70; }
+    .stats-grid strong { color:#00F0FF; }
+    .stats-grid span { color:#B8B0D1; }
+    .sektion, .sektion-weiss { background:#171039; }
+    .eyebrow, .text-blau, .text-orange, .karte-icon { color:#00F0FF; }
+    .sektion-text, .untertitel { color:#B8B0D1; }
+    .karte, .paket, .ueber-mich { background:#1D1245; border-color:#3C2D70; color:#F8F3FF; }
+    .sektion-weiss .karte { background:#1D1245; }
+    .karte p, .paket p { color:#B8B0D1; }
+    .karte:hover, .paket:hover { border-color:#00F0FF; box-shadow:0 18px 40px rgba(0,240,255,.12); }
+    .vergleich { border-color:#3C2D70; }
+    .vergleich-spalte:first-child { background:#21134F; border-color:#3C2D70; }
+    .vergleich-spalte:last-child { background:linear-gradient(145deg,#35145C,#21134F); }
+    .vergleich-spalte li { color:#D9D0F0; border-color:rgba(0,240,255,.16); }
+    .kunden-magnet-box, .testmonat { background:#21134F; border-color:#FF2DAA; color:#F8F3FF; }
+    .testmonat p { color:#D9D0F0; }
+    .kunden-magnet-icon { background:#FF2DAA; color:#120B2E; }
+    .paket.beliebt { background:#0D0824; border-color:#FF2DAA; }
+    .beliebt-label { background:#F7F500; color:#120B2E; }
+    .chip { background:#2B1B5C; color:#D9D0F0; }
+    .kontakt-box { background:#0D0824; border-color:#3C2D70; }
+    .kontakt-box input, .kontakt-box textarea { background:#171039; border-color:#3C2D70; }
+    footer { background:#0D0824; color:#8F86B0; }
+    footer a { color:#00F0FF; }
+
+    /* ---------- RUHIGE, HELLE INHALTSBEREICHE ---------- */
+    body { background:#F8F8F4; }
+    .stats {
+      background:#fff; border-bottom:1px solid #E5E4DD;
+    }
+    .stats-grid strong { color:#171039; }
+    .stats-grid span { color:#686B73; }
+    .sektion, .sektion-weiss {
+      background:#F8F8F4; color:#171039;
+    }
+    .sektion h2, .sektion h3 { color:#171039; }
+    .sektion-text, .untertitel { color:#686B73; }
+    .eyebrow, .text-blau, .text-orange, .karte-icon { color:#B01876; }
+    .karte, .paket, .ueber-mich {
+      background:#fff; border-color:#E0DFD8; color:#171039;
+      box-shadow:0 10px 28px rgba(23,16,57,.05);
+    }
+    .sektion-weiss .karte { background:#fff; }
+    .karte p, .paket p, .ueber-mich p { color:#686B73; }
+    .karte:hover, .paket:hover {
+      border-color:#D64A9C; box-shadow:0 18px 40px rgba(176,24,118,.1);
+    }
+    .vergleich { border-color:#E0DFD8; }
+    .vergleich-spalte:first-child { background:#F1F1EB; border-color:#E0DFD8; }
+    .vergleich-spalte:last-child { background:#FFF0FA; }
+    .vergleich-spalte h3 { color:#171039; }
+    .vergleich-spalte li { color:#4F535B; border-color:rgba(23,16,57,.1); }
+    .kunden-magnet-box {
+      background:#FFF0FA; border-color:#F0B7D7;
+    }
+    .testmonat {
+      background:#FFF0FA; border-color:#F0B7D7; color:#6B174B;
+    }
+    .testmonat p { color:#8E3B70; }
+    .paket.beliebt { background:#171039; border-color:#00F0FF; }
+    .paket.beliebt h3, .paket.beliebt .preis { color:#fff; }
+    .paket.beliebt p { color:#B8B0D1; }
+    .chip { background:#F1F1EB; color:#4F535B; }
+    header .kopf-zeile nav a { color:#fff; font-weight:700; }
+    header .kopf-zeile nav a:hover { color:#00F0FF; }
+
+    /* ---------- HELLERE CYAN RICHTUNG OHNE PINK ---------- */
+    :root {
+      --orange:#00C8D7;
+      --orange-dunkel:#009EAC;
+      --weser-blau:#00C8D7;
+      --weser-blau-hell:#B9FBFF;
+    }
+    header {
+      background:rgba(255,255,255,.92); border-bottom:1px solid #E1E5EA;
+      box-shadow:0 8px 26px rgba(18,11,46,.08);
+    }
+    .logo { color:#171039; }
+    .logo span { color:#009EAC; }
+    header .kopf-zeile nav a { color:#171039; }
+    header .kopf-zeile nav a:hover { color:#009EAC; }
+    header nav a::after { background:#00C8D7; }
+    .knopf-orange { background:#00C8D7; color:#071D2A; box-shadow:0 0 24px rgba(0,200,215,.24); }
+    .knopf-orange:hover { background:#73F3FA; color:#071D2A; }
+    .hero {
+      background:
+        radial-gradient(circle at 75% 12%, rgba(0,200,215,.26), transparent 0 24%),
+        radial-gradient(circle at 92% 78%, rgba(109,94,245,.18), transparent 0 23%),
+        linear-gradient(145deg,#120B2E 0%,#22145A 58%,#171039 100%);
+    }
+    .hero::before { background-image:linear-gradient(rgba(0,200,215,.2) 1px, transparent 1px),linear-gradient(90deg,rgba(0,200,215,.2) 1px,transparent 1px); }
+    .hero-badge { background:rgba(0,200,215,.12); border-color:rgba(0,200,215,.5); color:#B9FBFF; }
+    .hero h1 .text-orange { color:#73F3FA; }
+    .hero-karte { border-color:rgba(0,200,215,.35); }
+    .hero-karte-sub { color:#00C8D7; }
+    .hero-bar-fill { background:linear-gradient(90deg,#00C8D7,#6D5EF5); }
+    .eyebrow, .text-blau, .text-orange, .karte-icon { color:#008F9B; }
+    .kunden-magnet-box, .testmonat { background:#E7FBFC; border-color:#A7E9ED; }
+    .testmonat { color:#075B63; }
+    .testmonat p { color:#2C747A; }
+    .vergleich-spalte:last-child { background:#E7FBFC; }
+    .paket.beliebt { border-color:#00C8D7; }
+    .kontakt-box input:focus, .kontakt-box textarea:focus { outline:2px solid #00C8D7; outline-offset:1px; }
+
+    /* ---------- HARMONISCHE PREMIUM PALETTE ---------- */
+    :root {
+      --dunkelblau:#0D1B2A;
+      --dunkelblau-hell:#14283D;
+      --weser-blau:#13A89E;
+      --weser-blau-hell:#A7EFE7;
+      --hell:#F5F7F9;
+      --orange:#13A89E;
+      --orange-dunkel:#0E887F;
+      --text:#122033;
+      --grau-text:#617083;
+      --rahmen:#DCE3EA;
+    }
+    body { background:#F5F7F9; color:#122033; }
+    header {
+      background:rgba(255,255,255,.9); border-bottom:1px solid #E1E7EC;
+      box-shadow:0 6px 24px rgba(13,27,42,.06);
+    }
+    .logo { color:#0D1B2A; }
+    .logo span { color:#13A89E; }
+    header .kopf-zeile nav a { color:#334155; }
+    header .kopf-zeile nav a:hover { color:#0E887F; }
+    header nav a::after { background:#13A89E; }
+    .knopf-orange {
+      background:#13A89E; color:#fff; box-shadow:0 8px 20px rgba(19,168,158,.2);
+    }
+    .knopf-orange:hover { background:#0E887F; color:#fff; box-shadow:0 10px 24px rgba(19,168,158,.28); }
+    .knopf-weiss { background:#fff; color:#0D1B2A; border-color:#DCE3EA; }
+    .knopf-weiss:hover { background:#0D1B2A; color:#fff; }
+    .hero {
+      min-height:680px; padding:130px 0 90px;
+      background:
+        radial-gradient(circle at 78% 12%, rgba(19,168,158,.24), transparent 0 25%),
+        radial-gradient(circle at 92% 78%, rgba(111,142,255,.12), transparent 0 24%),
+        linear-gradient(145deg,#0D1B2A 0%,#122A40 60%,#0D1B2A 100%);
+    }
+    .hero::before {
+      opacity:.07;
+      background-image:linear-gradient(rgba(167,239,231,.3) 1px, transparent 1px),linear-gradient(90deg,rgba(167,239,231,.3) 1px,transparent 1px);
+      background-size:80px 80px;
+    }
+    .hero h1 { color:#F8FAFC; }
+    .hero h1 .text-orange { color:#A7EFE7; }
+    .hero p { color:#C2CBD5; }
+    .hero-badge { background:rgba(19,168,158,.13); border-color:rgba(167,239,231,.35); color:#A7EFE7; }
+    .hero-trust { color:#AAB7C4; }
+    .hero-karte {
+      background:rgba(255,255,255,.96); border:0; border-radius:18px;
+      box-shadow:0 26px 70px rgba(0,0,0,.24); transform:rotate(1deg);
+    }
+    .hero-karte-kopf { background:#EEF2F5; border-color:#E1E7EC; }
+    .hero-karte-kopf span:last-child { color:#617083 !important; }
+    .hero-karte-body { color:#0D1B2A; }
+    .hero-karte-label, .hero-karte-row span, .hero-karte-note { color:#728094; }
+    .hero-karte-big, .hero-karte-row strong { color:#0D1B2A; }
+    .hero-karte-sub { color:#0E887F; }
+    .hero-bar { background:#E1E7EC; }
+    .hero-bar-fill { background:linear-gradient(90deg,#13A89E,#6F8EFF); }
+    .stats { background:#fff; border-bottom:1px solid #E1E7EC; }
+    .stats-grid strong { color:#0D1B2A; }
+    .stats-grid span { color:#617083; }
+    .sektion, .sektion-weiss { background:#F5F7F9; color:#122033; }
+    .sektion h2, .sektion h3 { color:#0D1B2A; }
+    .eyebrow, .text-blau, .text-orange, .karte-icon { color:#0E887F; }
+    .sektion-text, .untertitel { color:#617083; }
+    .karte, .paket, .ueber-mich {
+      background:#fff; border-color:#DCE3EA; color:#122033;
+      border-radius:18px; box-shadow:0 8px 26px rgba(13,27,42,.045);
+    }
+    .sektion-weiss .karte { background:#fff; }
+    .karte p, .paket p, .ueber-mich p { color:#617083; }
+    .karte:hover, .paket:hover {
+      border-color:#9BDDD7; box-shadow:0 16px 34px rgba(13,27,42,.08);
+    }
+    .vergleich { border-color:#DCE3EA; border-radius:18px; }
+    .vergleich-spalte:first-child { background:#EEF2F5; border-color:#DCE3EA; }
+    .vergleich-spalte:last-child { background:#E8F8F5; }
+    .vergleich-spalte h3 { color:#0D1B2A; }
+    .vergleich-spalte li { color:#526274; border-color:rgba(13,27,42,.1); }
+    .kunden-magnet-box, .testmonat { background:#E8F8F5; border-color:#B9E4DF; border-radius:18px; }
+    .testmonat { color:#245D59; }
+    .testmonat p { color:#4B7774; }
+    .kunden-magnet-icon { background:#0D1B2A; color:#A7EFE7; }
+    .paket.beliebt { background:#0D1B2A; border-color:#13A89E; }
+    .paket.beliebt h3, .paket.beliebt .preis { color:#fff; }
+    .paket.beliebt p { color:#C2CBD5; }
+    .chip { background:#EEF2F5; color:#526274; }
+    .kontakt-box { background:#0D1B2A; border-color:#203C55; }
+    .kontakt-box input, .kontakt-box textarea { background:#14283D; border-color:#2B4A64; }
+    .kontakt-box input:focus, .kontakt-box textarea:focus { outline-color:#13A89E; }
+    footer { background:#0D1B2A; color:#8FA1B3; }
+    footer a { color:#A7EFE7; }
+    .hero .hero-karte-label { font-size:12px; color:#728094; margin:0 0 8px; }
+    .hero .hero-karte-big { font-size:34px; line-height:1.15; color:#0D1B2A; margin:0; }
+    .hero .hero-karte-sub { font-size:14px; color:#0E887F; margin:6px 0 16px; }
+    .hero .hero-karte-note { font-size:11.5px; color:#728094; margin:16px 0 0; }
+    @media(max-width:820px) {
+      .hero { min-height:0; padding:60px 0; }
+      .hero-grid { grid-template-columns:minmax(0, 1fr); gap:36px; }
+      .hero h1 { font-size:clamp(2.25rem, 8vw, 3rem); line-height:1.05; }
+      .hero p { font-size:16px; margin:20px 0 24px; }
+      .hero-karte { transform:none; }
+      .hero-karte-body { padding:24px; }
+      .hero-karte-row { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+      .hero-karte-row span { overflow-wrap:anywhere; }
+    }
+    @media(max-width:480px) {
+      .kopf-zeile { gap:12px; }
+      .kopf-zeile > .knopf-orange {
+        text-align:center; white-space:nowrap; flex-shrink:0;
+        padding:10px 12px; font-size:11px;
+      }
+      .hero-knopfe a { width:100%; text-align:center; }
+      .site-logo img { width:120px; }
+      .karten { grid-template-columns:minmax(0,1fr); }
+      .karten > .karte { min-width:0; }
+    }
+    .weserads-chat {
+      position:fixed; right:22px; bottom:22px; z-index:100;
+      font-family:'Manrope', Arial, sans-serif;
+    }
+    .weserads-chat-toggle {
+      display:flex; align-items:center; gap:9px; padding:14px 19px;
+      border:1px solid #0D1B2A; border-radius:999px; background:#A7EFE7;
+      color:#0D1B2A; box-shadow:0 10px 28px rgba(13,27,42,.2);
+      cursor:pointer; font:800 14px 'Manrope', Arial, sans-serif;
+      transition:transform .2s ease, background .2s ease;
+    }
+    .weserads-chat-toggle:hover { transform:translateY(-2px); background:#C6F7F1; }
+    .weserads-chat-toggle:focus-visible, .weserads-chat-question:focus-visible,
+    .weserads-chat-contact:focus-visible, .weserads-chat-close:focus-visible {
+      outline:3px solid #13A89E; outline-offset:3px;
+    }
+    .weserads-chat-toggle svg { width:19px; height:19px; }
+    .weserads-chat-panel {
+      position:absolute; right:0; bottom:calc(100% + 12px);
+      display:flex; flex-direction:column; width:min(360px, calc(100vw - 32px));
+      max-height:min(560px, calc(100vh - 110px)); overflow:hidden;
+      border:1px solid #DCE3EA; border-radius:18px; background:#fff;
+      box-shadow:0 18px 55px rgba(13,27,42,.2);
+    }
+    .weserads-chat-panel[hidden] { display:none; }
+    .weserads-chat-heading {
+      display:flex; justify-content:space-between; align-items:center; gap:16px;
+      padding:18px 20px; background:#0D1B2A; color:#fff;
+    }
+    .weserads-chat-heading strong { display:block; font-size:15px; }
+    .weserads-chat-heading span { display:block; margin-top:3px; color:#C2CBD5; font-size:12px; }
+    .weserads-chat-close {
+      flex:0 0 auto; border:0; background:transparent; color:#fff;
+      cursor:pointer; font-size:24px; line-height:1;
+    }
+    .weserads-chat-content { display:flex; flex-direction:column; gap:12px; min-height:0; padding:16px; }
+    .weserads-chat-messages {
+      display:flex; flex-direction:column; gap:10px; min-height:110px; max-height:270px;
+      overflow-y:auto; overscroll-behavior:contain; padding:0 2px 2px;
+    }
+    .weserads-chat-message {
+      max-width:90%; padding:10px 13px; border-radius:14px;
+      font-size:13px; line-height:1.5; animation:weserads-chat-appear .2s ease-out both;
+    }
+    .weserads-chat-message p { margin:0; color:inherit; }
+    .weserads-chat-message--bot {
+      align-self:flex-start; border-bottom-left-radius:4px;
+      background:#F1F4F7; color:#34465A;
+    }
+    .weserads-chat-message--user {
+      align-self:flex-end; border-bottom-right-radius:4px;
+      background:#0D1B2A; color:#fff;
+    }
+    .weserads-chat-typing { display:flex; align-items:center; gap:4px; min-height:38px; }
+    .weserads-chat-typing span {
+      width:6px; height:6px; border-radius:50%; background:#617083;
+      animation:weserads-chat-typing 1s ease-in-out infinite;
+    }
+    .weserads-chat-typing span:nth-child(2) { animation-delay:.15s; }
+    .weserads-chat-typing span:nth-child(3) { animation-delay:.3s; }
+    .weserads-chat-questions {
+      display:flex; flex-wrap:wrap; gap:7px; padding-top:11px;
+      border-top:1px solid #E8EDF1;
+    }
+    .weserads-chat-question {
+      max-width:100%; padding:8px 11px; border:1px solid #DCE3EA; border-radius:999px;
+      background:#fff; color:#0D1B2A; text-align:left; line-height:1.35;
+      cursor:pointer; font:600 12px 'Manrope', Arial, sans-serif;
+      transition:border-color .2s ease, background .2s ease;
+    }
+    .weserads-chat-question:hover { border-color:#13A89E; background:#E8F8F5; }
+    .weserads-chat-question:disabled { opacity:.55; cursor:wait; }
+    .weserads-chat-contact {
+      display:inline-block; margin-top:10px; padding:8px 11px; border-radius:7px;
+      background:#0D1B2A; color:#fff; font-size:12px; font-weight:800;
+      text-decoration:none; transition:background .2s ease;
+    }
+    .weserads-chat-contact:hover { background:#173653; }
+    @keyframes weserads-chat-appear {
+      from { opacity:0; transform:translateY(5px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+    @keyframes weserads-chat-typing {
+      0%, 60%, 100% { opacity:.4; transform:translateY(0); }
+      30% { opacity:1; transform:translateY(-3px); }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      .weserads-chat-message, .weserads-chat-typing span { animation:none; }
+      .weserads-chat-toggle, .weserads-chat-question, .weserads-chat-contact { transition:none; }
+    }
+    @media(max-width:480px) {
+      .weserads-chat { right:16px; bottom:16px; }
+    }
 
   </style>
 </head>
@@ -313,14 +858,14 @@
   <header>
     <div class="container">
       <div class="kopf-zeile">
-        <a class="logo" href="#anfang" aria-label="WeserAds - zum Seitenanfang">Weser<span>Ads</span></a>
+        <a class="site-logo" href="#anfang" aria-label="WeserAds - zum Seitenanfang"><img src="assets/weserads-logo.png" alt="" width="280" height="94"></a>
         <nav>
           <a href="#leistungen">Leistungen</a>
           <a href="#pakete">Pakete</a>
           <a href="#warum-ich">Warum ich</a>
           <a href="#kontakt">Kontakt</a>
         </nav>
-        <a class="knopf-orange" href="#kontakt">Kostenloses Erstgespräch</a>
+        <a class="knopf-orange" href="#kontakt">Testmonat anfragen</a>
       </div>
     </div>
   </header>
@@ -330,33 +875,33 @@
     <div class="container">
       <div class="hero-grid">
         <div>
-          <span class="hero-badge">✓ Google Ads Expertise &nbsp;•&nbsp; Strategien für nachhaltiges Wachstum</span>
-          <h1>Mehr qualifizierte Kunden für Ihr Unternehmen <span class="text-orange">mit Google Ads.</span></h1>
-          <p>WeserAds entwickelt und betreut leistungsorientierte Google-Ads-Kampagnen für Unternehmen jeder Größe und Branche. Von der Strategie bis zur Optimierung schaffen wir mehr Sichtbarkeit, qualifizierte Anfragen und messbare Ergebnisse.</p>
-          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:28px;">
-            <a href="#kontakt" class="knopf-orange">Kostenloses Erstgespräch →</a>
-            <a href="#pakete" class="knopf-weiss">Pakete ansehen</a>
+          <span class="hero-badge">✦ Die moderne Google Ads Agentur: Mensch + KI</span>
+          <h1>Wir lassen KI arbeiten. <span class="text-orange">Aber nicht allein.</span></h1>
+          <p>WeserAds erstellt für Sie parallel eine KI gestützte Performance Max Kampagne und eine keywordbasierte Search Kampagne. Wir vergleichen Suchanfragen, Gebote, Kosten und Ergebnisse und optimieren Ihr Budget anhand Ihrer Ziele.</p>
+          <div class="hero-knopfe" style="margin-top:28px;">
+            <a href="#kontakt" class="knopf-orange">Einen Monat testen</a>
+            <a href="#methode" class="knopf-weiss">Unsere Methode</a>
           </div>
           <div class="hero-trust">
-            <span>✓ <strong>Google-Erfahrung</strong></span>
-            <span>✓ <strong>Strukturierte Kampagnen</strong></span>
-            <span>✓ <strong>Messbare Ergebnisse</strong></span>
+            <span>✓ <strong>KI Analyse</strong></span>
+            <span>✓ <strong>Manueller Gegencheck</strong></span>
+            <span>✓ <strong>Klare Vergleichswerte</strong></span>
           </div>
         </div>
         <div class="hero-karte">
           <div class="hero-karte-kopf">
             <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            <span style="margin-left:8px; font-size:13px; color:#64748B;">Ihr Ergebnis mit WeserAds</span>
+            <span style="margin-left:8px; font-size:13px; color:#64748B;">Ihr Kampagnenvergleich</span>
           </div>
           <div class="hero-karte-body">
-            <p class="hero-karte-label">Beispielhafte Kampagnenauswertung • 30 Tage</p>
-            <p class="hero-karte-big">+ 47 Anrufe</p>
-            <p class="hero-karte-sub">↑ 212% mehr qualifizierte Anfragen • bei 520 € Werbebudget</p>
+            <p class="hero-karte-label">Beispielhafte Auswertung • 30 Tage</p>
+            <p class="hero-karte-big">2 Wege. 1 klares Ziel.</p>
+            <p class="hero-karte-sub">Performance Max vs. keywordbasierte Search Kampagne</p>
             <div class="hero-bar"><div class="hero-bar-fill"></div></div>
             <div class="hero-karte-row">
-              <div><strong>3,2x</strong><span>Return on Ad Spend</span></div>
-              <div><strong>11,10€</strong><span>Kosten pro Anruf</span></div>
-              <div><strong>100%</strong><span>Transparentes Tracking</span></div>
+              <div><strong>100%</strong><span>Budget-Vergleich</span></div>
+              <div><strong>1:1</strong><span>Transparente Daten</span></div>
+              <div><strong>30 Tage</strong><span>Testzeitraum</span></div>
             </div>
             <p class="hero-karte-note">* Beispielhafte Darstellung aus einem Kundenkonto. Die tatsächlichen Ergebnisse hängen von Branche, Wettbewerb und Budget ab.</p>
           </div>
@@ -368,10 +913,10 @@
   <!-- STATS LEISTE - WIE BEI PRO ADS -->
   <section class="stats">
     <div class="container stats-grid">
-      <div><strong>1.000+</strong><span>Google-Ads-Konten<br>im Google-Umfeld betreut</span></div>
-      <div><strong>7 Tage</strong><span>Bis Ihre Kampagne<br>startbereit ist</span></div>
+      <div><strong>2x</strong><span>Strategien gleichzeitig<br>im direkten Vergleich</span></div>
+      <div><strong>30 Tage</strong><span>Fair testen und<br>Ergebnisse vergleichen</span></div>
       <div><strong>100%</strong><span>Transparente<br>Auswertungen</span></div>
-      <div><strong>0 €</strong><span>Versteckte Kosten.<br>Monatlich kündbar.</span></div>
+      <div><strong>0 €</strong><span>Langzeitbindung.<br>Monatlich kündbar.</span></div>
     </div>
   </section>
 
@@ -379,23 +924,41 @@
   <section class="sektion sektion-weiss" id="methode">
     <div class="container">
       <span class="eyebrow">Die WeserAds Methode</span>
-      <h2>Von Sichtbarkeit zu <span class="text-blau">messbarem Wachstum.</span></h2>
-      <p class="sektion-text">Erfolgreiche Google-Ads-Kampagnen beginnen mit einer klaren Strategie. Wir richten Ihre Kampagnen auf relevante Suchanfragen, qualifizierte Kontakte und nachvollziehbare Geschäftsergebnisse aus.</p>
+      <h2>Das Beste aus <span class="text-blau">Mensch und KI.</span></h2>
+      <p class="sektion-text">KI kann mehr Daten verarbeiten als ein Mensch. Ein Mensch versteht dafür Ihr Geschäft, Ihre Kunden und die Qualität einer Anfrage. WeserAds verbindet beides – und testet nicht nach Bauchgefühl, sondern im direkten Vergleich.</p>
       <div class="karten-grid">
         <div class="karte">
           <div class="karte-icon">01</div>
-          <h3>Relevante Zielgruppen erreichen</h3>
-          <p>Wir identifizieren die Suchbegriffe, die auf eine konkrete Nachfrage hindeuten, und richten Ihre Kampagnen gezielt auf diese Zielgruppen aus.</p>
+          <h3>Zwei Kampagnen starten</h3>
+          <p>Wir bauen eine KI gestützte Performance Max Kampagne und parallel eine keywordbasierte Search Kampagne auf, mit sauberem Tracking und vergleichbaren Conversion Zielen.</p>
         </div>
         <div class="karte">
           <div class="karte-icon">02</div>
-          <h3>Aufmerksamkeit gewinnen</h3>
-          <p>Mit präzisen Anzeigentexten, passenden Landingpages und überzeugenden Angeboten schaffen wir die Grundlage für qualifizierte Anfragen.</p>
+          <h3>Daten statt Vermutungen</h3>
+          <p>Wir beobachten Suchanfragen, Gebote, Kosten pro Anfrage und Conversion Qualität. So sehen wir, wo Googles Automatisierung stark ist und wo gezieltere Steuerung Vorteile bietet.</p>
         </div>
         <div class="karte">
           <div class="karte-icon">03</div>
-          <h3>Ergebnisse auswerten</h3>
-          <p>Durch sauberes Tracking wird sichtbar, welche Maßnahmen Wirkung zeigen. Sie erhalten klare Auswertungen zu Budget, Kontakten und Conversions.</p>
+          <h3>Gemeinsam entscheiden</h3>
+          <p>Sie bekommen eine verständliche Auswertung und eine klare Empfehlung. Wir lassen nicht einfach die KI laufen – wir holen aus Ihrem Budget das Maximum heraus.</p>
+        </div>
+      </div>
+      <div class="vergleich">
+        <div class="vergleich-spalte">
+          <h3>Was Google automatisiert</h3>
+          <ul>
+            <li>✓ Gebote in Echtzeit anpassen</li>
+            <li>✓ Zielgruppen und Placements finden</li>
+            <li>✓ Große Datenmengen auswerten</li>
+          </ul>
+        </div>
+        <div class="vergleich-spalte">
+          <h3>Was WeserAds zusätzlich macht</h3>
+          <ul>
+            <li>✓ Kampagnen strategisch vergleichen</li>
+            <li>✓ Qualität statt nur Klicks bewerten</li>
+            <li>✓ Entscheidungen verständlich erklären</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -405,23 +968,23 @@
   <!-- Hier zeigen wir: Wir verstehen die Herausforderungen unserer Kunden -->
   <section class="sektion">
     <div class="container">
-      <h2>Herausforderungen, die viele Unternehmen kennen</h2>
-      <p class="untertitel">Eine professionelle Kampagnensteuerung schafft Klarheit und macht aus Ihrem Werbebudget eine planbare Investition.</p>
+      <h2>Ihre Agentur sollte mehr können als „Google macht das schon“.</h2>
+      <p class="untertitel">Performance Max ist stark. Klassische Kampagnen sind stark. Die richtige Frage ist: Was funktioniert für Ihr Unternehmen besser?</p>
       <div class="karten">
         <div class="karte">
           <div class="icon">🔍</div>
-          <h3>Ihre Website wird nicht ausreichend gefunden</h3>
-          <p>Eine gute Website allein reicht nicht aus. Entscheidend ist, dass potenzielle Kunden Ihr Angebot genau dann sehen, wenn sie danach suchen.</p>
+          <h3>Sie wissen nicht, wohin Ihr Budget fließt</h3>
+          <p>Automatisierung ist bequem. Ohne Vergleich bleibt aber oft unklar, welche Suchanfragen und Gebote wirklich gute Kunden bringen.</p>
         </div>
         <div class="karte">
           <div class="icon">💸</div>
-          <h3>Sie investieren in Werbung ohne klare Auswertung</h3>
-          <p>Ohne zuverlässiges Tracking bleibt unklar, welche Kampagnen Anfragen generieren und wo Optimierungspotenzial besteht.</p>
+          <h3>Ihre Agentur verlässt sich auf eine einzige Methode</h3>
+          <p>Wir testen Performance Max nicht isoliert. Eine parallele Search Kampagne liefert den Gegencheck und macht Chancen sichtbar.</p>
         </div>
         <div class="karte">
           <div class="icon">🏙️</div>
-          <h3>Ihre Agentur arbeitet nicht nah genug an Ihrem Geschäft</h3>
-          <p>Sie erhalten persönliche Betreuung und eine Strategie, die zu Ihren Zielen, Ihrer Branche und Ihren Ressourcen passt.</p>
+          <h3>Sie bekommen Reports, aber keine Entscheidung</h3>
+          <p>Sie erhalten keine Zahlenwüste, sondern eine klare Antwort: Was lief besser, warum und wie holen wir im nächsten Monat mehr heraus?</p>
         </div>
       </div>
     </div>
@@ -430,38 +993,38 @@
   <!-- ================= LEISTUNGEN ================= -->
   <section class="sektion sektion-weiss" id="leistungen">
     <div class="container">
-      <h2>Leistungen für Ihren Google-Erfolg</h2>
-      <p class="untertitel">Von der strategischen Planung bis zur laufenden Optimierung: WeserAds begleitet Ihre Google-Ads-Aktivitäten transparent und zielorientiert.</p>
+      <h2>Keine KI-Spielerei. Ein System für bessere Entscheidungen.</h2>
+      <p class="untertitel">Wir kombinieren die Reichweite von Google mit einer Strategie, die zu Ihrem Unternehmen passt. Jede Maßnahme bleibt nachvollziehbar und messbar.</p>
       <div class="karten">
         <div class="karte">
           <div class="icon">🎯</div>
-          <h3>Google Ads Search</h3>
-          <p>Wir platzieren Ihre Anzeigen bei relevanten Suchanfragen und erreichen potenzielle Kunden in dem Moment, in dem konkreter Bedarf besteht.</p>
+          <h3>Klassische Google Ads</h3>
+          <p>Keywordbasierte Suchkampagnen mit gezielteren Steuerungsmöglichkeiten und klarer Suchanfragen- und Anzeigenauswertung. Ihr Gegencheck zu Performance Max.</p>
         </div>
         <div class="karte">
           <div class="icon">⚡</div>
           <h3>Performance Max</h3>
-          <p>Wir nutzen die Möglichkeiten von Google, um Ihre Zielgruppen über Search, YouTube, Maps und Display effizient zu erreichen.</p>
+          <p>Wir nutzen Googles KI über Search, YouTube, Maps und Display – aber mit klaren Zielen, sauberem Tracking und menschlicher Kontrolle.</p>
         </div>
         <div class="karte">
           <div class="icon">🛒</div>
-          <h3>Google Shopping</h3>
-          <p>Wir bringen Ihre Produkte mit strukturierten Shopping-Kampagnen direkt in die relevanten Google-Suchergebnisse.</p>
+          <h3>Keyword und Gebote</h3>
+          <p>Wir vergleichen, welche Suchanfragen, Gebote und Kampagnen tatsächlich qualifizierte Anfragen oder Verkäufe erzeugen.</p>
         </div>
         <div class="karte">
           <div class="icon">📊</div>
-          <h3>Tracking &amp; Analytics</h3>
-          <p>Wir schaffen eine belastbare Datengrundlage für Entscheidungen und zeigen Ihnen, welche Maßnahmen zu Anfragen und Conversions beitragen.</p>
+          <h3>Tracking &amp; klare Auswertung</h3>
+          <p>Wir messen nicht nur Klicks. Sie sehen, welche Kampagne Kosten verursacht, Conversions bringt und zum Geschäftsergebnis beiträgt.</p>
         </div>
         <div class="karte">
           <div class="icon">📍</div>
-          <h3>Landingpages &amp; Conversion-Optimierung</h3>
-          <p>Wir analysieren die Zielseiten Ihrer Kampagnen und schaffen die Voraussetzungen dafür, dass aus Klicks qualifizierte Anfragen und Kunden werden.</p>
+          <h3>Menschliche Optimierung</h3>
+          <p>Wir prüfen Anzeigen, Landingpages und Anfragen mit Blick auf Ihre Realität – damit aus automatisierten Klicks echte Geschäftschancen werden.</p>
         </div>
         <div class="karte">
           <div class="icon">➕</div>
-          <h3>Erweiterte Kampagnen</h3>
-          <p>Wenn es strategisch sinnvoll ist, erweitern wir Ihre digitale Präsenz Schritt für Schritt um weitere Kanäle.</p>
+          <h3>Monatliche Strategie</h3>
+          <p>Wir lernen aus den Daten, passen die Verteilung an und erklären Ihnen jeden Schritt. Keine Blackbox, keine unnötigen Maßnahmen.</p>
         </div>
       </div>
     </div>
@@ -475,7 +1038,7 @@
           <span class="eyebrow">Vorschau · bald verfügbar</span>
           <h2>Der WeserAds Kunden-Magnet</h2>
           <p class="untertitel">Der vollständige Kunden-Magnet ist bald verfügbar. Den QR-Generator können Sie schon jetzt ansehen und ausprobieren.</p>
-          <a class="knopf-orange" href="Weserads-Kunden-Magnet.html">Vorschau jetzt ansehen →</a>
+          <a class="knopf-orange" href="Weserads-Kunden-Magnet.html">Vorschau jetzt ansehen</a>
         </div>
         <div class="kunden-magnet-icon" aria-hidden="true">⌁</div>
       </div>
@@ -485,12 +1048,12 @@
   <!-- ================= ABLAUF ================= -->
   <section class="sektion">
     <div class="container">
-      <h2>Die Zusammenarbeit</h2>
-      <p class="untertitel">Transparent, strukturiert und auf Ihre Ziele ausgerichtet.</p>
+      <h2>So testen Sie WeserAds ohne Risiko.</h2>
+      <p class="untertitel">Sie müssen Ihrer aktuellen Agentur nicht sofort kündigen. Vergleichen Sie uns einfach einen Monat lang.</p>
       <div class="karten">
-        <div class="karte"><h3>1. Analyse und Beratung</h3><p>In einem unverbindlichen Erstgespräch besprechen wir Ihre Ziele, Ihre Ausgangssituation und ob Google Ads für Ihr Unternehmen sinnvoll ist.</p></div>
-        <div class="karte"><h3>2. Konzeption und Einrichtung</h3><p>Wir entwickeln Ihre Kampagnenstruktur, richten Tracking und relevante Profile ein und schaffen eine solide Grundlage für den Start.</p></div>
-        <div class="karte"><h3>3. Laufende Optimierung</h3><p>Wir analysieren die Entwicklung, optimieren Ihre Kampagnen kontinuierlich und stellen Ihnen die wichtigsten Ergebnisse regelmäßig vor.</p></div>
+        <div class="karte"><h3>1. Ziele und Ausgangslage</h3><p>Wir schauen uns Ihr Angebot, Ihre bisherigen Daten und Ihre Ziele an. Dabei klären wir, woran ein guter Kunde für Sie wirklich zu erkennen ist.</p></div>
+        <div class="karte"><h3>2. Zwei Wege parallel</h3><p>Wir starten Performance Max und eine keywordbasierte Search-Kampagne mit sauberem Tracking. So entsteht ein strukturierter Vergleich statt einer bloßen Behauptung.</p></div>
+        <div class="karte"><h3>3. Auswerten und entscheiden</h3><p>Nach dem Testmonat zeigen wir Ihnen, welche Strategie unter den gleichen Zielen und Bedingungen die besseren Signale liefert. Ein Monat liefert erste Daten, aber keine Erfolgsgarantie. Wenn wir schlechter sind, bleiben Sie einfach bei Ihrer aktuellen Agentur.</p></div>
       </div>
     </div>
   </section>
@@ -498,18 +1061,18 @@
   <!-- ================= PAKETE / PREISE ================= -->
   <section class="sektion sektion-weiss" id="pakete">
     <div class="container">
-      <h2>Pakete</h2>
-      <p class="untertitel">Transparente Betreuung mit klar definiertem Leistungsumfang und monatlicher Kündbarkeit.</p>
-      <div class="einrichtungs-angebot"><strong>Aktuelles Angebot für alle Pakete:</strong> Einrichtung <span class="alter-preis">499 €</span> <strong>jetzt 0 €</strong> – testen Sie den ersten Monat inklusive Einrichtung zum regulären Paketpreis.</div>
+      <h2>Ein fairer Test statt großer Versprechen.</h2>
+      <p class="untertitel">Starten Sie mit einem Monat Vergleich. Wenn wir Sie nicht überzeugen, bleiben Sie bei Ihrer aktuellen Agentur – ohne lange Bindung.</p>
+      <div class="testmonat"><strong>Unser Versprechen: Sie behalten die Kontrolle.</strong><p>Wir zeigen Ihnen offen, wie Performance Max und Search unter Ihren Bedingungen abschneiden. Die Kampagnentypen erreichen teilweise unterschiedliche Google Inventare und benötigen Lernzeit. Deshalb bewerten wir die Ergebnisse im richtigen Kontext. Keine künstliche Abhängigkeit, kein Vertrag für zwölf Monate.</p></div>
       <div class="pakete">
 
         <!-- Paket 1 -->
         <div class="paket">
           <h3>START</h3>
-          <p>Für einen strukturierten Einstieg</p>
+          <p>Für den fairen Vergleich</p>
           <div class="preis">349€ <span style="font-size:16px;">/ Monat</span></div>
           <ul>
-            <li>✓ 1 Google Ads Kampagne</li>
+            <li>✓ Performance Max + Search</li>
             <li>✓ Conversion-Tracking &amp; Reporting</li>
             <li>✓ Monats-Report</li>
             <li>✓ E-Mail Support</li>
@@ -523,8 +1086,8 @@
           <p>Für Unternehmen mit Wachstumszielen</p>
           <div class="preis">649€ <span style="font-size:16px;">/ Monat</span></div>
           <ul>
-            <li>✓ Bis zu 3 Kampagnen</li>
-            <li>✓ Performance Max</li>
+            <li>✓ Vergleich von bis zu 3 Kampagnen</li>
+            <li>✓ KI und menschliche Optimierung</li>
             <li>✓ Landingpage-Check</li>
             <li>✓ Telefon-Report</li>
             <li>✓ Monatlicher Call</li>
@@ -538,16 +1101,16 @@
           <p>Für größere Kampagnen und Budgets</p>
           <div class="preis">949€ <span style="font-size:16px;">/ Monat</span></div>
           <ul>
-            <li>✓ Bis zu 6 Kampagnen</li>
-            <li>✓ Google Shopping</li>
-            <li>✓ A/B-Tests</li>
+            <li>✓ Vergleich von bis zu 6 Kampagnen</li>
+            <li>✓ Erweiterte Automatisierung</li>
+            <li>✓ Strategie- und A/B-Tests</li>
             <li>✓ Prioritäts-Support</li>
           </ul>
           <a class="knopf-dunkel" href="#kontakt">PROFI wählen</a>
         </div>
 
       </div>
-      <p class="hinweis">Das Werbebudget wird direkt an Google gezahlt. Aktuell entfällt die einmalige Einrichtungsgebühr von 499 €. Sie testen den ersten Monat inklusive Einrichtung zum regulären Paketpreis. Die Betreuung ist monatlich kündbar.</p>
+      <p class="hinweis">Das Werbebudget wird direkt an Google gezahlt. Alle Pakete sind monatlich kündbar. Die tatsächlichen Ergebnisse hängen von Branche, Wettbewerb, Angebot und Budget ab.</p>
     </div>
   </section>
 
@@ -560,26 +1123,26 @@
           <img src="assets/ricardo-lemser-portrait.png" alt="Ricardo Lemser, Gründer von WeserAds">
         </div>
         <div>
-          <p style="color:var(--text); font-size:17px;">
-            Mein Name ist Ricardo Lemser. Ich unterstütze Unternehmen verschiedener Branchen dabei, Google Ads gezielt und wirtschaftlich einzusetzen.
+          <p style="color:#171039; font-size:17px;">
+            Mein Name ist Ricardo Lemser. Ich baue WeserAds für Unternehmen, die keine weitere Standard-Agentur wollen, sondern einen ehrlichen Test: Was bringt KI – und wo muss ein Mensch eingreifen?
           </p>
           <br>
           <p>
-            Durch meine Erfahrung im Google-Ads-Umfeld kenne ich die Anforderungen an professionelle Kampagnen aus der Praxis.
-            Ich unterstütze Sie bei der Planung, Einrichtung und Optimierung Ihrer Kampagnen und behalte dabei stets Ihre Geschäftsziele im Blick.
+            Google entwickelt seine Kampagnen immer weiter in Richtung Automatisierung. Das ist eine große Chance, aber kein Grund, Verantwortung abzugeben.
+            Deshalb kombiniere ich Performance Max mit klassischen Kampagnen und vergleiche die Ergebnisse anhand Ihrer Ziele.
           </p>
           <br>
           <p>
-            Da ich auch Websites und digitale Anwendungen entwickle, kann ich Werbeanzeigen, Landingpages und technische Grundlagen ganzheitlich betrachten.
-            Im Mittelpunkt stehen für mich nicht möglichst viele Klicks, sondern relevante Kontakte und nachvollziehbare Geschäftsergebnisse.
+            Da ich auch Websites und digitale Anwendungen entwickle, kann ich Anzeigen, Landingpages und technische Grundlagen ganzheitlich betrachten.
+            Im Mittelpunkt stehen nicht möglichst viele Klicks, sondern relevante Kontakte und nachvollziehbare Geschäftsergebnisse.
           </p>
           <br>
           <p>
-            WeserAds steht für persönliche Betreuung, klare Kommunikation und eine datenbasierte Arbeitsweise - unabhängig von Branche und Unternehmensgröße.
+            WeserAds steht für persönliche Betreuung, klare Kommunikation und eine datenbasierte Arbeitsweise. Sie bekommen keine Blackbox, sondern einen Partner, der Ihnen auch sagt, wenn eine andere Lösung besser ist.
           </p>
           <div class="stichpunkte">
-            <span class="chip">Google-Ads-Erfahrung</span>
-            <span class="chip">Technisches Verständnis</span>
+            <span class="chip">Mensch + KI</span>
+            <span class="chip">Direkter Vergleich</span>
             <span class="chip">Persönliche Betreuung</span>
             <span class="chip">Messbare Ziele</span>
           </div>
@@ -603,12 +1166,12 @@
   <!-- ================= FAQ ================= -->
   <section class="sektion">
     <div class="container">
-      <h2>Häufige Fragen</h2>
+      <h2>Häufige Fragen zum KI-Vergleich</h2>
       <br>
-      <div class="karte" style="margin-bottom:12px;"><h3>Was kostet Google Ads wirklich?</h3><p>Sie zahlen die Betreuungsleistung an WeserAds und das Werbebudget direkt an Google. Die Höhe des Budgets legen wir passend zu Ihren Zielen und Möglichkeiten fest.</p></div>
-      <div class="karte" style="margin-bottom:12px;"><h3>Wie schnell sind erste Ergebnisse sichtbar?</h3><p>Erste Daten liegen häufig nach wenigen Tagen vor. Aussagekräftige Ergebnisse entstehen, sobald ausreichend Daten gesammelt und die Kampagnen fundiert optimiert wurden.</p></div>
-      <div class="karte" style="margin-bottom:12px;"><h3>Muss ich einen Vertrag für 12 Monate abschließen?</h3><p>Nein. Die Zusammenarbeit ist monatlich kündbar. Ich möchte Sie mit Ergebnissen überzeugen, nicht mit einem Vertrag binden.</p></div>
-      <div class="karte"><h3>Betreuen Sie auch andere Werbekanäle?</h3><p>Der Schwerpunkt liegt auf Google Ads. Wenn weitere Kanäle zu Ihrer Strategie passen, besprechen wir eine sinnvolle Erweiterung im nächsten Schritt.</p></div>
+      <div class="karte" style="margin-bottom:12px;"><h3>Warum Performance Max und eine Search-Kampagne?</h3><p>Performance Max nutzt Googles KI und kann über mehrere Google-Kanäle ausspielen. Keywordbasierte Search-Kampagnen bieten gezieltere Steuerungsmöglichkeiten. Im Vergleich sehen wir, welche Kombination und Ausrichtung zu Ihren Zielen passt.</p></div>
+      <div class="karte" style="margin-bottom:12px;"><h3>Ersetzt KI nicht die Agentur?</h3><p>Nein. KI verarbeitet Daten und passt Gebote an. Wir setzen die Ziele, prüfen die Qualität der Ergebnisse und entscheiden, wo Ihr Budget sinnvoll eingesetzt wird.</p></div>
+      <div class="karte" style="margin-bottom:12px;"><h3>Kann ich WeserAds testen, obwohl ich schon eine Agentur habe?</h3><p>Ja. Genau dafür ist der Test gedacht. Sie müssen Ihre aktuelle Agentur nicht sofort kündigen, sondern können Ergebnisse und Arbeitsweise einen Monat direkt vergleichen.</p></div>
+      <div class="karte"><h3>Was passiert, wenn WeserAds schlechter ist?</h3><p>Dann bleiben Sie bei Ihrer aktuellen Agentur. Wir wollen Sie mit einer besseren Strategie und klaren Ergebnissen überzeugen – nicht mit einem langen Vertrag.</p></div>
     </div>
   </section>
 
@@ -617,8 +1180,8 @@
     <div class="container">
       <div class="kontakt-box">
         <div>
-          <h2 style="color:white;">Lassen Sie uns über Ihre Ziele sprechen.</h2>
-          <p>Vereinbaren Sie ein unverbindliches Erstgespräch. Gemeinsam prüfen wir, ob und wie Google Ads Ihr Unternehmen unterstützen kann.</p>
+          <h2 style="color:white;">Testen Sie uns einen Monat.</h2>
+          <p>Auch wenn Sie bereits eine Agentur haben: Vergleichen Sie unsere KI-gestützte Strategie mit dem, was heute für Sie läuft. Wenn wir schlechter sind, können Sie einfach bei Ihrer aktuellen Agentur bleiben.</p>
           <br>
           <p><b style="color:white;">Telefon:</b> <a href="tel:+491735329771" style="color:white;">0173 5329771</a></p>
           <p><b style="color:white;">E-Mail:</b> kontakt@weserads.de</p>
@@ -629,18 +1192,51 @@
           <input type="text" name="unternehmen" placeholder="Ihr Unternehmen">
           <input type="tel" name="telefon" placeholder="Ihre Telefonnummer" required>
           <input type="url" name="website" placeholder="Ihre Website (optional)">
-          <textarea rows="4" name="nachricht" placeholder="Wobei dürfen wir Sie unterstützen?" required></textarea>
-          <button class="knopf-orange" type="submit" style="border:none; width:100%; cursor:pointer;">Unverbindliches Gespräch anfragen</button>
+          <textarea rows="4" name="nachricht" placeholder="Was möchten Sie im Testmonat vergleichen?" required></textarea>
+          <button class="knopf-orange" type="submit" style="border:none; width:100%; cursor:pointer;">Testmonat anfragen</button>
           <p id="formular-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
   </section>
 
+  <!-- ================= FAQ-CHAT ================= -->
+  <div class="weserads-chat">
+    <section class="weserads-chat-panel" id="weserads-chat-panel" role="dialog" aria-labelledby="weserads-chat-title" hidden>
+      <div class="weserads-chat-heading">
+        <div>
+          <strong id="weserads-chat-title">WeserAds Hilfe</strong>
+          <span>Schnelle Antworten zu Testmonat &amp; Paketen</span>
+        </div>
+        <button class="weserads-chat-close" id="weserads-chat-close" type="button" aria-label="Chat schließen">×</button>
+      </div>
+      <div class="weserads-chat-content">
+        <div class="weserads-chat-messages" id="weserads-chat-messages" role="log" aria-label="Chatverlauf" aria-relevant="additions">
+          <div class="weserads-chat-message weserads-chat-message--bot">
+            <p>Hallo! Ich helfe dir gern bei Fragen zu WeserAds. Was möchtest du wissen?</p>
+          </div>
+        </div>
+        <div class="weserads-chat-questions" role="group" aria-label="Häufige Fragen">
+          <button class="weserads-chat-question" type="button" data-chat-question="ablauf">Wie läuft der Testmonat ab?</button>
+          <button class="weserads-chat-question" type="button" data-chat-question="kosten">Was kostet das?</button>
+          <button class="weserads-chat-question" type="button" data-chat-question="agentur">Kann ich trotz meiner aktuellen Agentur testen?</button>
+          <button class="weserads-chat-question" type="button" data-chat-question="ergebnis">Was, wenn die Ergebnisse schlechter sind?</button>
+        </div>
+      </div>
+    </section>
+    <button class="weserads-chat-toggle" id="weserads-chat-toggle" type="button" aria-controls="weserads-chat-panel" aria-expanded="false" aria-label="WeserAds Chat öffnen">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M20 11.5a7.5 7.5 0 0 1-7.5 7.5H5l1.7-3.1A7.5 7.5 0 1 1 20 11.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M8.5 11.5h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Fragen?
+    </button>
+  </div>
+
   <!-- ================= FUSSZEILE ================= -->
   <footer>
     <div class="container">
-      WeserAds - Ihre Google Ads Agentur |
+      WeserAds | Google Ads mit Mensch &amp; KI |
       <a href="impressum.html">Impressum</a> |
       <a href="datenschutz.html">Datenschutz</a> |
       © 2026 WeserAds
@@ -675,6 +1271,83 @@
       formularStatus.textContent = 'Die Anfrage konnte nicht übermittelt werden. Bitte schreiben Sie direkt an kontakt@weserads.de.';
     } finally {
       button.disabled = false;
+    }
+  });
+
+  const chatPanel = document.getElementById('weserads-chat-panel');
+  const chatToggle = document.getElementById('weserads-chat-toggle');
+  const chatClose = document.getElementById('weserads-chat-close');
+  const chatMessages = document.getElementById('weserads-chat-messages');
+  const chatQuestions = [...document.querySelectorAll('.weserads-chat-question')];
+  const chatAnswers = {
+    ablauf: 'Zuerst klären wir Ihre Ziele. Dann vergleichen wir Performance Max und Search mit sauberem Tracking. Nach dem Testmonat besprechen wir gemeinsam die ersten Ergebnisse.',
+    kosten: 'Die Pakete starten bei 349 € pro Monat. Das Werbebudget zahlen Sie direkt an Google; alle Pakete sind monatlich kündbar.',
+    agentur: 'Ja. Sie müssen Ihrer aktuellen Agentur nicht sofort kündigen, sondern können WeserAds einen Monat lang parallel vergleichen.',
+    ergebnis: 'Dann bleiben Sie einfach bei Ihrer aktuellen Agentur. Ein Monat liefert erste Daten, aber keine Erfolgsgarantie.'
+  };
+
+  function setChatOpen(isOpen) {
+    chatPanel.hidden = !isOpen;
+    chatToggle.setAttribute('aria-expanded', String(isOpen));
+    chatToggle.setAttribute('aria-label', isOpen ? 'WeserAds Chat schließen' : 'WeserAds Chat öffnen');
+    if (isOpen) {
+      chatQuestions.find((question) => !question.disabled)?.focus();
+    } else {
+      chatToggle.focus();
+    }
+  }
+
+  chatToggle.addEventListener('click', () => {
+    setChatOpen(chatPanel.hidden);
+  });
+  chatClose.addEventListener('click', () => setChatOpen(false));
+
+  function addChatMessage(text, sender) {
+    const message = document.createElement('div');
+    message.className = `weserads-chat-message weserads-chat-message--${sender}`;
+    const paragraph = document.createElement('p');
+    paragraph.textContent = text;
+    message.append(paragraph);
+    chatMessages.append(message);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return message;
+  }
+
+  chatQuestions.forEach((question) => {
+    question.addEventListener('click', () => {
+      chatQuestions.forEach((item) => { item.disabled = true; });
+      addChatMessage(question.textContent.trim(), 'user');
+
+      const typing = document.createElement('div');
+      typing.className = 'weserads-chat-message weserads-chat-message--bot weserads-chat-typing';
+      typing.setAttribute('role', 'status');
+      typing.setAttribute('aria-label', 'WeserAds schreibt eine Antwort');
+      for (let index = 0; index < 3; index += 1) {
+        const dot = document.createElement('span');
+        dot.setAttribute('aria-hidden', 'true');
+        typing.append(dot);
+      }
+      chatMessages.append(typing);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      window.setTimeout(() => {
+        typing.remove();
+        const reply = addChatMessage(chatAnswers[question.dataset.chatQuestion], 'bot');
+        const contactLink = document.createElement('a');
+        contactLink.className = 'weserads-chat-contact';
+        contactLink.href = '#kontakt';
+        contactLink.textContent = 'Persönliche Frage stellen';
+        contactLink.addEventListener('click', () => setChatOpen(false));
+        reply.append(contactLink);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        chatQuestions.forEach((item) => { item.disabled = false; });
+      }, 450);
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !chatPanel.hidden) {
+      setChatOpen(false);
     }
   });
 </script>

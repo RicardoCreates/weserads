@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
+  <Metadata>
+    <Identity Language="en-US" Id="weserads-neon-tide" Version="1.1.0" Publisher="weserads-local" />
+    <DisplayName>WeserAds Neon Tide</DisplayName>
+    <Description xml:space="preserve">A dark VS Code color theme inspired by the WeserAds navy, teal, mint, and orange brand palette.</Description>
+    <Tags>theme,dark,colors</Tags>
+    <Categories>Themes</Categories>
+    <Properties>
+      <Property Id="Microsoft.VisualStudio.Code.Engine" Value="^1.74.0" />
+      <Property Id="Microsoft.VisualStudio.Code.Manifest" Value="extension/package.json" />
+    </Properties>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Code" />
+  </Installation>
+  <Dependencies />
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.Code.Manifest" Path="extension/package.json" Addressable="true" />
+    <Asset Type="Microsoft.VisualStudio.Services.Content.Details" Path="extension/README.md" Addressable="true" />
+  </Assets>
+</PackageManifest>

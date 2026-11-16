@@ -1,0 +1,22 @@
+{
+  "name": "weserads-neon-tide",
+  "displayName": "WeserAds Neon Tide",
+  "description": "A dark VS Code theme inspired by the WeserAds navy, teal, mint, and orange brand palette.",
+  "version": "1.1.0",
+  "publisher": "weserads-local",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "WeserAds Neon Tide",
+        "uiTheme": "vs-dark",
+        "path": "./themes/weserads-neon-tide-color-theme.json"
+      }
+    ]
+  }
+}

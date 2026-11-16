@@ -5,26 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Datenschutzerklärung - WeserAds</title>
   <style>
-    :root { --blau:#0A1931; --teal:#0EA5A0; --hell:#F8FAFC; --text:#0F172A; --grau:#64748B; --rahmen:#E2E8F0; }
+    @font-face {
+      font-family:'Manrope'; font-style:normal; font-weight:400 800; font-display:swap;
+      src:url('assets/fonts/manrope-latin.woff2') format('woff2');
+    }
+    @font-face {
+      font-family:'Sora'; font-style:normal; font-weight:600 800; font-display:swap;
+      src:url('assets/fonts/sora-latin.woff2') format('woff2');
+    }
+    :root { --blau:#0D1B2A; --teal:#13A89E; --hell:#F5F7F9; --text:#122033; --grau:#617083; --rahmen:#DCE3EA; }
     * { box-sizing:border-box; }
-    body { margin:0; font-family:Arial,sans-serif; background:var(--hell); color:var(--text); line-height:1.7; }
-    header { background:white; border-bottom:1px solid var(--rahmen); padding:18px 22px; }
-    .container { max-width:860px; margin:0 auto; padding:0 22px; }
-    .logo { color:var(--blau); font-size:26px; font-weight:800; text-decoration:none; }
-    .logo span { color:var(--teal); }
-    main { padding:64px 0; }
-    h1 { color:var(--blau); font-size:40px; margin:0 0 28px; }
-    h2 { color:var(--blau); font-size:22px; margin-top:34px; }
+    body { margin:0; font-family:'Manrope',Arial,sans-serif; background:var(--hell); color:var(--text); line-height:1.7; }
+    header { background:rgba(255,255,255,.94); border-bottom:1px solid var(--rahmen); padding:18px 22px; box-shadow:0 6px 24px rgba(13,27,42,.06); }
+    .container { max-width:900px; margin:0 auto; padding:0 22px; }
+    .site-logo { display:inline-flex; align-items:center; }
+    .site-logo img { display:block; width:170px; height:auto; }
+    main { padding:74px 0; }
+    h1,h2 { font-family:'Sora',Arial,sans-serif; letter-spacing:-.045em; }
+    h1 { color:var(--blau); font-size:clamp(36px,6vw,58px); line-height:1; margin:0 0 28px; }
+    h2 { color:var(--blau); font-size:22px; margin-top:38px; }
     p, li { color:var(--grau); }
     a { color:var(--teal); }
-    footer { border-top:1px solid var(--rahmen); padding:28px 0; color:var(--grau); font-size:14px; }
+    footer { border-top:1px solid var(--rahmen); padding:28px 0; color:var(--grau); font-size:14px; background:#fff; }
   </style>
 </head>
 <body>
-  <header><div class="container"><a class="logo" href="index.html" aria-label="WeserAds - Startseite">Weser<span>Ads</span></a></div></header>
+  <header><div class="container"><a class="site-logo" href="index.html" aria-label="WeserAds - Startseite"><img src="assets/weserads-logo.png" alt="" width="280" height="94"></a></div></header>
   <main><div class="container">
     <h1>Datenschutzerklärung</h1>
-    <p>Stand: 8. November 2026</p>
+    <p>Stand: 13. November 2026</p>
     <h2>1. Verantwortlicher</h2>
     <p>
       Verantwortlicher für die Datenverarbeitung auf dieser Website ist:<br>
@@ -42,13 +51,12 @@
       Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Weitere Informationen finden Sie in der
       <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">Datenschutzerklärung von Vercel</a>.
     </p>
-    <h2>3. Schriftarten von Google Fonts</h2>
+    <h2>3. Technisch notwendige Cookies</h2>
     <p>
-      Auf der Startseite werden Schriftarten von Google Fonts geladen. Dabei kann Ihre IP-Adresse
-      an Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland, übertragen werden.
-      Rechtsgrundlage ist Ihre Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO. Sie können die
-      Übertragung vermeiden, indem Sie die Startseite nicht aufrufen. Weitere Informationen finden
-      Sie in der <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener noreferrer">Datenschutzerklärung von Google</a>.
+      Für die Anmeldung und Sitzungsverwaltung des passwortgeschützten CRM-Bereichs werden
+      erforderliche Cookies gesetzt. Das Sitzungscookie läuft nach spätestens acht Stunden ab;
+      temporäre Cookies für die Google-Kalender-Autorisierung nach spätestens zehn Minuten.
+      Diese Cookies werden nicht für Werbung oder Reichweitenmessung verwendet.
     </p>
     <h2>4. Kontaktaufnahme</h2>
     <p>
@@ -60,11 +68,28 @@
     <p>
       Über das Kontaktformular können Sie Name, Unternehmen, Telefonnummer, Website und Nachricht
       übermitteln. Diese Daten werden ausschließlich zur Bearbeitung Ihrer Anfrage verarbeitet und
-      per E-Mail an den Verantwortlichen weitergeleitet. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b
-      oder lit. f DSGVO. Die Daten werden gelöscht, sobald sie für die Bearbeitung nicht mehr
-      erforderlich sind und keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
+      per E-Mail an den Verantwortlichen weitergeleitet. Für den technischen E-Mail-Versand wird
+      IONOS SE, Elgendorfer Straße 57, 56410 Montabaur, eingesetzt. Rechtsgrundlage ist Art. 6
+      Abs. 1 lit. b oder lit. f DSGVO. Die Daten werden gelöscht, sobald sie für die Bearbeitung
+      nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
     </p>
-    <h2>6. Ihre Rechte</h2>
+    <h2>6. Geschützter CRM-Bereich</h2>
+    <p>
+      Im passwortgeschützten CRM-Bereich werden geschäftliche Kontaktdaten, Gesprächsnotizen,
+      Aufgaben und Vertriebsinformationen verarbeitet. Die Daten werden in einer MongoDB-Datenbank
+      gespeichert und ausschließlich für die interne Kundenverwaltung genutzt. Der Zugriff ist auf
+      autorisierte Nutzer beschränkt.
+    </p>
+    <h2>7. Google-Kalender im CRM</h2>
+    <p>
+      Ein CRM-Admin kann einen Google-Kalender über Google OAuth verbinden. Wenn im CRM ein Termin
+      erstellt wird, werden Titel, Datum und Uhrzeit sowie – sofern eingetragen – Kundenname,
+      Standort und Notizen an den verbundenen Kalender übertragen. Die OAuth-Zugangstoken werden
+      verschlüsselt in der MongoDB-Datenbank gespeichert. Weitere Informationen zur Verarbeitung
+      durch Google finden Sie in der
+      <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener noreferrer">Datenschutzerklärung von Google</a>.
+    </p>
+    <h2>8. Ihre Rechte</h2>
     <p>
       Sie haben im Rahmen der gesetzlichen Voraussetzungen das Recht auf Auskunft, Berichtigung,
       Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch gegen die

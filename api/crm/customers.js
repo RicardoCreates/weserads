@@ -1,18 +1,13 @@
 import { ObjectId, MongoClient } from "mongodb";
 import { requireAuth } from "./_auth.js";
-
-let clientPromise;
-function collection() {
-  if (!process.env.MONGODB_URI) throw new Error("MONGODB_URI ist nicht gesetzt.");
-  if (!clientPromise) clientPromise = new MongoClient(process.env.MONGODB_URI).connect();
-  return clientPromise.then((client) => client.db().collection("customers"));
-}
+import { collection } from "./_db.js";
 
 function normalize(input) {
   const fields = [
-    "firma", "kontakt", "telefon", "email", "ort", "googleLink", "schaltetAds",
-    "tracking", "status", "produkt", "notiz", "naechsterSchritt", "naechstesDatum",
-    "quelle", "wert", "farbe"
+    "leadId", "firma", "branche", "adresse", "kontakt", "telefon", "email", "ort",
+    "googleLink", "googleAdsStatus", "schaltetAds", "tracking", "status", "prioritaet",
+    "produkt", "notiz", "letzterKontakt", "naechsterSchritt", "naechstesDatum",
+    "quelle", "rechercheDatum", "wert", "farbe"
   ];
   const record = Object.fromEntries(
     fields
@@ -37,7 +32,7 @@ function withDefaults(row) {
 export default async function handler(req, res) {
   if (!requireAuth(req, res)) return;
   try {
-    const customers = await collection();
+    const customers = await collection("customers");
     if (req.method === "GET") {
       const rows = await customers.find({}).sort({ createdAt: -1 }).toArray();
       return res.status(200).json(rows.map(({ _id, ...row }) => ({ ...withDefaults(row), id: _id.toString() })));
