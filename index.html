@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <!-- Google Tag Manager -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-TD6C3NCN');</script>
-  <!-- End Google Tag Manager -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function(){ window.dataLayer.push(arguments); };
+    window.weserAdsAdsConsent = false;
+    window.gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied'
+    });
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WeserAds | Google Ads mit Mensch &amp; KI</title>
@@ -856,15 +860,38 @@
     @media(max-width:480px) {
       .weserads-chat { right:16px; bottom:16px; }
     }
+    .ads-consent-banner {
+      position:fixed; z-index:1000; left:24px; right:24px; bottom:24px;
+      max-width:1100px; margin:0 auto; display:flex; align-items:center;
+      justify-content:space-between; gap:24px; padding:20px 24px;
+      border:1px solid #DCE3EA; border-radius:14px; background:#fff;
+      color:#122033; box-shadow:0 12px 40px rgba(13,27,42,.22);
+    }
+    .ads-consent-banner[hidden] { display:none; }
+    .ads-consent-copy { max-width:720px; }
+    .ads-consent-title { margin:0 0 6px; color:#0D1B2A; font-size:17px; }
+    .ads-consent-copy p { margin:0; color:#526174; font-size:13px; line-height:1.55; }
+    .ads-consent-copy a { color:#087F78; text-decoration:underline; }
+    .ads-consent-actions { display:flex; flex-shrink:0; gap:10px; }
+    .ads-consent-button {
+      min-height:42px; padding:10px 14px; border:1px solid #0D1B2A;
+      border-radius:8px; background:#fff; color:#0D1B2A;
+      cursor:pointer; font:700 13px 'Manrope', Arial, sans-serif;
+    }
+    .ads-consent-button--accept { border-color:#0D1B2A; background:#0D1B2A; color:#fff; }
+    .ads-consent-button:hover { filter:brightness(.94); }
+    .cookie-settings-button {
+      padding:0; border:0; background:none; color:inherit; cursor:pointer;
+      font:inherit; text-decoration:underline;
+    }
+    @media(max-width:640px) {
+      .ads-consent-banner { left:12px; right:12px; bottom:12px; padding:16px; align-items:stretch; flex-direction:column; gap:14px; }
+      .ads-consent-actions { display:grid; grid-template-columns:1fr; }
+    }
 
   </style>
 </head>
 <body id="anfang">
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TD6C3NCN"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
   <!-- ================= KOPFZEILE ================= -->
   <header>
     <div class="container">
@@ -1244,18 +1271,114 @@
     </button>
   </div>
 
+  <section class="ads-consent-banner" id="ads-consent-banner" role="region" aria-labelledby="ads-consent-title" aria-describedby="ads-consent-description" hidden>
+    <div class="ads-consent-copy">
+      <h2 class="ads-consent-title" id="ads-consent-title">Google-Ads-Messung</h2>
+      <p id="ads-consent-description">Mit Ihrer Zustimmung laden wir das Google-Ads-Tag zur Messung von Seitenaufrufen und erfolgreichen Anfragen. Sie können Ihre Auswahl jederzeit über „Cookie-Einstellungen“ ändern. <a href="datenschutz.html">Mehr zum Datenschutz</a>.</p>
+    </div>
+    <div class="ads-consent-actions">
+      <button class="ads-consent-button" type="button" data-ads-consent="denied">Nur notwendige</button>
+      <button class="ads-consent-button ads-consent-button--accept" type="button" data-ads-consent="granted">Google Ads erlauben</button>
+    </div>
+  </section>
+
   <!-- ================= FUSSZEILE ================= -->
   <footer>
     <div class="container">
       WeserAds | Google Ads mit Mensch &amp; KI |
       <a href="impressum.html">Impressum</a> |
       <a href="datenschutz.html">Datenschutz</a> |
+      <button class="cookie-settings-button" id="open-cookie-settings" type="button">Cookie-Einstellungen</button> |
       © 2026 WeserAds
     </div>
   </footer>
 
 </body>
 <script>
+  const adsConsentBanner = document.getElementById('ads-consent-banner');
+  const adsConsentStorageKey = 'weserads-google-ads-consent';
+  const adsConsentStates = {
+    granted: {
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied'
+    },
+    denied: {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied'
+    }
+  };
+
+  function loadGoogleAdsTag() {
+    if (window.googleAdsTagRequested) return;
+
+    window.googleAdsTagRequested = true;
+    if (!window.googleAdsTagConfigured) {
+      window.gtag('js', new Date());
+      window.gtag('config', 'AW-18579248744');
+      window.googleAdsTagConfigured = true;
+    }
+
+    const googleTagScript = document.createElement('script');
+    googleTagScript.async = true;
+    googleTagScript.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18579248744';
+    googleTagScript.addEventListener('error', () => {
+      window.googleAdsTagRequested = false;
+      console.error('Das Google-Ads-Tag konnte nicht geladen werden.');
+    });
+    document.head.appendChild(googleTagScript);
+  }
+
+  function setGoogleAdsConsent(granted) {
+    window.weserAdsAdsConsent = granted;
+    window.gtag('consent', 'update', granted ? adsConsentStates.granted : adsConsentStates.denied);
+    if (granted) loadGoogleAdsTag();
+  }
+
+  function readAdsConsent() {
+    try {
+      return window.localStorage.getItem(adsConsentStorageKey);
+    } catch (error) {
+      console.error('Die gespeicherte Cookie-Auswahl konnte nicht gelesen werden.', error);
+      return null;
+    }
+  }
+
+  function saveAdsConsent(value) {
+    try {
+      window.localStorage.setItem(adsConsentStorageKey, value);
+    } catch (error) {
+      console.error('Die Cookie-Auswahl konnte nicht gespeichert werden.', error);
+    }
+  }
+
+  const savedAdsConsent = readAdsConsent();
+  if (savedAdsConsent === 'granted') {
+    setGoogleAdsConsent(true);
+    adsConsentBanner.hidden = true;
+  } else if (savedAdsConsent === 'denied') {
+    setGoogleAdsConsent(false);
+    adsConsentBanner.hidden = true;
+  } else {
+    adsConsentBanner.hidden = false;
+  }
+
+  adsConsentBanner.querySelectorAll('[data-ads-consent]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const granted = button.dataset.adsConsent === 'granted';
+      saveAdsConsent(granted ? 'granted' : 'denied');
+      setGoogleAdsConsent(granted);
+      adsConsentBanner.hidden = true;
+    });
+  });
+
+  document.getElementById('open-cookie-settings').addEventListener('click', () => {
+    adsConsentBanner.hidden = false;
+  });
+
   const kontaktFormular = document.getElementById('kontakt-formular');
   const formularStatus = document.getElementById('formular-status');
 
@@ -1276,7 +1399,13 @@
         throw new Error('Die Anfrage konnte nicht übermittelt werden.');
       }
 
-      window.dataLayer.push({ event: 'contact_form_success' });
+      if (window.weserAdsAdsConsent) {
+        window.gtag('event', 'conversion', {
+          send_to: 'AW-18579248744/aW8wCPLS3bkdEOiso5tF',
+          value: 1.0,
+          currency: 'EUR'
+        });
+      }
       kontaktFormular.reset();
       formularStatus.textContent = 'Vielen Dank. Ihre Anfrage wurde erfolgreich übermittelt.';
     } catch (error) {
