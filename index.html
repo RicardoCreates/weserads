@@ -1,17 +1,8 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function(){ window.dataLayer.push(arguments); };
-    window.weserAdsAdsConsent = false;
-    window.gtag('consent', 'default', {
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied'
-    });
-  </script>
+  <script src="assets/google-consent.js" data-google-ads></script>
+  <link rel="stylesheet" href="assets/google-consent.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WeserAds | Google Ads mit Mensch &amp; KI</title>
@@ -860,35 +851,6 @@
     @media(max-width:480px) {
       .weserads-chat { right:16px; bottom:16px; }
     }
-    .ads-consent-banner {
-      position:fixed; z-index:1000; left:24px; right:24px; bottom:24px;
-      max-width:1100px; margin:0 auto; display:flex; align-items:center;
-      justify-content:space-between; gap:24px; padding:20px 24px;
-      border:1px solid #DCE3EA; border-radius:14px; background:#fff;
-      color:#122033; box-shadow:0 12px 40px rgba(13,27,42,.22);
-    }
-    .ads-consent-banner[hidden] { display:none; }
-    .ads-consent-copy { max-width:720px; }
-    .ads-consent-title { margin:0 0 6px; color:#0D1B2A; font-size:17px; }
-    .ads-consent-copy p { margin:0; color:#526174; font-size:13px; line-height:1.55; }
-    .ads-consent-copy a { color:#087F78; text-decoration:underline; }
-    .ads-consent-actions { display:flex; flex-shrink:0; gap:10px; }
-    .ads-consent-button {
-      min-height:42px; padding:10px 14px; border:1px solid #0D1B2A;
-      border-radius:8px; background:#fff; color:#0D1B2A;
-      cursor:pointer; font:700 13px 'Manrope', Arial, sans-serif;
-    }
-    .ads-consent-button--accept { border-color:#0D1B2A; background:#0D1B2A; color:#fff; }
-    .ads-consent-button:hover { filter:brightness(.94); }
-    .cookie-settings-button {
-      padding:0; border:0; background:none; color:inherit; cursor:pointer;
-      font:inherit; text-decoration:underline;
-    }
-    @media(max-width:640px) {
-      .ads-consent-banner { left:12px; right:12px; bottom:12px; padding:16px; align-items:stretch; flex-direction:column; gap:14px; }
-      .ads-consent-actions { display:grid; grid-template-columns:1fr; }
-    }
-
   </style>
 </head>
 <body id="anfang">
@@ -903,7 +865,7 @@
           <a href="#warum-ich">Warum ich</a>
           <a href="#kontakt">Kontakt</a>
         </nav>
-        <a class="knopf-orange" href="#kontakt">Testmonat anfragen</a>
+        <a class="knopf-orange" href="#kontakt">Anfrage senden</a>
       </div>
     </div>
   </header>
@@ -915,9 +877,9 @@
         <div>
           <span class="hero-badge">✦ Die moderne Google Ads Agentur: Mensch + KI</span>
           <h1>Wir lassen KI arbeiten. <span class="text-orange">Aber nicht allein.</span></h1>
-          <p>WeserAds erstellt für Sie parallel eine KI gestützte Performance Max Kampagne und eine keywordbasierte Search Kampagne. Wir vergleichen Suchanfragen, Gebote, Kosten und Ergebnisse und optimieren Ihr Budget anhand Ihrer Ziele.</p>
+          <p>WeserAds erstellt für Sie parallel eine KI gestützte Performance Max Kampagne und eine keywordbasierte Search Kampagne. Wir vergleichen Suchanfragen, Gebote, Kosten und Ergebnisse und optimieren Ihr Budget anhand Ihrer Ziele. Testen Sie unsere Betreuung einen Monat lang zum regulären Paketpreis ab 399 €; das Werbebudget zahlen Sie zusätzlich direkt an Google.</p>
           <div class="hero-knopfe" style="margin-top:28px;">
-            <a href="#kontakt" class="knopf-orange">Einen Monat testen</a>
+            <a href="#kontakt" class="knopf-orange">Anfrage senden</a>
             <a href="#methode" class="knopf-weiss">Unsere Methode</a>
           </div>
           <div class="hero-trust">
@@ -954,7 +916,7 @@
       <div><strong>2x</strong><span>Strategien gleichzeitig<br>im direkten Vergleich</span></div>
       <div><strong>30 Tage</strong><span>Fair testen und<br>Ergebnisse vergleichen</span></div>
       <div><strong>100%</strong><span>Transparente<br>Auswertungen</span></div>
-      <div><strong>0 €</strong><span>Langzeitbindung.<br>Monatlich kündbar.</span></div>
+      <div><strong>Monatlich</strong><span>Kündbar ohne<br>lange Vertragsbindung</span></div>
     </div>
   </section>
 
@@ -1068,26 +1030,11 @@
     </div>
   </section>
 
-  <!-- ================= KUNDEN-MAGNET ================= -->
-  <section class="sektion sektion-weiss" id="kunden-magnet">
-    <div class="container">
-      <div class="kunden-magnet-box">
-        <div>
-          <span class="eyebrow">Vorschau · bald verfügbar</span>
-          <h2>Der WeserAds Kunden-Magnet</h2>
-          <p class="untertitel">Der vollständige Kunden-Magnet ist bald verfügbar. Den QR-Generator können Sie schon jetzt ansehen und ausprobieren.</p>
-          <a class="knopf-orange" href="Weserads-Kunden-Magnet.html">Vorschau jetzt ansehen</a>
-        </div>
-        <div class="kunden-magnet-icon" aria-hidden="true">⌁</div>
-      </div>
-    </div>
-  </section>
-
   <!-- ================= ABLAUF ================= -->
   <section class="sektion">
     <div class="container">
-      <h2>So testen Sie WeserAds ohne Risiko.</h2>
-      <p class="untertitel">Sie müssen Ihrer aktuellen Agentur nicht sofort kündigen. Vergleichen Sie uns einfach einen Monat lang.</p>
+      <h2>So testen Sie WeserAds einen Monat lang.</h2>
+      <p class="untertitel">Lernen Sie unsere Betreuung einen Monat lang kennen und vergleichen Sie unsere Arbeitsweise mit Ihrer bisherigen Lösung. Der erste Monat ist kostenpflichtig: Sie zahlen den regulären Preis Ihres gewählten Pakets; das Werbebudget kommt hinzu.</p>
       <div class="karten">
         <div class="karte"><h3>1. Ziele und Ausgangslage</h3><p>Wir schauen uns Ihr Angebot, Ihre bisherigen Daten und Ihre Ziele an. Dabei klären wir, woran ein guter Kunde für Sie wirklich zu erkennen ist.</p></div>
         <div class="karte"><h3>2. Zwei Wege parallel</h3><p>Wir starten Performance Max und eine keywordbasierte Search-Kampagne mit sauberem Tracking. So entsteht ein strukturierter Vergleich statt einer bloßen Behauptung.</p></div>
@@ -1100,7 +1047,7 @@
   <section class="sektion sektion-weiss" id="pakete">
     <div class="container">
       <h2>Ein fairer Test statt großer Versprechen.</h2>
-      <p class="untertitel">Starten Sie mit einem Monat Vergleich. Wenn wir Sie nicht überzeugen, bleiben Sie bei Ihrer aktuellen Agentur – ohne lange Bindung.</p>
+      <p class="untertitel">Starten Sie mit einem Monat Betreuung zum regulären Paketpreis. Wenn wir Sie nicht überzeugen, können Sie monatlich kündigen. Das Werbebudget zahlen Sie zusätzlich direkt an Google.</p>
       <div class="testmonat"><strong>Unser Versprechen: Sie behalten die Kontrolle.</strong><p>Wir zeigen Ihnen offen, wie Performance Max und Search unter Ihren Bedingungen abschneiden. Die Kampagnentypen erreichen teilweise unterschiedliche Google Inventare und benötigen Lernzeit. Deshalb bewerten wir die Ergebnisse im richtigen Kontext. Keine künstliche Abhängigkeit, kein Vertrag für zwölf Monate.</p></div>
       <div class="pakete">
 
@@ -1108,7 +1055,7 @@
         <div class="paket">
           <h3>START</h3>
           <p>Für den fairen Vergleich</p>
-          <div class="preis">349€ <span style="font-size:16px;">/ Monat</span></div>
+          <div class="preis">399€ <span style="font-size:16px;">/ Monat</span></div>
           <ul>
             <li>✓ Performance Max + Search</li>
             <li>✓ Conversion-Tracking &amp; Reporting</li>
@@ -1122,7 +1069,7 @@
         <div class="paket beliebt">
           <span class="beliebt-label">⭐ BELIEBTESTES PAKET</span><h3>WACHSTUM</h3>
           <p>Für Unternehmen mit Wachstumszielen</p>
-          <div class="preis">649€ <span style="font-size:16px;">/ Monat</span></div>
+          <div class="preis">699€ <span style="font-size:16px;">/ Monat</span></div>
           <ul>
             <li>✓ Vergleich von bis zu 3 Kampagnen</li>
             <li>✓ KI und menschliche Optimierung</li>
@@ -1137,7 +1084,7 @@
         <div class="paket">
           <h3>PROFI</h3>
           <p>Für größere Kampagnen und Budgets</p>
-          <div class="preis">949€ <span style="font-size:16px;">/ Monat</span></div>
+          <div class="preis">999€ <span style="font-size:16px;">/ Monat</span></div>
           <ul>
             <li>✓ Vergleich von bis zu 6 Kampagnen</li>
             <li>✓ Erweiterte Automatisierung</li>
@@ -1208,7 +1155,7 @@
       <br>
       <div class="karte" style="margin-bottom:12px;"><h3>Warum Performance Max und eine Search-Kampagne?</h3><p>Performance Max nutzt Googles KI und kann über mehrere Google-Kanäle ausspielen. Keywordbasierte Search-Kampagnen bieten gezieltere Steuerungsmöglichkeiten. Im Vergleich sehen wir, welche Kombination und Ausrichtung zu Ihren Zielen passt.</p></div>
       <div class="karte" style="margin-bottom:12px;"><h3>Ersetzt KI nicht die Agentur?</h3><p>Nein. KI verarbeitet Daten und passt Gebote an. Wir setzen die Ziele, prüfen die Qualität der Ergebnisse und entscheiden, wo Ihr Budget sinnvoll eingesetzt wird.</p></div>
-      <div class="karte" style="margin-bottom:12px;"><h3>Kann ich WeserAds testen, obwohl ich schon eine Agentur habe?</h3><p>Ja. Genau dafür ist der Test gedacht. Sie müssen Ihre aktuelle Agentur nicht sofort kündigen, sondern können Ergebnisse und Arbeitsweise einen Monat direkt vergleichen.</p></div>
+      <div class="karte" style="margin-bottom:12px;"><h3>Kann ich WeserAds testen, obwohl ich schon eine Agentur habe?</h3><p>Ja. Sie können unsere Betreuung einen Monat lang zum regulären Paketpreis kennenlernen und die Arbeitsweise vergleichen. Das Werbebudget zahlen Sie zusätzlich direkt an Google.</p></div>
       <div class="karte"><h3>Was passiert, wenn WeserAds schlechter ist?</h3><p>Dann bleiben Sie bei Ihrer aktuellen Agentur. Wir wollen Sie mit einer besseren Strategie und klaren Ergebnissen überzeugen – nicht mit einem langen Vertrag.</p></div>
     </div>
   </section>
@@ -1218,8 +1165,8 @@
     <div class="container">
       <div class="kontakt-box">
         <div>
-          <h2 style="color:white;">Testen Sie uns einen Monat.</h2>
-          <p>Auch wenn Sie bereits eine Agentur haben: Vergleichen Sie unsere KI-gestützte Strategie mit dem, was heute für Sie läuft. Wenn wir schlechter sind, können Sie einfach bei Ihrer aktuellen Agentur bleiben.</p>
+          <h2 style="color:white;">Lassen Sie uns über Ihre Google Ads sprechen.</h2>
+          <p>Lernen Sie unsere Betreuung einen Monat lang kennen – zum regulären Preis des gewählten Pakets ab 399 €. Das Werbebudget zahlen Sie zusätzlich direkt an Google. Alle Pakete sind monatlich kündbar.</p>
           <br>
           <p><b style="color:white;">Telefon:</b> <a href="tel:+491735329771" style="color:white;">0173 5329771</a></p>
           <p><b style="color:white;">E-Mail:</b> kontakt@weserads.de</p>
@@ -1230,8 +1177,8 @@
           <input type="text" name="unternehmen" placeholder="Ihr Unternehmen">
           <input type="tel" name="telefon" placeholder="Ihre Telefonnummer" required>
           <input type="url" name="website" placeholder="Ihre Website (optional)">
-          <textarea rows="4" name="nachricht" placeholder="Was möchten Sie im Testmonat vergleichen?" required></textarea>
-          <button class="knopf-orange" type="submit" style="border:none; width:100%; cursor:pointer;">Testmonat anfragen</button>
+          <textarea rows="4" name="nachricht" placeholder="Wie können wir Sie unterstützen?" required></textarea>
+          <button class="knopf-orange" type="submit" style="border:none; width:100%; cursor:pointer;">Anfrage senden</button>
           <p id="formular-status" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -1271,17 +1218,6 @@
     </button>
   </div>
 
-  <section class="ads-consent-banner" id="ads-consent-banner" role="region" aria-labelledby="ads-consent-title" aria-describedby="ads-consent-description" hidden>
-    <div class="ads-consent-copy">
-      <h2 class="ads-consent-title" id="ads-consent-title">Google-Ads-Messung</h2>
-      <p id="ads-consent-description">Mit Ihrer Zustimmung laden wir das Google-Ads-Tag zur Messung von Seitenaufrufen und erfolgreichen Anfragen. Sie können Ihre Auswahl jederzeit über „Cookie-Einstellungen“ ändern. <a href="datenschutz.html">Mehr zum Datenschutz</a>.</p>
-    </div>
-    <div class="ads-consent-actions">
-      <button class="ads-consent-button" type="button" data-ads-consent="denied">Nur notwendige</button>
-      <button class="ads-consent-button ads-consent-button--accept" type="button" data-ads-consent="granted">Google Ads erlauben</button>
-    </div>
-  </section>
-
   <!-- ================= FUSSZEILE ================= -->
   <footer>
     <div class="container">
@@ -1295,90 +1231,6 @@
 
 </body>
 <script>
-  const adsConsentBanner = document.getElementById('ads-consent-banner');
-  const adsConsentStorageKey = 'weserads-google-ads-consent';
-  const adsConsentStates = {
-    granted: {
-      ad_storage: 'granted',
-      ad_user_data: 'granted',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied'
-    },
-    denied: {
-      ad_storage: 'denied',
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied'
-    }
-  };
-
-  function loadGoogleAdsTag() {
-    if (window.googleAdsTagRequested) return;
-
-    window.googleAdsTagRequested = true;
-    if (!window.googleAdsTagConfigured) {
-      window.gtag('js', new Date());
-      window.gtag('config', 'AW-18579248744');
-      window.googleAdsTagConfigured = true;
-    }
-
-    const googleTagScript = document.createElement('script');
-    googleTagScript.async = true;
-    googleTagScript.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18579248744';
-    googleTagScript.addEventListener('error', () => {
-      window.googleAdsTagRequested = false;
-      console.error('Das Google-Ads-Tag konnte nicht geladen werden.');
-    });
-    document.head.appendChild(googleTagScript);
-  }
-
-  function setGoogleAdsConsent(granted) {
-    window.weserAdsAdsConsent = granted;
-    window.gtag('consent', 'update', granted ? adsConsentStates.granted : adsConsentStates.denied);
-    if (granted) loadGoogleAdsTag();
-  }
-
-  function readAdsConsent() {
-    try {
-      return window.localStorage.getItem(adsConsentStorageKey);
-    } catch (error) {
-      console.error('Die gespeicherte Cookie-Auswahl konnte nicht gelesen werden.', error);
-      return null;
-    }
-  }
-
-  function saveAdsConsent(value) {
-    try {
-      window.localStorage.setItem(adsConsentStorageKey, value);
-    } catch (error) {
-      console.error('Die Cookie-Auswahl konnte nicht gespeichert werden.', error);
-    }
-  }
-
-  const savedAdsConsent = readAdsConsent();
-  if (savedAdsConsent === 'granted') {
-    setGoogleAdsConsent(true);
-    adsConsentBanner.hidden = true;
-  } else if (savedAdsConsent === 'denied') {
-    setGoogleAdsConsent(false);
-    adsConsentBanner.hidden = true;
-  } else {
-    adsConsentBanner.hidden = false;
-  }
-
-  adsConsentBanner.querySelectorAll('[data-ads-consent]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const granted = button.dataset.adsConsent === 'granted';
-      saveAdsConsent(granted ? 'granted' : 'denied');
-      setGoogleAdsConsent(granted);
-      adsConsentBanner.hidden = true;
-    });
-  });
-
-  document.getElementById('open-cookie-settings').addEventListener('click', () => {
-    adsConsentBanner.hidden = false;
-  });
-
   const kontaktFormular = document.getElementById('kontakt-formular');
   const formularStatus = document.getElementById('formular-status');
 
@@ -1421,8 +1273,8 @@
   const chatMessages = document.getElementById('weserads-chat-messages');
   const chatQuestions = [...document.querySelectorAll('.weserads-chat-question')];
   const chatAnswers = {
-    ablauf: 'Zuerst klären wir Ihre Ziele. Dann vergleichen wir Performance Max und Search mit sauberem Tracking. Nach dem Testmonat besprechen wir gemeinsam die ersten Ergebnisse.',
-    kosten: 'Die Pakete starten bei 349 € pro Monat. Das Werbebudget zahlen Sie direkt an Google; alle Pakete sind monatlich kündbar.',
+    ablauf: 'Zuerst klären wir Ihre Ziele. Dann vergleichen wir Performance Max und Search mit sauberem Tracking. Der erste Monat kostet den regulären Paketpreis; das Werbebudget kommt hinzu. Anschließend besprechen wir gemeinsam die ersten Ergebnisse.',
+    kosten: 'Die Pakete starten bei 399 € pro Monat, auch im ersten Monat. Das Werbebudget zahlen Sie zusätzlich direkt an Google; alle Pakete sind monatlich kündbar.',
     agentur: 'Ja. Sie müssen Ihrer aktuellen Agentur nicht sofort kündigen, sondern können WeserAds einen Monat lang parallel vergleichen.',
     ergebnis: 'Dann bleiben Sie einfach bei Ihrer aktuellen Agentur. Ein Monat liefert erste Daten, aber keine Erfolgsgarantie.'
   };
