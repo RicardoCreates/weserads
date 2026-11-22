@@ -4,72 +4,230 @@
   <meta charset="utf-8">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WeserAds Kunden-Magnet – Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/weserads-favicon.svg">
+  <title>Kunden-Magnet · Verwaltung</title>
   <style>
-    :root { --navy:#0A1931; --teal:#0EA5A0; --soft:#E0F7F5; --line:#E2E8F0; --text:#0F172A; --muted:#64748B; }
-    * { box-sizing:border-box; } body { margin:0; font:16px/1.5 Arial,sans-serif; background:#F8FAFC; color:var(--text); }
-    header { background:var(--navy); color:#fff; padding:24px; } main { max-width:1100px; margin:0 auto; padding:32px 20px; }
-    .card { background:#fff; border:1px solid var(--line); border-radius:18px; padding:24px; margin-bottom:20px; box-shadow:0 6px 20px #0f172a0b; }
-    h1,h2 { margin-top:0; } label { display:block; font-weight:700; margin:12px 0; } input { display:block; width:100%; padding:12px; border:1px solid var(--line); border-radius:10px; margin-top:5px; }
-    button { border:0; border-radius:999px; padding:11px 18px; background:var(--teal); color:#fff; font-weight:700; cursor:pointer; } button.secondary { background:var(--navy); } button.off { background:#94A3B8; }
-    table { width:100%; border-collapse:collapse; } th,td { text-align:left; padding:12px 8px; border-bottom:1px solid var(--line); vertical-align:top; } .status { font-weight:700; } .active { color:#087f5b; } .pending { color:#b45309; } .inactive { color:#b91c1c; }
-    .message { margin-top:14px; color:var(--muted); } .hidden { display:none; } .actions { display:flex; gap:8px; flex-wrap:wrap; }
-    @media (max-width:700px) { table,thead,tbody,tr,th,td { display:block; } thead { display:none; } td { border:0; padding:6px 0; } tr { border-bottom:1px solid var(--line); padding:12px 0; } }
+    @font-face { font-family:'Manrope'; font-weight:400 800; font-display:swap; src:url('/assets/fonts/manrope-latin.woff2') format('woff2'); }
+    :root { --navy:#0A1931; --navy2:#13283F; --teal:#0EA5A0; --teal-d:#0E887F; --soft:#E3F5F2; --line:#E2E8F0; --text:#0F172A; --muted:#64748B; --warn:#B45309; --warn-bg:#FFF3DC; --bad:#B91C1C; }
+    * { box-sizing:border-box; }
+    body { margin:0; font:15px/1.5 'Manrope',-apple-system,Arial,sans-serif; background:#F5F7F9; color:var(--text); }
+    header { background:var(--navy2); color:#fff; padding:16px 20px; border-bottom:3px solid var(--teal); display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    header b { font-size:18px; } header span { color:#A7EFE7; font-weight:700; font-size:13px; }
+    main { max-width:1120px; margin:0 auto; padding:24px 16px 60px; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px; margin-bottom:18px; box-shadow:0 6px 18px #0f172a0a; }
+    h1 { font-size:22px; margin:0 0 4px; } h2 { font-size:17px; margin:0 0 12px; }
+    p.sub { color:var(--muted); margin:0 0 16px; }
+    label { display:block; font-weight:700; font-size:13px; margin:0 0 4px; color:#334155; }
+    input { width:100%; padding:11px 12px; border:1px solid #CBD5E1; border-radius:10px; font:inherit; background:#fff; }
+    input:focus { outline:2px solid var(--teal); border-color:transparent; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; align-items:end; }
+    button, .btn { border:0; border-radius:999px; padding:10px 16px; background:var(--teal); color:#fff; font:inherit; font-weight:800; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+    button:hover, .btn:hover { background:var(--teal-d); }
+    .ghost { background:#EEF2F6; color:var(--navy); } .ghost:hover { background:#E2E8F0; }
+    .danger { background:#FEE2E2; color:var(--bad); } .danger:hover { background:#FECACA; }
+    .small { padding:7px 12px; font-size:13px; }
+    .msg { min-height:22px; margin-top:10px; font-weight:700; font-size:14px; } .ok { color:var(--teal-d); } .err { color:var(--bad); }
+    .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:18px; }
+    .kpi { background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px 16px; }
+    .kpi b { display:block; font-size:24px; color:var(--navy); } .kpi span { color:var(--muted); font-size:13px; font-weight:700; }
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; min-width:760px; }
+    th { text-align:left; font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); padding:8px 10px; border-bottom:2px solid var(--line); }
+    td { padding:12px 10px; border-bottom:1px solid var(--line); vertical-align:middle; }
+    td small { color:var(--muted); display:block; }
+    .pill { font-size:12px; font-weight:800; padding:3px 10px; border-radius:20px; }
+    .active { background:var(--soft); color:var(--teal-d); } .pending { background:var(--warn-bg); color:var(--warn); } .inactive { background:#F1F5F9; color:#64748B; }
+    .num { font-weight:800; font-size:16px; }
+    .actions { display:flex; gap:6px; flex-wrap:wrap; }
+    a.link { color:var(--teal-d); font-weight:700; text-decoration:none; }
+    .hidden { display:none !important; }
+    dialog { border:0; border-radius:16px; padding:0; width:min(560px,94vw); box-shadow:0 30px 80px #0006; }
+    dialog::backdrop { background:#0a193199; }
+    .dlg { padding:22px; } .dlg .grid { grid-template-columns:1fr; }
+    .qr-box { display:flex; gap:16px; align-items:center; flex-wrap:wrap; }
+    .qr-box img { width:150px; height:150px; border:1px solid var(--line); border-radius:12px; }
+    .bars { display:flex; align-items:flex-end; gap:2px; height:70px; margin-top:8px; }
+    .bars i { flex:1; background:var(--teal); border-radius:2px 2px 0 0; min-height:2px; opacity:.85; }
+    .empty { color:var(--muted); padding:20px 0; text-align:center; }
   </style>
 </head>
 <body>
-  <header><strong>WeserAds</strong> · Kunden-Magnet Admin</header>
+  <header><div><b>WeserAds</b> <span>· Kunden-Magnet Verwaltung</span></div><button class="ghost small hidden" id="logout">Abmelden</button></header>
   <main>
-    <section class="card" id="login">
-      <h1>Admin anmelden</h1>
-      <label>Admin-Passwort<input id="token" type="password" autocomplete="current-password"></label>
-      <button id="loginButton">Dashboard öffnen</button><p class="message" id="loginMessage"></p>
-    </section>
-    <section class="card hidden" id="dashboard">
-      <h1>Kunden verwalten</h1>
-      <p>Neue Anfragen starten inaktiv. Aktiviere sie erst nach deiner Zahlungsbestätigung.</p>
-      <form id="createForm">
-        <label>Firmenname<input name="firma" required placeholder="Bäckerei Schmidt, Höxter"></label>
-        <label>Kunden-Slug<input name="slug" required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" placeholder="baeckerei-schmidt"></label>
-        <label>Google-Bewertungslink<input name="googleUrl" type="url" required placeholder="https://g.page/r/..."></label>
-        <button type="submit">Kundenanfrage anlegen</button>
+    <section class="card hidden" id="login" style="max-width:420px;margin:40px auto">
+      <h1>Anmelden</h1>
+      <p class="sub">Mit deinen CRM-Zugangsdaten.</p>
+      <form id="loginForm" class="grid" style="grid-template-columns:1fr">
+        <div><label for="u">Benutzername</label><input id="u" autocomplete="username" required></div>
+        <div><label for="p">Passwort</label><input id="p" type="password" autocomplete="current-password" required></div>
+        <button type="submit">Anmelden</button>
       </form>
-      <p class="message" id="dashboardMessage"></p>
-      <div id="customers"></div>
+      <p class="msg err" id="loginMsg"></p>
     </section>
+
+    <div id="app" class="hidden">
+      <div class="kpis">
+        <div class="kpi"><b id="kActive">0</b><span>aktive Kunden</span></div>
+        <div class="kpi"><b id="kPending">0</b><span>offene Anfragen</span></div>
+        <div class="kpi"><b id="kMonth">0</b><span>Scans diesen Monat</span></div>
+        <div class="kpi"><b id="kMrr">0 €</b><span>Monatsumsatz (29 € × aktiv)</span></div>
+      </div>
+
+      <section class="card">
+        <h2>Neuen Kunden anlegen</h2>
+        <form id="createForm" class="grid">
+          <div><label>Firmenname</label><input name="firma" required placeholder="Bäckerei Schmidt, Höxter"></div>
+          <div><label>Google-Bewertungslink</label><input name="googleUrl" type="url" required placeholder="https://g.page/r/…/review"></div>
+          <div><label>Kurzname (optional)</label><input name="slug" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" placeholder="wird automatisch erzeugt"></div>
+          <div><label>Ansprechpartner / Telefon</label><input name="kontakt" placeholder="optional"></div>
+          <div><button type="submit">Anlegen &amp; aktivieren</button></div>
+        </form>
+        <p class="msg" id="createMsg"></p>
+      </section>
+
+      <section class="card">
+        <h2>Kunden</h2>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Firma</th><th>Status</th><th>Scans 30 Tage</th><th>Scans gesamt</th><th>Kurzlink</th><th>Aktionen</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table></div>
+        <p class="msg" id="listMsg"></p>
+      </section>
+    </div>
   </main>
+
+  <dialog id="dlg"><div class="dlg">
+    <h2 id="dTitle">Kunde</h2>
+    <div class="qr-box"><img id="dQr" alt="QR-Code"><div>
+      <div class="actions" style="margin-bottom:8px">
+        <a class="btn small" id="dPoster" target="_blank">A4-Poster drucken</a>
+        <a class="btn small ghost" id="dPng">QR als PNG</a>
+        <a class="btn small ghost" id="dTest" target="_blank">Link testen</a>
+      </div>
+      <small id="dShort" style="color:var(--muted)"></small>
+    </div></div>
+    <h2 style="margin-top:18px">Scans der letzten 90 Tage</h2>
+    <div class="bars" id="dBars"></div>
+    <small id="dBarsInfo" style="color:var(--muted)"></small>
+    <form id="editForm" class="grid" style="margin-top:16px">
+      <div><label>Firmenname</label><input name="firma" required></div>
+      <div><label>Google-Bewertungslink</label><input name="googleUrl" type="url" required></div>
+      <div><label>Ansprechpartner / Telefon</label><input name="kontakt"></div>
+      <div class="actions"><button type="submit">Speichern</button><button type="button" class="ghost" id="dClose">Schließen</button></div>
+    </form>
+    <p class="msg" id="dMsg"></p>
+  </div></dialog>
+
   <script>
-    const login = document.getElementById('login');
-    const dashboard = document.getElementById('dashboard');
-    const tokenInput = document.getElementById('token');
-    const loginMessage = document.getElementById('loginMessage');
-    const dashboardMessage = document.getElementById('dashboardMessage');
-    let token = sessionStorage.getItem('weserads_admin_token') || '';
-    const headers = () => ({ Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' });
-    async function loadCustomers() {
-      const response = await fetch('/api/customer', { headers: headers() });
-      if (!response.ok) throw new Error((await response.json()).error || 'Laden fehlgeschlagen.');
-      const { customers } = await response.json();
-      document.getElementById('customers').innerHTML = customers.length ? `<table><thead><tr><th>Firma</th><th>Status</th><th>QR-Link</th><th>Aktion</th></tr></thead><tbody>${customers.map(customer => `<tr><td><strong>${escapeHtml(customer.firma)}</strong><br><small>${escapeHtml(customer.slug)}</small></td><td class="status ${customer.status}">${customer.status}</td><td><a href="/r/${encodeURIComponent(customer.slug)}" target="_blank">/r/${escapeHtml(customer.slug)}</a></td><td><div class="actions"><button data-slug="${escapeHtml(customer.slug)}" data-active="${customer.active}">${customer.active ? 'Deaktivieren' : 'Aktivieren'}</button></div></td></tr>`).join('')}</tbody></table>` : '<p>Noch keine Kunden angelegt.</p>';
-      document.querySelectorAll('[data-slug]').forEach(button => button.addEventListener('click', () => setActive(button.dataset.slug, button.dataset.active !== 'true')));
+    const $ = (s) => document.querySelector(s);
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[c]));
+    const fmtDate = (iso) => iso ? new Date(iso).toLocaleString('de-DE', { dateStyle:'short', timeStyle:'short' }) : '–';
+    let customers = [], current = null;
+
+    async function api(path, options = {}) {
+      const res = await fetch(path, { credentials:'same-origin', headers:{ 'Content-Type':'application/json' }, ...options });
+      if (res.status === 204) return {};
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) { const e = new Error(data.error || 'Unbekannter Fehler.'); e.status = res.status; throw e; }
+      return data;
     }
-    async function setActive(slug, active) {
-      const response = await fetch('/api/customer', { method:'PUT', headers:headers(), body:JSON.stringify({ slug, active }) });
-      dashboardMessage.textContent = response.ok ? 'Status gespeichert.' : (await response.json()).error;
-      await loadCustomers();
+    function msg(el, text, ok) { el.textContent = text; el.className = 'msg ' + (ok ? 'ok' : 'err'); }
+
+    async function load() {
+      const data = await api('/api/customer');
+      customers = data.customers || [];
+      const active = customers.filter((c) => c.active);
+      $('#kActive').textContent = active.length;
+      $('#kPending').textContent = customers.filter((c) => c.status === 'pending').length;
+      $('#kMonth').textContent = customers.reduce((s, c) => s + c.scansThisMonth, 0);
+      $('#kMrr').textContent = (active.length * 29).toLocaleString('de-DE') + ' €';
+      const label = { active:'Aktiv', pending:'Anfrage', inactive:'Pausiert' };
+      $('#rows').innerHTML = customers.length ? customers.map((c, i) => `
+        <tr>
+          <td><b>${esc(c.firma)}</b><small>${esc(c.kontakt || '')}</small></td>
+          <td><span class="pill ${c.status}">${label[c.status]}</span></td>
+          <td class="num">${c.scans30}</td>
+          <td><span class="num">${c.scansTotal}</span><small>zuletzt ${fmtDate(c.lastScanAt)}</small></td>
+          <td><a class="link" href="${esc(c.shortUrl)}" target="_blank">/r/${esc(c.slug)}</a></td>
+          <td><div class="actions">
+            <button class="small ghost" data-open="${i}">Details &amp; QR</button>
+            <button class="small ${c.active ? 'danger' : ''}" data-toggle="${i}">${c.active ? 'Pausieren' : 'Aktivieren'}</button>
+          </div></td>
+        </tr>`).join('') : '<tr><td colspan="6" class="empty">Noch keine Kunden. Lege oben den ersten an.</td></tr>';
     }
-    function escapeHtml(value) { return String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[character])); }
-    document.getElementById('loginButton').addEventListener('click', async () => {
-      token = tokenInput.value.trim(); sessionStorage.setItem('weserads_admin_token', token);
-      try { await loadCustomers(); login.classList.add('hidden'); dashboard.classList.remove('hidden'); } catch (error) { loginMessage.textContent = error.message; sessionStorage.removeItem('weserads_admin_token'); }
+
+    async function toggle(i) {
+      const c = customers[i];
+      try { await api('/api/customer', { method:'PUT', body:JSON.stringify({ slug:c.slug, active:!c.active }) }); msg($('#listMsg'), `${c.firma}: ${c.active ? 'pausiert' : 'aktiviert'}.`, true); await load(); }
+      catch (e) { msg($('#listMsg'), e.message); }
+    }
+
+    async function openDetails(i) {
+      current = customers[i];
+      const c = current, f = $('#editForm');
+      $('#dTitle').textContent = c.firma;
+      $('#dQr').src = `/api/magnet/qr?slug=${encodeURIComponent(c.slug)}`;
+      $('#dPoster').href = `/Weserads-Kunden-Magnet-poster?slug=${encodeURIComponent(c.slug)}&firma=${encodeURIComponent(c.firma)}`;
+      $('#dPng').href = `/api/magnet/qr?slug=${encodeURIComponent(c.slug)}&format=png&download=1`;
+      $('#dTest').href = c.shortUrl;
+      $('#dShort').textContent = c.shortUrl;
+      f.firma.value = c.firma; f.googleUrl.value = c.googleUrl; f.kontakt.value = c.kontakt || '';
+      $('#dMsg').textContent = ''; $('#dBars').innerHTML = ''; $('#dBarsInfo').textContent = 'Lädt …';
+      $('#dlg').showModal();
+      try {
+        const { daily } = await api(`/api/customer?slug=${encodeURIComponent(c.slug)}`);
+        const map = Object.fromEntries(daily.map((d) => [d.day, d.count]));
+        const days = [...Array(90)].map((_, k) => new Date(Date.now() - (89 - k) * 864e5).toLocaleDateString('sv-SE', { timeZone:'Europe/Berlin' }));
+        const counts = days.map((d) => map[d] || 0);
+        const max = Math.max(...counts), sum = counts.reduce((a, b) => a + b, 0);
+        $('#dBars').innerHTML = days.map((d, k) => `<i title="${d}: ${counts[k]}" style="height:${max ? (counts[k] / max) * 100 : 0}%"></i>`).join('');
+        $('#dBarsInfo').textContent = `${sum} Scans in 90 Tagen · bester Tag: ${max}`;
+      } catch (e) { $('#dBarsInfo').textContent = e.message; }
+    }
+
+    $('#rows').addEventListener('click', (ev) => {
+      const t = ev.target.closest('button'); if (!t) return;
+      if (t.dataset.open) openDetails(+t.dataset.open);
+      if (t.dataset.toggle) toggle(+t.dataset.toggle);
     });
-    document.getElementById('createForm').addEventListener('submit', async event => {
-      event.preventDefault(); const data = Object.fromEntries(new FormData(event.target));
-      const response = await fetch('/api/customer', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
-      dashboardMessage.textContent = response.ok ? 'Kunde angelegt und zunächst deaktiviert.' : (await response.json()).error;
-      if (response.ok) event.target.reset(); await loadCustomers();
+    $('#dClose').onclick = () => $('#dlg').close();
+
+    $('#editForm').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const f = ev.target;
+      try {
+        await api('/api/customer', { method:'PUT', body:JSON.stringify({ slug:current.slug, firma:f.firma.value, googleUrl:f.googleUrl.value, kontakt:f.kontakt.value }) });
+        msg($('#dMsg'), 'Gespeichert. Der gedruckte QR-Code bleibt gültig.', true); await load();
+      } catch (e) { msg($('#dMsg'), e.message); }
     });
-    if (token) { tokenInput.value = token; document.getElementById('loginButton').click(); }
+
+    $('#createForm').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      const data = Object.fromEntries(new FormData(ev.target));
+      if (!data.slug) delete data.slug;
+      try {
+        const r = await api('/api/customer', { method:'POST', body:JSON.stringify({ ...data, active:true }) });
+        ev.target.reset(); msg($('#createMsg'), `Angelegt: weserads.de/r/${r.slug}`, true); await load();
+      } catch (e) { msg($('#createMsg'), e.message); }
+    });
+
+    $('#loginForm').addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      try { await api('/api/crm/auth', { method:'POST', body:JSON.stringify({ username:$('#u').value, password:$('#p').value }) }); await start(); }
+      catch (e) { msg($('#loginMsg'), e.message); }
+    });
+    $('#logout').onclick = async () => { await api('/api/crm/auth', { method:'DELETE' }).catch(() => {}); location.reload(); };
+
+    async function start() {
+      try {
+        await load();
+        $('#login').classList.add('hidden'); $('#app').classList.remove('hidden'); $('#logout').classList.remove('hidden');
+      } catch (e) {
+        $('#app').classList.add('hidden'); $('#login').classList.remove('hidden');
+        if (e.status !== 401) msg($('#loginMsg'), e.message);
+      }
+    }
+    start();
   </script>
 </body>
 </html>

@@ -6,15 +6,19 @@
   <meta charset="utf-8">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="/assets/weserads-favicon.svg">
   <title>WeserAds Kunden-Magnet – Einrichtung</title>
   <style>
-    :root { --navy:#0A1931; --teal:#0EA5A0; --soft:#E0F7F5; --line:#E2E8F0; --text:#0F172A; --muted:#64748B; }
-    * { box-sizing:border-box; } body { margin:0; font:16px/1.6 Arial,sans-serif; background:#F8FAFC; color:var(--text); }
-    header { background:linear-gradient(135deg,var(--navy),#13294B); color:#fff; padding:28px 20px; }
-    main { max-width:680px; margin:0 auto; padding:40px 20px; } .card { background:#fff; border:1px solid var(--line); border-radius:22px; padding:28px; box-shadow:0 12px 30px #0f172a0b; }
+    @font-face { font-family:'Manrope'; font-weight:400 800; font-display:swap; src:url('/assets/fonts/manrope-latin.woff2') format('woff2'); }
+    :root { --navy:#0A1931; --teal:#0EA5A0; --line:#E2E8F0; --text:#0F172A; --muted:#64748B; }
+    * { box-sizing:border-box; } body { margin:0; font:16px/1.6 'Manrope',-apple-system,Arial,sans-serif; background:#F8FAFC; color:var(--text); }
+    header { background:linear-gradient(135deg,var(--navy),#13294B); color:#fff; padding:24px 20px; }
+    main { max-width:680px; margin:0 auto; padding:36px 16px; } .card { background:#fff; border:1px solid var(--line); border-radius:22px; padding:28px; box-shadow:0 12px 30px #0f172a0b; }
     h1 { margin-top:0; line-height:1.15; } p { color:var(--muted); } label { display:block; margin:18px 0; font-weight:700; }
     input { display:block; width:100%; margin-top:6px; padding:13px 14px; border:1px solid var(--line); border-radius:11px; font:inherit; }
-    button { border:0; border-radius:999px; padding:14px 22px; background:var(--teal); color:#fff; font-weight:800; cursor:pointer; }
+    small { display:block; color:var(--muted); font-weight:400; margin-top:4px; }
+    button { border:0; border-radius:999px; padding:14px 22px; background:var(--teal); color:#fff; font:inherit; font-weight:800; cursor:pointer; }
+    .hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
     #status { margin-top:18px; font-weight:700; } .success { color:#087f5b; } .error { color:#b91c1c; }
   </style>
 </head>
@@ -25,9 +29,11 @@
       <h1>Ihre Einrichtung für den Kunden-Magnet</h1>
       <p>Tragen Sie Ihre Firmendaten und den Google-Bewertungslink ein. Wir prüfen die Angaben und schalten Ihren QR-Code nach der Bestätigung frei.</p>
       <form id="requestForm">
-        <label>Firmenname<input name="firma" required placeholder="Bäckerei Schmidt, Höxter"></label>
-        <label>Google-Bewertungslink<input name="googleUrl" type="url" required placeholder="https://g.page/r/..."></label>
-        <label>Gewünschter Kunden-Slug<input name="slug" required pattern="[a-z0-9]+(?:-[a-z0-9]+)*" placeholder="baeckerei-schmidt"></label>
+        <label>Firmenname<input name="firma" required maxlength="120" placeholder="Bäckerei Schmidt, Höxter"></label>
+        <label>Google-Bewertungslink<input name="googleUrl" type="url" required placeholder="https://g.page/r/…/review">
+          <small>Zu finden in Ihrem Google-Unternehmensprofil unter „Nach Rezensionen fragen“.</small></label>
+        <label>Ansprechpartner und Telefon<input name="kontakt" maxlength="160" placeholder="z. B. Anna Schmidt, 05271 …"></label>
+        <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
         <button type="submit">Einrichtung anfragen</button>
       </form>
       <p id="status" role="status"></p>
@@ -36,17 +42,17 @@
   <script>
     const form = document.getElementById('requestForm');
     const status = document.getElementById('status');
-    form.addEventListener('submit', async event => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       status.className = ''; status.textContent = 'Anfrage wird übermittelt …';
       try {
         const response = await fetch('/api/customer', {
-          method:'POST', headers:{'Content-Type':'application/json'},
-          body:JSON.stringify(Object.fromEntries(new FormData(form)))
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
         });
-        const result = await response.json();
+        const result = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(result.error || 'Die Anfrage konnte nicht gespeichert werden.');
-        form.reset(); status.className = 'success'; status.textContent = 'Vielen Dank. Ihre Anfrage wurde aufgenommen und wird geprüft.';
+        form.reset(); status.className = 'success'; status.textContent = 'Vielen Dank! Ihre Anfrage ist angekommen. Wir melden uns innerhalb eines Werktags.';
       } catch (error) { status.className = 'error'; status.textContent = error.message; }
     });
   </script>
