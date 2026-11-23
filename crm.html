@@ -79,6 +79,22 @@
     .login-card .primary:hover{background:#fff;box-shadow:0 14px 30px rgba(3,8,26,.3)}
     .login-card .error{color:#ffd2d2;text-align:center}
     @media(max-width:600px){.login-card{padding:82px 22px 26px;border-radius:28px}.login-card::before{border-radius:28px}.login-card h1{font-size:34px}.login-card > p{font-size:16px}.login-avatar{width:100px;height:100px}.login-avatar svg{width:48px;height:48px}}
+    /* Vertriebs-CRM */
+    .pipeline{grid-template-columns:repeat(6,minmax(165px,1fr));padding-bottom:12px}
+    .workspace .wrap{max-width:1500px}
+    .stage.drop{outline:2px dashed #13a89e;outline-offset:-4px}.stage .sum{font-size:12px;color:var(--muted);font-weight:500;display:block}
+    .stage-card[draggable]{cursor:grab}.stage-card .foot{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-top:8px}
+    .stage-card .foot button{border:1px solid var(--line);border-radius:8px;background:#fff;padding:5px 9px;font-size:12px}
+    .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:#94a3b8}.dot.overdue{background:#d64545}.dot.today{background:#e0a100}.dot.planned{background:#23a06b}
+    .label-heiss{background:#fbe8e8;color:#a33b3b}.label-warm{background:#fff5da;color:#8d6816}.label-kalt{background:#e6effc;color:#3768a8}
+    .call-ok{background:#e4f6ed;color:#23734d}.call-no{background:#f1f3f5;color:#617083}
+    .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.filters select,.filters input{border:1px solid var(--line);border-radius:8px;padding:9px 10px;background:#fff;max-width:100%}.filters input{flex:1 1 220px}
+    .tablewrap{overflow:auto}.leads{width:100%;border-collapse:collapse;font-size:14px}.leads th{text-align:left;font-size:12px;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}.leads td{padding:10px;border-bottom:1px solid #e8eef3;vertical-align:top}.leads tbody tr{cursor:pointer}.leads tbody tr:hover{background:#f3faf9}.leads a{color:#0e887f}
+    .linkrow{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 10px}.linkrow a{text-decoration:none;font-size:13px}
+    .leads td:nth-child(5),.leads .badge,.to-deal{white-space:nowrap}.form-grid .field:has([name=notiz]){order:-1}.form-grid .field:has([name=leadId]){order:9}
+    .timeline-note{white-space:pre-wrap;overflow-wrap:anywhere}
+    .stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+    @media(max-width:850px){.pipeline{grid-template-columns:repeat(6,230px)}.leads .opt{display:none}}
   </style>
 </head>
 <body>
@@ -86,23 +102,38 @@
   <section id="app" class="hidden">
     <header class="top"><div class="wrap"><div><strong>WeserAds CRM</strong><p>Kunden, Pipeline und Aufgaben an einem Ort</p></div><button id="logout" type="button">Abmelden</button></div></header>
     <div class="app-shell">
-      <aside class="sidebar"><div class="brand">Weser<span>Ads</span></div><div class="side-label">Arbeitsbereich</div><nav class="nav" id="nav"><button data-view="dashboard" class="active">Übersicht</button><button data-view="customers">Kunden</button><button data-view="pipeline">Pipeline</button><button data-view="tasks">Aufgaben & Termine</button><button data-view="admin" id="admin-nav" class="hidden">CRM/Admin</button></nav><div class="side-note"><strong>Dein CRM</strong><br>Alle Kontakte, Aufgaben und nächsten Schritte an einem Ort.</div></aside>
+      <aside class="sidebar"><div class="brand">Weser<span>Ads</span></div><div class="side-label">Arbeitsbereich</div><nav class="nav" id="nav"><button data-view="dashboard" class="active">Übersicht</button><button data-view="leads">Leads</button><button data-view="pipeline">Pipeline</button><button data-view="customers">Kunden</button><button data-view="lost">Verloren</button><button data-view="tasks">Aufgaben & Termine</button><button data-view="admin" id="admin-nav" class="hidden">CRM/Admin</button></nav><div class="side-note"><strong>Kaltakquise</strong><br>„Erst Brief/Besuch“ heißt: nicht kalt anrufen. Keine Werbe-Mails ohne Einwilligung.</div></aside>
       <main class="workspace"><div class="wrap"><button class="secondary mobile-menu" type="button" id="mobile-menu">Menü anzeigen</button>
-      <section id="view-dashboard" class="view"><div class="app-intro"><div><p class="eyebrow">Arbeitsbereich</p><h2 id="greeting">Guten Tag</h2><p>Hier ist dein Vertriebsüberblick für heute.</p></div><button class="primary" id="add-dashboard" type="button">+ Kunde anlegen</button></div><div class="stats" id="stats"></div><div class="grid section"><div class="card"><div class="toolbar"><div><p class="eyebrow">Prioritäten</p><h3>Nächste Aufgaben</h3></div><button class="secondary" data-view="tasks" type="button">Alle ansehen</button></div><div id="dashboard-tasks" class="list"></div></div><div class="card"><div class="toolbar"><div><p class="eyebrow">Timeline</p><h3>Letzte Aktivitäten</h3></div><button class="secondary" data-view="customers" type="button">Kunden öffnen</button></div><div id="dashboard-activities" class="list"></div></div></div></section>
-      <section id="view-customers" class="view hidden"><div class="toolbar"><div><h2>Kunden</h2><p id="count"></p><p id="import-status" class="meta" role="status"></p></div><div class="actions"><input class="search" id="search" placeholder="Firma, Kontakt oder Status suchen"><button class="secondary" id="import-leads" type="button">Akquise importieren</button><input id="import-file" type="file" accept=".csv,text/csv,application/json" hidden><button class="primary" id="add" type="button">+ Kunde anlegen</button></div></div><div id="customers" class="grid"></div></section>
-      <section id="view-pipeline" class="view hidden"><div class="toolbar"><div><h2>Vertriebspipeline</h2><p>Ziehe den nächsten Schritt über die Kundendetails weiter</p></div></div><div class="pipeline" id="pipeline"></div></section>
+      <section id="view-dashboard" class="view"><div class="app-intro"><div><p class="eyebrow">Arbeitsbereich</p><h2 id="greeting">Guten Tag</h2><p>Hier ist dein Vertriebsüberblick für heute.</p></div><button class="primary" id="add-dashboard" type="button">+ Kontakt anlegen</button></div><div class="stats" id="stats"></div><div class="grid section"><div class="card"><div class="toolbar"><div><p class="eyebrow">Prioritäten</p><h3>Nächste Aufgaben</h3></div><button class="secondary" data-view="tasks" type="button">Alle ansehen</button></div><div id="dashboard-tasks" class="list"></div></div><div class="card"><div class="toolbar"><div><p class="eyebrow">Timeline</p><h3>Letzte Aktivitäten</h3></div><button class="secondary" data-view="pipeline" type="button">Pipeline öffnen</button></div><div id="dashboard-activities" class="list"></div></div></div></section>
+      <section id="view-leads" class="view hidden"><div class="toolbar"><div><h2>Leads</h2><p id="count"></p><p id="import-status" class="meta" role="status"></p></div><div class="actions"><button class="secondary" id="import-leads" type="button">Akquise importieren</button><input id="import-file" type="file" accept=".csv,text/csv,application/json" hidden><button class="primary" id="add" type="button">+ Lead anlegen</button></div></div><div class="filters"><input id="search" placeholder="Firma, Ort, Branche, Notiz suchen" aria-label="Leads durchsuchen"><select id="f-label" aria-label="Label"><option value="">Alle Labels</option><option>Heiß</option><option>Warm</option><option>Kalt</option></select><select id="f-branche" aria-label="Branche"></select><select id="f-ads" aria-label="Google Ads"><option value="">Google Ads: alle</option><option value="ja">Schaltet Ads</option><option value="nein">Keine Ads</option></select><select id="f-sort" aria-label="Sortierung"><option value="label">Wärmste zuerst</option><option value="firma">Firma A–Z</option><option value="bewertung">Meiste Bewertungen</option><option value="neu">Neueste zuerst</option></select></div><div class="card tablewrap"><table class="leads"><thead><tr><th>Firma</th><th>Label</th><th class="opt">Branche</th><th class="opt">Ort</th><th>Telefon</th><th class="opt">Google</th><th>Kontaktweg</th><th></th></tr></thead><tbody id="leads"></tbody></table></div></section>
+      <section id="view-pipeline" class="view hidden"><div class="toolbar"><div><h2>Pipeline</h2><p id="pipeline-sum"></p></div><button class="primary" id="add-deal" type="button">+ Deal anlegen</button></div><p class="meta"><span class="dot overdue"></span>überfällig &nbsp; <span class="dot today"></span>heute &nbsp; <span class="dot planned"></span>geplant &nbsp; <span class="dot"></span>keine Aufgabe</p><div class="pipeline" id="pipeline"></div></section>
+      <section id="view-customers" class="view hidden"><div class="toolbar"><div><h2>Kunden</h2><p>Gewonnene Deals und laufende Betreuung</p></div></div><div id="customers" class="grid"></div></section>
+      <section id="view-lost" class="view hidden"><div class="toolbar"><div><h2>Verloren</h2><p>Abgesagt – mit Grund, jederzeit wieder aktivierbar</p></div></div><div id="lost" class="grid"></div></section>
       <section id="view-tasks" class="view hidden"><div class="toolbar"><div><p class="eyebrow">Organisation</p><h2>Aufgaben & Termine</h2><p>Alle offenen nächsten Schritte – mit oder ohne Fälligkeitsdatum</p></div><div class="actions"><button class="secondary" id="add-calendar-event" type="button">+ Google-Termin</button><button class="primary" id="add-task-page" type="button">+ Aufgabe erstellen</button></div></div><div class="card"><div id="tasks" class="list"></div></div></section>
-      <section id="view-admin" class="view hidden"><div class="toolbar"><div><p class="eyebrow">Administration</p><h2>CRM/Admin</h2><p>Benutzer anlegen und Zugänge verwalten.</p></div></div><div class="grid"><form class="card" id="user-form"><h3>Neuen CRM-Zugang anlegen</h3><div class="field"><label for="user-name">Name</label><input id="user-name" required placeholder="Wolf Schneider"></div><div class="field"><label for="user-username">Benutzername</label><input id="user-username" required pattern="[A-Za-z0-9._-]{3,50}" placeholder="wolf.schneider" autocomplete="username"></div><div class="field"><label for="user-password">Startpasswort</label><input id="user-password" type="password" minlength="12" required autocomplete="new-password"><small class="meta">Mindestens 12 Zeichen. Der Admin kann das Passwort später neu setzen.</small></div><button class="primary" type="submit">Zugang anlegen</button><div class="error" id="user-form-error"></div></form><div class="card"><h3>Bestehende Zugänge</h3><div id="users" class="list"></div></div><div class="card"><h3>Google Kalender</h3><p id="calendar-status">Status wird geladen …</p><a class="primary" id="connect-calendar" href="/api/crm/calendar/oauth?action=start">Google Kalender verbinden</a><div class="error" id="calendar-error"></div></div></div></section>
+      <section id="view-admin" class="view hidden"><div class="toolbar"><div><p class="eyebrow">Administration</p><h2>CRM/Admin</h2><p>Benutzer anlegen und Zugänge verwalten.</p></div></div><div class="grid"><form class="card" id="user-form"><h3>Neuen CRM-Zugang anlegen</h3><div class="field"><label for="user-name">Name</label><input id="user-name" required placeholder="Wolf Schneider"></div><div class="field"><label for="user-username">Benutzername</label><input id="user-username" required pattern="[A-Za-z0-9._-]{3,50}" placeholder="wolf.schneider" autocomplete="username"></div><div class="field"><label for="user-password">Startpasswort</label><input id="user-password" type="password" minlength="12" required autocomplete="new-password"><small class="meta">Mindestens 12 Zeichen. Der Admin kann das Passwort später neu setzen.</small></div><button class="primary" type="submit">Zugang anlegen</button><div class="error" id="user-form-error"></div></form><div class="card"><h3>Bestehende Zugänge</h3><div id="users" class="list"></div></div><div class="card"><h3>Google Kalender</h3><p id="calendar-status">Status wird geladen …</p><a class="primary" id="connect-calendar" href="/api/crm/calendar/oauth?action=start">Google Kalender verbinden</a><div class="error" id="calendar-error"></div></div><div class="card"><h3>Datensicherung</h3><p>Lade alle CRM-Daten als Datei herunter oder ersetze den kompletten Bestand durch eine Datei. Vor dem Ersetzen wird der alte Bestand in der Datenbank gesichert.</p><div class="actions"><button class="secondary" id="backup-download" type="button">Sicherung herunterladen</button><button class="secondary danger" id="backup-restore" type="button">Bestand ersetzen …</button><input id="backup-file" type="file" accept="application/json,.json" hidden></div><p class="meta" id="backup-status" role="status"></p></div></div></section>
       </div></main>
     </div>
   </section>
-  <div id="modal" class="modal hidden"><form class="card" id="customer-form"><div class="toolbar"><h2 id="modal-title">Kunde anlegen</h2><button class="secondary" id="cancel" type="button">Schließen</button></div><input id="customer-id" type="hidden"><div class="form-grid"><div class="field"><label>Lead-ID</label><input name="leadId"></div><div class="field"><label>Firma *</label><input name="firma" required></div><div class="field"><label>Branche</label><input name="branche"></div><div class="field"><label>Ansprechpartner</label><input name="kontakt"></div><div class="field full"><label>Geschäftsadresse</label><input name="adresse"></div><div class="field"><label>Telefon</label><input name="telefon" type="tel"></div><div class="field"><label>E-Mail</label><input name="email" type="email"></div><div class="field"><label>Ort</label><input name="ort"></div><div class="field"><label>Website</label><input name="googleLink" type="url"></div><div class="field"><label>Google Ads Status</label><input name="googleAdsStatus"></div><div class="field"><label>CRM Status</label><select name="status"><option>Neu</option><option>Angerufen</option><option>Check geschickt</option><option>Angebot</option><option>Kunde</option><option>Abgesagt</option></select></div><div class="field"><label>Priorität</label><select name="prioritaet"><option>A</option><option>B</option><option>C</option></select></div><div class="field"><label>Produkt</label><select name="produkt"><option>Google Ads START 399€</option><option>Google Ads WACHSTUM 699€</option><option>Google Ads PROFI 999€</option><option>Kunden-Magnet 29€</option><option value="Google Ads START 349€">Google Ads START 349€ (Bestand)</option><option value="Google Ads WACHSTUM 649€">Google Ads WACHSTUM 649€ (Bestand)</option><option value="Google Ads PROFI 949€">Google Ads PROFI 949€ (Bestand)</option><option value="Google Ads">Google Ads (Bestand)</option><option value="Google Ads 299€">Google Ads 299€ (Bestand)</option></select></div><div class="field"><label>Quelle</label><input name="quelle"></div><div class="field"><label>Recherche-Datum</label><input name="rechercheDatum" type="date"></div><div class="field"><label>Letzter Kontakt</label><input name="letzterKontakt" type="date"></div><div class="field"><label>Wert</label><input name="wert" type="number" min="0" step="1" placeholder="0"></div><div class="field"><label>Nächster Schritt</label><input name="naechsterSchritt" value="Erstanruf"></div><div class="field"><label>Wiedervorlage</label><input name="naechstesDatum" type="date"></div><div class="field full"><label>Gesprächsnotiz</label><textarea name="notiz"></textarea></div></div><div class="section"><h3>Aktivität hinzufügen</h3><div class="form-grid"><div class="field"><label>Typ</label><select id="activity-type"><option>Anruf</option><option>E-Mail</option><option>Meeting</option><option>Notiz</option></select></div><div class="field"><label>Text</label><input id="activity-text" placeholder="Was ist passiert?"></div></div><button class="secondary" id="add-activity" type="button">Aktivität vormerken</button><div id="activity-list" class="list"></div></div><div class="section"><h3>Aufgabe hinzufügen</h3><div class="form-grid"><div class="field"><label>Aufgabe</label><input id="task-text" placeholder="z. B. Angebot nachfassen"></div><div class="field"><label>Fällig am</label><input id="task-date" type="date"></div></div><button class="secondary" id="add-task" type="button">Aufgabe vormerken</button><div id="task-list" class="list"></div></div><div class="actions"><button class="primary" type="submit">Speichern</button><button class="secondary danger hidden" id="delete" type="button">Löschen</button></div><div class="error" id="form-error"></div></form></div>
+  <div id="modal" class="modal hidden"><form class="card" id="customer-form"><div class="toolbar"><h2 id="modal-title">Kontakt anlegen</h2><button class="secondary" id="cancel" type="button">Schließen</button></div><input id="customer-id" type="hidden"><div class="linkrow" id="contact-links"></div><div class="actions" id="quick-actions"><button class="secondary" data-q="next" type="button">→ Nächste Phase</button><button class="secondary" data-q="won" type="button">✓ Gewonnen</button><button class="secondary danger" data-q="lost" type="button">✕ Verloren</button><button class="secondary" data-q="noanswer" type="button">Nicht erreicht (+2 Tage)</button></div><div class="form-grid"><div class="field"><label>Lead-ID</label><input name="leadId"></div><div class="field"><label>Firma *</label><input name="firma" required></div><div class="field"><label>Branche</label><input name="branche"></div><div class="field"><label>Ansprechpartner</label><input name="kontakt"></div><div class="field full"><label>Geschäftsadresse</label><input name="adresse"></div><div class="field"><label>Telefon</label><input name="telefon" type="tel"></div><div class="field"><label>E-Mail</label><input name="email" type="email"></div><div class="field"><label>Ort</label><input name="ort"></div><div class="field"><label>Website</label><input name="googleLink" type="url"></div><div class="field"><label>Google Ads Status</label><input name="googleAdsStatus"></div><div class="field"><label>Phase</label><select name="status"></select></div><div class="field"><label>Label</label><select name="label"><option value="">–</option><option>Heiß</option><option>Warm</option><option>Kalt</option></select></div><div class="field"><label>Kontaktweg</label><input name="kontaktweg"></div><div class="field"><label>Empfehlung</label><input name="empfehlung"></div><div class="field"><label>Google-Bewertung</label><input name="bewertung"></div><div class="field"><label>Verlustgrund</label><input name="verlustgrund" placeholder="nur bei Absage"></div><div class="field full"><label>Weitere Kontakte</label><input name="weitereKontakte"></div><div class="field"><label>Produkt</label><select name="produkt"><option value="">Noch offen</option><option>Google Ads START 399€</option><option>Google Ads WACHSTUM 699€</option><option>Google Ads PROFI 999€</option><option>Kunden-Magnet 29€</option><option value="Google Ads START 349€">Google Ads START 349€ (Bestand)</option><option value="Google Ads WACHSTUM 649€">Google Ads WACHSTUM 649€ (Bestand)</option><option value="Google Ads PROFI 949€">Google Ads PROFI 949€ (Bestand)</option><option value="Google Ads">Google Ads (Bestand)</option><option value="Google Ads 299€">Google Ads 299€ (Bestand)</option></select></div><div class="field"><label>Quelle</label><input name="quelle"></div><div class="field"><label>Recherche-Datum</label><input name="rechercheDatum" type="date"></div><div class="field"><label>Letzter Kontakt</label><input name="letzterKontakt" type="date"></div><div class="field"><label>Wert (€ pro Monat)</label><input name="wert" type="number" min="0" step="1" placeholder="0"></div><div class="field"><label>Nächster Schritt</label><input name="naechsterSchritt"></div><div class="field"><label>Wiedervorlage</label><input name="naechstesDatum" type="date"></div><div class="field full"><label>Gesprächsnotiz</label><textarea name="notiz"></textarea></div></div><div class="section"><h3>Aktivität hinzufügen</h3><div class="form-grid"><div class="field"><label>Typ</label><select id="activity-type"><option>Anruf</option><option>E-Mail</option><option>Meeting</option><option>Besuch</option><option>Brief</option><option>Notiz</option></select></div><div class="field"><label>Text</label><input id="activity-text" placeholder="Was ist passiert?"></div></div><button class="secondary" id="add-activity" type="button">Aktivität vormerken</button><div id="activity-list" class="list"></div></div><div class="section"><h3>Aufgabe hinzufügen</h3><div class="form-grid"><div class="field"><label>Aufgabe</label><input id="task-text" placeholder="z. B. Angebot nachfassen"></div><div class="field"><label>Fällig am</label><input id="task-date" type="date"></div></div><button class="secondary" id="add-task" type="button">Aufgabe vormerken</button><div id="task-list" class="list"></div></div><div class="actions"><button class="primary" type="submit">Speichern</button><button class="secondary danger hidden" id="delete" type="button">Löschen</button></div><div class="error" id="form-error"></div></form></div>
   <div id="task-modal" class="modal hidden"><form class="card" id="task-form"><div class="toolbar"><div><p class="eyebrow">Nächster Schritt</p><h2 id="task-modal-title">Aufgabe erstellen</h2></div><button class="secondary" id="task-cancel" type="button">Schließen</button></div><input id="task-id-new" type="hidden"><div class="field"><label for="task-customer">Kunde</label><select id="task-customer" required></select></div><div class="field"><label for="task-title-new">Aufgabe</label><input id="task-title-new" required placeholder="z. B. Angebot nachfassen"></div><div class="field"><label for="task-date-new">Fällig am</label><input id="task-date-new" type="date"></div><div class="actions"><button class="primary" type="submit">Speichern</button></div><div class="error" id="task-form-error"></div></form></div>
   <div id="calendar-modal" class="modal hidden"><form class="card" id="calendar-form"><div class="toolbar"><div><p class="eyebrow">Google Kalender</p><h2>Termin anlegen</h2></div><button class="secondary" id="calendar-cancel" type="button">Schließen</button></div><div class="field"><label for="calendar-title">Titel</label><input id="calendar-title" required placeholder="Erstgespräch mit Kunde"></div><div class="field"><label for="calendar-customer">Kunde</label><select id="calendar-customer"></select></div><div class="form-grid"><div class="field"><label for="calendar-date">Datum</label><input id="calendar-date" type="date" required></div><div class="field"><label for="calendar-location">Ort / Telefon</label><input id="calendar-location" placeholder="Telefonisch oder Adresse"></div><div class="field"><label for="calendar-start">Startzeit</label><input id="calendar-start" type="time" required></div><div class="field"><label for="calendar-end">Endzeit</label><input id="calendar-end" type="time" required></div></div><div class="field"><label for="calendar-notes">Notiz</label><textarea id="calendar-notes" placeholder="Gesprächsinhalte oder Vorbereitung"></textarea></div><div class="actions"><button class="primary" type="submit">In Google Kalender speichern</button></div><div class="error" id="calendar-form-error"></div></form></div>
   <script>
     const $ = (selector) => document.querySelector(selector);
-    const fields = ["leadId","firma","branche","adresse","kontakt","telefon","email","ort","googleLink","googleAdsStatus","status","prioritaet","produkt","quelle","rechercheDatum","letzterKontakt","wert","naechsterSchritt","naechstesDatum","notiz"];
-    const stages = ["Neu","Angerufen","Check geschickt","Angebot","Kunde"];
+    const fields = ["leadId","firma","branche","adresse","kontakt","telefon","email","ort","googleLink","googleAdsStatus","status","label","kontaktweg","empfehlung","bewertung","verlustgrund","weitereKontakte","produkt","quelle","rechercheDatum","letzterKontakt","wert","naechsterSchritt","naechstesDatum","notiz"];
+    const stages = ["Erstkontakt","Interesse geweckt","Termin vereinbart","Ads-Check / Beratung","Angebot versendet","Nachfassen"];
+    const chance = {"Erstkontakt":.1,"Interesse geweckt":.2,"Termin vereinbart":.3,"Ads-Check / Beratung":.5,"Angebot versendet":.7,"Nachfassen":.8};
+    const statuses = ["Lead", ...stages, "Kunde", "Verloren"];
+    const day = (offset = 0) => { const d = new Date(); d.setDate(d.getDate() + offset); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+    const deDate = (value) => /^\d{4}-\d{2}-\d{2}/.test(value || "") ? value.slice(0, 10).split("-").reverse().join(".") : "ohne Termin";
+    const euro = (value) => `${Math.round(value).toLocaleString("de-DE")} €`;
+    const isDeal = (row) => stages.includes(row.status);
+    const dateState = (date) => !date ? "planned" : date < day() ? "overdue" : date === day() ? "today" : "planned";
+    const nextTask = (row) => (row.aufgaben || []).filter((task) => !task.done).sort((a, b) => (a.date || "9999").localeCompare(b.date || "9999"))[0];
+    const labelBadge = (label) => label ? `<span class="badge label-${esc(label.toLowerCase().replace("ß", "ss"))}">${esc(label)}</span>` : "";
+    const statusEntry = (from, to) => ({id: crypto.randomUUID(), type: "Phase", text: `${from} → ${to}`, createdAt: new Date().toISOString()});
+    const webUrl = (value) => /^https?:\/\//i.test(value || "") ? value : "";
+    const callOk = (row) => !/brief|besuch/i.test(row.kontaktweg || "");
+    $('select[name="status"]').innerHTML = statuses.map((status) => `<option>${status}</option>`).join("");
     let rows = [], users = [], session = null, draftActivities = [], draftTasks = [];
     let customerBaseline = {}, customerSaveTimer = null, customerSaving = null;
     const customerForm = $("#customer-form");
@@ -117,36 +148,85 @@
       return response.status === 204 ? null : response.json();
     }
     const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]));
-    const allTasks = () => rows.flatMap((row) => (row.aufgaben || []).map((task) => ({...task, firma: row.firma, customerId: row.id}))).filter((task) => !task.done).sort((a,b) => String(a.date || "").localeCompare(String(b.date || "")));
-    const allActivities = () => rows.flatMap((row) => (row.aktivitaeten || []).map((activity) => ({...activity, firma: row.firma}))).sort((a,b) => String(b.createdAt || "").localeCompare(String(a.createdAt || "")));
+    const allTasks = () => rows.flatMap((row) => (row.aufgaben || []).map((task) => ({...task, firma: row.firma, customerId: row.id}))).filter((task) => !task.done).sort((a,b) => (a.date || "9999").localeCompare(b.date || "9999"));
+    const allActivities = () => rows.flatMap((row) => (row.aktivitaeten || []).map((activity) => ({...activity, firma: row.firma, customerId: row.id}))).sort((a,b) => String(b.createdAt || "").localeCompare(String(a.createdAt || "")));
     function renderStats() {
-      const open = rows.filter((row) => !["Kunde","Abgesagt"].includes(row.status)).length;
-      const value = rows.reduce((sum, row) => sum + Number(row.wert || 0), 0);
-      $("#stats").innerHTML = [["Kunden", rows.length, "Gesamter Bestand"],["Offene Leads", open, "In aktiver Bearbeitung"],["Gewonnen", rows.filter((row) => row.status === "Kunde").length, "Erfolgreich abgeschlossen"],["Pipeline-Wert", `${value.toLocaleString("de-DE")} €`, "Potenzial im CRM"]].map(([label, value, note]) => `<div class="card stat"><span>${label}</span><strong>${esc(value)}</strong><small>${note}</small><i class="kpi-icon">✦</i></div>`).join("");
+      const deals = rows.filter(isDeal), won = rows.filter((row) => row.status === "Kunde");
+      const sum = (list) => list.reduce((total, row) => total + Number(row.wert || 0), 0);
+      const due = allTasks().filter((task) => task.date && task.date <= day()).length;
+      $("#stats").innerHTML = [["Leads", rows.filter((row) => row.status === "Lead").length, "Noch nicht kontaktiert"],["Offene Deals", deals.length, `${euro(sum(deals))} / Monat`],["Gewichtet", euro(deals.reduce((total, row) => total + Number(row.wert || 0) * chance[row.status], 0)), "Wert × Abschlusschance"],["Kunden", won.length, `${euro(sum(won))} / Monat`],["Heute fällig", due, "inkl. überfällig"]].map(([label, value, note]) => `<div class="card stat"><span>${label}</span><strong>${esc(value)}</strong><small>${esc(note)}</small></div>`).join("");
+    }
+    function bindOpen(root) {
+      $(root).querySelectorAll("[data-open]").forEach((item) => item.onclick = (event) => { if (!event.target.closest("a,button:not([data-open])")) openModal(rows.find((row) => row.id === item.dataset.open)); });
+    }
+    function renderLeads() {
+      const branch = (row) => (row.branche || "").replace(/ \(.*$/, "");
+      const query = $("#search").value.toLowerCase(), leads = rows.filter((row) => row.status === "Lead");
+      const branches = [...new Set(leads.map((row) => branch(row)).filter(Boolean))].sort();
+      const current = $("#f-branche").value;
+      $("#f-branche").innerHTML = `<option value="">Alle Branchen</option>${branches.map((name) => `<option>${esc(name)}</option>`).join("")}`;
+      $("#f-branche").value = branches.includes(current) ? current : "";
+      const rank = {"Heiß":0,"Warm":1,"Kalt":3}, count = (row) => Number((String(row.bewertung || "").match(/(\d+) Bewertung/) || [])[1] || 0);
+      const ads = (row) => /^ja/i.test(row.googleAdsStatus || "");
+      const sorters = {label: (a, b) => (rank[a.label] ?? 2) - (rank[b.label] ?? 2) || a.firma.localeCompare(b.firma), firma: (a, b) => a.firma.localeCompare(b.firma), bewertung: (a, b) => count(b) - count(a), neu: (a, b) => String(b.createdAt).localeCompare(String(a.createdAt))};
+      const visible = leads.filter((row) => fields.some((field) => String(row[field] || "").toLowerCase().includes(query)) && (!$("#f-label").value || row.label === $("#f-label").value) && (!$("#f-branche").value || branch(row) === $("#f-branche").value) && (!$("#f-ads").value || ads(row) === ($("#f-ads").value === "ja"))).sort(sorters[$("#f-sort").value]);
+      $("#count").textContent = `${visible.length} von ${leads.length} Leads`;
+      $("#leads").innerHTML = visible.map((row) => `<tr data-open="${row.id}"><td><strong>${esc(row.firma)}</strong><div class="meta">${esc(row.kontakt || "")}</div></td><td>${labelBadge(row.label)}</td><td class="opt">${esc(row.branche || "–")}</td><td class="opt">${esc(row.ort || "–")}</td><td>${esc(row.telefon || "–")}</td><td class="opt">${esc(row.bewertung || "–")}<div class="meta">${row.googleAdsStatus ? `Ads: ${esc(row.googleAdsStatus)}` : ""}</div></td><td>${row.kontaktweg ? `<span class="badge ${callOk(row) ? "call-ok" : "call-no"}">${callOk(row) ? "Anruf vertretbar" : "Erst Brief/Besuch"}</span>` : "–"}</td><td><button class="secondary to-deal" data-id="${row.id}" type="button">→ Deal</button></td></tr>`).join("") || `<tr><td colspan="8" class="empty">Keine passenden Leads.</td></tr>`;
+      bindOpen("#leads");
+      document.querySelectorAll(".to-deal").forEach((button) => button.onclick = () => moveTo(button.dataset.id, "Erstkontakt"));
+    }
+    function contactCard(row) {
+      const task = nextTask(row);
+      return `<article class="card customer"><div>${labelBadge(row.label)} <h3>${esc(row.firma)}</h3><div class="meta">${esc([row.branche, row.ort].filter(Boolean).join(" · ") || "–")}</div></div><div>${esc(row.kontakt || "Kein Ansprechpartner")}<br>${esc(row.telefon || "–")}<br>${esc(row.email || "–")}</div><div class="meta">${esc(row.produkt || "Produkt offen")}${row.wert ? ` · ${euro(Number(row.wert))} / Monat` : ""}</div>${row.status === "Verloren" ? `<div class="meta">Grund: ${esc(row.verlustgrund || "nicht angegeben")}</div>` : ""}${task ? `<div class="meta"><span class="dot ${dateState(task.date)}"></span>${esc(task.text)} · ${deDate(task.date)}</div>` : ""}<div class="actions"><button class="secondary" data-open="${row.id}" type="button">Öffnen</button>${row.status === "Verloren" ? `<button class="secondary reactivate" data-id="${row.id}" type="button">Wieder aktivieren</button>` : `<button class="secondary quick-calendar" data-id="${row.id}" type="button">Termin buchen</button>`}</div></article>`;
     }
     function renderCustomers() {
-      const query = ($("#search")?.value || "").toLowerCase();
-      const visible = rows.filter((row) => fields.some((field) => String(row[field] || "").toLowerCase().includes(query)));
-      $("#count").textContent = `${visible.length} von ${rows.length} Kunden`;
-      $("#customers").innerHTML = visible.map((row) => `<article class="card customer"><div><span class="badge status-${esc(String(row.status).toLowerCase().replaceAll(" ","-"))}">${esc(row.status)}</span><span class="badge">${esc(row.prioritaet || "—")}</span><h3>${esc(row.firma)}</h3><div class="meta">${esc(row.branche || "Keine Branche")} · ${esc(row.ort || "—")}</div></div><div>${esc(row.kontakt || "Kein Ansprechpartner")}<br>${esc(row.telefon || "—")}<br>${esc(row.email || "—")}</div><div class="meta">${esc(row.naechsterSchritt || "Kein nächster Schritt")} ${row.naechstesDatum ? `· Wiedervorlage ${esc(row.naechstesDatum)}` : ""}</div><div class="meta">${esc(row.googleAdsStatus || "Google Ads Status unbekannt")} · Lead ${esc(row.leadId || "ohne ID")}</div><div class="actions"><button class="secondary edit" data-id="${row.id}">Öffnen</button><button class="secondary quick-task" data-id="${row.id}">Aufgabe</button><button class="secondary quick-calendar" data-id="${row.id}" type="button">Jetzt Termin buchen</button></div></article>`).join("") || `<div class="card empty">Noch keine passenden Kunden.</div>`;
-      document.querySelectorAll(".edit").forEach((button) => button.onclick = () => openModal(rows.find((row) => row.id === button.dataset.id)));
-      document.querySelectorAll(".quick-task").forEach((button) => button.onclick = async () => { if (await openModal(rows.find((row) => row.id === button.dataset.id))) $("#task-text").focus(); });
+      for (const [root, status, empty] of [["#customers", "Kunde", "Noch keine Kunden."], ["#lost", "Verloren", "Nichts verloren."]]) {
+        $(root).innerHTML = rows.filter((row) => row.status === status).map(contactCard).join("") || `<div class="card empty">${empty}</div>`;
+        $(root).querySelectorAll("[data-open]").forEach((button) => button.onclick = () => openModal(rows.find((row) => row.id === button.dataset.open)));
+      }
       document.querySelectorAll(".quick-calendar").forEach((button) => button.onclick = () => openCalendarModal(button.dataset.id));
+      document.querySelectorAll(".reactivate").forEach((button) => button.onclick = () => moveTo(button.dataset.id, "Erstkontakt"));
+    }
+    async function moveTo(id, status) {
+      const row = rows.find((item) => item.id === id);
+      if (!row || row.status === status) return;
+      if (!await closeCustomer()) return;
+      const current = rows.find((item) => item.id === id);
+      try {
+        const saved = await request(`/api/crm/customers?id=${id}`, {method:"PATCH", body:JSON.stringify({status, aktivitaeten:[statusEntry(current.status, status), ...(current.aktivitaeten || [])]})});
+        rows[rows.findIndex((item) => item.id === id)] = saved;
+        renderAll();
+      } catch (error) { alert(error.message); }
     }
     function renderPipeline() {
-      $("#pipeline").innerHTML = stages.map((stage) => `<div class="stage"><h3>${stage} <span class="meta">(${rows.filter((row) => row.status === stage).length})</span></h3>${rows.filter((row) => row.status === stage).map((row) => `<div class="stage-card edit" data-id="${row.id}"><strong>${esc(row.firma)}</strong><div class="meta">${esc(row.kontakt || "—")}</div><div class="meta">${esc(row.wert ? `${row.wert} €` : "")}</div></div>`).join("") || `<div class="meta">Leer</div>`}</div>`).join("");
-      document.querySelectorAll(".stage-card").forEach((card) => card.onclick = () => openModal(rows.find((row) => row.id === card.dataset.id)));
+      const deals = rows.filter(isDeal), total = deals.reduce((sum, row) => sum + Number(row.wert || 0), 0);
+      $("#pipeline-sum").textContent = `${deals.length} offene Deals · ${euro(total)} / Monat`;
+      $("#pipeline").innerHTML = stages.map((stage) => {
+        const list = deals.filter((row) => row.status === stage);
+        return `<div class="stage" data-stage="${stage}"><h3>${stage} <span class="sum">${Math.round(chance[stage] * 100)} % · ${list.length} ${list.length === 1 ? "Deal" : "Deals"} · ${euro(list.reduce((sum, row) => sum + Number(row.wert || 0), 0))}</span></h3>${list.map((row) => {
+          const task = nextTask(row), days = row.statusSeit ? Math.max(0, Math.floor((Date.now() - new Date(row.statusSeit)) / 864e5)) : null;
+          return `<div class="stage-card" draggable="true" data-open="${row.id}"><strong>${esc(row.firma)}</strong> ${labelBadge(row.label)}<div class="meta">${esc(row.kontakt || "–")}${row.wert ? ` · ${euro(Number(row.wert))}` : ""}</div><div class="meta"><span class="dot ${task ? dateState(task.date) : ""}"></span>${task ? `${esc(task.text)} · ${deDate(task.date)}` : "Keine Aufgabe"}</div><div class="foot"><span class="meta">${days === null ? "" : days === 1 ? "seit 1 Tag" : `seit ${days} Tagen`}</span><button class="advance" data-id="${row.id}" type="button">${stage === stages.at(-1) ? "✓ Gewonnen" : "Weiter →"}</button></div></div>`;
+        }).join("") || `<div class="meta">Leer</div>`}</div>`;
+      }).join("");
+      bindOpen("#pipeline");
+      document.querySelectorAll(".advance").forEach((button) => button.onclick = () => { const row = rows.find((item) => item.id === button.dataset.id); moveTo(row.id, statuses[statuses.indexOf(row.status) + 1]); });
+      document.querySelectorAll(".stage-card").forEach((card) => card.ondragstart = (event) => event.dataTransfer.setData("text/plain", card.dataset.open));
+      document.querySelectorAll(".stage").forEach((stage) => {
+        stage.ondragover = (event) => { event.preventDefault(); stage.classList.add("drop"); };
+        stage.ondragleave = () => stage.classList.remove("drop");
+        stage.ondrop = (event) => { event.preventDefault(); stage.classList.remove("drop"); moveTo(event.dataTransfer.getData("text/plain"), stage.dataset.stage); };
+      });
     }
     function renderTasks() {
       const tasks = allTasks();
-      $("#tasks").innerHTML = tasks.map((task) => `<div class="list-row"><div><strong>${esc(task.text)}</strong><div class="meta">${esc(task.firma)} · ${esc(task.date || "ohne Termin")}</div></div><div class="actions"><button class="secondary edit-task" data-id="${task.customerId}" data-task="${task.id}" type="button">Bearbeiten</button><button class="secondary complete-task" data-id="${task.customerId}" data-task="${task.id}" type="button">Erledigt</button><button class="danger delete-task" data-id="${task.customerId}" data-task="${task.id}" type="button">Löschen</button></div></div>`).join("") || `<div class="empty">Keine offenen Aufgaben.</div>`;
+      $("#tasks").innerHTML = tasks.map((task) => `<div class="list-row"><div><strong>${esc(task.text)}</strong><div class="meta"><span class="dot ${dateState(task.date)}"></span>${esc([task.type, task.firma].filter(Boolean).join(" · "))} · ${deDate(task.date)}</div></div><div class="actions"><button class="secondary edit-task" data-id="${task.customerId}" data-task="${task.id}" type="button">Bearbeiten</button><button class="secondary complete-task" data-id="${task.customerId}" data-task="${task.id}" type="button">Erledigt</button><button class="danger delete-task" data-id="${task.customerId}" data-task="${task.id}" type="button">Löschen</button></div></div>`).join("") || `<div class="empty">Keine offenen Aufgaben.</div>`;
       document.querySelectorAll(".complete-task").forEach((button) => button.onclick = () => completeTask(button.dataset.id, button.dataset.task));
       document.querySelectorAll(".edit-task").forEach((button) => button.onclick = () => openTaskModal(true, button.dataset.id, button.dataset.task));
       document.querySelectorAll(".delete-task").forEach((button) => button.onclick = () => deleteTask(button.dataset.id, button.dataset.task));
     }
     function renderDashboard() {
       renderStats();
-      $("#dashboard-tasks").innerHTML = allTasks().slice(0, 5).map((task) => `<div class="list-row"><div><strong>${esc(task.text)}</strong><div class="meta">${esc(task.firma)} · ${esc(task.date || "ohne Termin")}</div></div></div>`).join("") || `<div class="empty">Alles erledigt.</div>`;
+      $("#dashboard-tasks").innerHTML = allTasks().slice(0, 5).map((task) => `<div class="list-row"><div><strong>${esc(task.text)}</strong><div class="meta"><span class="dot ${dateState(task.date)}"></span>${esc([task.type, task.firma].filter(Boolean).join(" · "))} · ${deDate(task.date)}</div></div></div>`).join("") || `<div class="empty">Alles erledigt.</div>`;
       $("#dashboard-activities").innerHTML = allActivities().slice(0, 5).map((activity) => `<div class="list-row"><div><strong>${esc(activity.type)}</strong><div class="meta">${esc(activity.firma)} · ${esc(activity.text)}</div></div></div>`).join("") || `<div class="empty">Noch keine Aktivitäten.</div>`;
     }
     function renderUsers() {
@@ -157,10 +237,10 @@
         if (password) updateUser(button.dataset.id, {password});
       });
     }
-    function renderAll() { renderStats(); renderCustomers(); renderPipeline(); renderTasks(); renderDashboard(); if (session?.role === "admin") renderUsers(); }
+    function renderAll() { renderStats(); renderLeads(); renderCustomers(); renderPipeline(); renderTasks(); renderDashboard(); if (session?.role === "admin") renderUsers(); }
     function renderDrafts() {
-      $("#activity-list").innerHTML = draftActivities.map((item) => `<div class="list-row"><span><strong>${esc(item.type)}</strong> · ${esc(item.text)}</span><button class="danger remove-activity" data-id="${item.id}" type="button">Entfernen</button></div>`).join("");
-      $("#task-list").innerHTML = draftTasks.map((item) => `<div class="list-row"><span><strong>${esc(item.text)}</strong> · ${esc(item.date || "ohne Datum")}</span><button class="danger remove-task" data-id="${item.id}" type="button">Entfernen</button></div>`).join("");
+      $("#activity-list").innerHTML = draftActivities.map((item) => `<div class="list-row"><span class="timeline-note"><strong>${esc(item.type)}</strong> · ${esc(item.text)}<span class="meta"> · ${deDate(item.createdAt)}</span></span><button class="danger remove-activity" data-id="${item.id}" type="button">Entfernen</button></div>`).join("");
+      $("#task-list").innerHTML = draftTasks.map((item) => `<div class="list-row"><span><strong>${esc(item.text)}</strong> · ${deDate(item.date)}${item.done ? " · erledigt ✓" : ""}</span><button class="danger remove-task" data-id="${item.id}" type="button">Entfernen</button></div>`).join("");
       document.querySelectorAll(".remove-activity").forEach((button) => button.onclick = () => { draftActivities = draftActivities.filter((item) => item.id !== button.dataset.id); renderDrafts(); scheduleCustomerSave(); });
       document.querySelectorAll(".remove-task").forEach((button) => button.onclick = () => { draftTasks = draftTasks.filter((item) => item.id !== button.dataset.id); renderDrafts(); scheduleCustomerSave(); });
     }
@@ -198,7 +278,7 @@
           const saved = await request(id ? `/api/crm/customers?id=${id}` : "/api/crm/customers", {method:id ? "PATCH" : "POST", body:JSON.stringify(changes)});
           $("#customer-id").value = saved.id;
           $("#delete").classList.remove("hidden");
-          $("#modal-title").textContent = "Kunde bearbeiten";
+          $("#modal-title").textContent = "Kontakt bearbeiten";
           customerBaseline = data;
           const index = rows.findIndex((row) => row.id === saved.id);
           if (index < 0) rows.unshift(saved); else rows[index] = saved;
@@ -228,12 +308,65 @@
       $("#modal").classList.remove("minimized");
       return true;
     }
-    async function openModal(row = null) {
+    let openStatus = "Lead", newStatus = "Lead";
+    function renderLinks() {
+      const value = (name) => customerForm.elements[name].value.trim(), row = {kontaktweg: value("kontaktweg")};
+      const links = [];
+      if (value("telefon")) links.push(`<a class="badge ${callOk(row) ? "call-ok" : "call-no"}" href="tel:${esc(value("telefon").replace(/[^+\d]/g, ""))}">☎ ${esc(value("telefon"))}${callOk(row) ? "" : " – erst Brief/Besuch"}</a>`);
+      if (value("email")) links.push(`<a class="badge" href="mailto:${esc(value("email"))}">✉ ${esc(value("email"))}</a>`);
+      if (webUrl(value("googleLink"))) links.push(`<a class="badge" target="_blank" rel="noopener noreferrer" href="${esc(value("googleLink"))}">Website</a>`);
+      if (value("adresse")) links.push(`<a class="badge" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${value("firma")} ${value("adresse")}`)}">Karte</a>`);
+      $("#contact-links").innerHTML = links.join("");
+    }
+    function setStatus(next) {
+      customerForm.elements.status.value = next;
+      if (next !== openStatus && $("#customer-id").value) draftActivities.unshift(statusEntry(openStatus, next));
+      openStatus = next; renderDrafts(); scheduleCustomerSave();
+    }
+    customerForm.elements.status.addEventListener("change", (event) => setStatus(event.target.value));
+    $("#quick-actions").onclick = (event) => {
+      const action = event.target.dataset.q;
+      if (action === "won") setStatus("Kunde");
+      if (action === "next" && statuses.indexOf(openStatus) < statuses.indexOf("Kunde")) setStatus(statuses[statuses.indexOf(openStatus) + 1]);
+      if (action === "lost") { const reason = prompt("Warum verloren?", customerForm.elements.verlustgrund.value); if (reason !== null) { customerForm.elements.verlustgrund.value = reason; setStatus("Verloren"); } }
+      if (action === "noanswer") {
+        draftActivities.unshift({id:crypto.randomUUID(), type:"Anruf", text:"Nicht erreicht", createdAt:new Date().toISOString()});
+        draftTasks.push({id:crypto.randomUUID(), type:"Anruf", text:"Erneut anrufen", date:day(2), done:false});
+        customerForm.elements.letzterKontakt.value = day(); renderDrafts(); scheduleCustomerSave();
+      }
+    };
+    $("#backup-download").onclick = async () => {
+      try {
+        const data = await request("/api/crm/backup"), link = document.createElement("a");
+        link.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], {type:"application/json"}));
+        link.download = `weserads-crm-${day()}.json`; link.click(); URL.revokeObjectURL(link.href);
+        $("#backup-status").textContent = `${data.length} Datensätze gesichert.`;
+      } catch (error) { $("#backup-status").textContent = error.message; }
+    };
+    $("#backup-restore").onclick = () => $("#backup-file").click();
+    $("#backup-file").onchange = async (event) => {
+      const [file] = event.target.files;
+      if (!file) return;
+      try {
+        const records = JSON.parse(await file.text());
+        if (!Array.isArray(records)) throw new Error("Keine gültige CRM-Datei.");
+        if (!confirm(`${rows.length} vorhandene Datensätze durch ${records.length} aus der Datei ersetzen? Der alte Bestand wird vorher gesichert.`)) return;
+        if (!await closeCustomer()) return;
+        $("#backup-status").textContent = "Wird ersetzt …";
+        const result = await request("/api/crm/backup", {method:"POST", body:JSON.stringify({confirm:"ERSETZEN", records})});
+        await load();
+        $("#backup-status").textContent = `${result.imported} Datensätze importiert, ${result.removed} alte entfernt${result.backup ? ` (gesichert als ${result.backup})` : ""}.`;
+      } catch (error) { $("#backup-status").textContent = error.message; } finally { event.target.value = ""; }
+    };
+    async function openModal(row = null, status = "Lead") {
       if (!await closeCustomer()) return false;
+      newStatus = status;
       if (row) row = rows.find((item) => item.id === row.id) || row;
-      $("#customer-form").reset(); $("#customer-id").value = row?.id || ""; $("#modal-title").textContent = row ? "Kunde bearbeiten" : "Kunde anlegen"; $("#delete").classList.toggle("hidden", !row); draftActivities = [...(row?.aktivitaeten || [])]; draftTasks = [...(row?.aufgaben || [])];
+      $("#customer-form").reset(); $("#customer-id").value = row?.id || ""; $("#modal-title").textContent = row ? "Kontakt bearbeiten" : "Kontakt anlegen"; $("#delete").classList.toggle("hidden", !row); draftActivities = [...(row?.aktivitaeten || [])]; draftTasks = [...(row?.aufgaben || [])];
       if (row) fields.forEach((field) => { const input = $(`[name="${field}"]`); if (input) input.value = row[field] || ""; });
-      renderDrafts(); customerBaseline = customerData(); $("#customer-minimized-name").textContent = customerForm.elements.firma.value.trim() || "Neuer Kunde"; $("#form-error").textContent = ""; $("#customer-save-status").textContent = row ? "Gespeichert" : "Wird nach Eingabe des Firmennamens gespeichert"; $("#modal").classList.remove("hidden");
+      if (row) customerForm.elements.status.value = row.status; else customerForm.elements.status.value = newStatus;
+      openStatus = customerForm.elements.status.value;
+      renderLinks(); renderDrafts(); customerBaseline = customerData(); $("#customer-minimized-name").textContent = customerForm.elements.firma.value.trim() || "Neuer Kunde"; $("#form-error").textContent = ""; $("#customer-save-status").textContent = row ? "Gespeichert" : "Wird nach Eingabe des Firmennamens gespeichert"; $("#modal").classList.remove("hidden");
       return true;
     }
     async function load() { rows = await request("/api/crm/customers"); if (session?.role === "admin") users = await request("/api/crm/users"); renderAll(); }
@@ -339,7 +472,7 @@
         googleLink: record["Website (laut Quelle)"] || "",
         kontakt: record["Ansprechpartner (öffentlich)"] || "",
         googleAdsStatus: record["Google Ads aktiv?"] || "",
-        status: record["CRM-Status"] || "Neu",
+        status: record["CRM-Status"] || "Lead",
         prioritaet: record["Priorität"] || "",
         letzterKontakt: record["Letzter Kontakt"] || "",
         naechstesDatum: record["Wiedervorlage"] || "",
@@ -361,7 +494,7 @@
       let created = 0, updated = 0;
       for (const lead of leads) {
         const current = existing.get(lead.leadId);
-        await request(current ? `/api/crm/customers?id=${current.id}` : "/api/crm/customers", {method: current ? "PATCH" : "POST", body: JSON.stringify(current ? {...lead, produkt: current.produkt} : lead)});
+        await request(current ? `/api/crm/customers?id=${current.id}` : "/api/crm/customers", {method: current ? "PATCH" : "POST", body: JSON.stringify(current ? {...lead, produkt: current.produkt, status: current.status} : lead)});
         if (current) updated += 1; else created += 1;
       }
       $("#import-status").textContent = `${created} Leads angelegt, ${updated} aktualisiert.`;
@@ -369,7 +502,7 @@
     }
     $("#login-form").onsubmit = async (event) => { event.preventDefault(); $("#login-error").textContent = ""; try { await request("/api/crm/auth", {method:"POST", body:JSON.stringify({username:$("#username").value, password:$("#password").value})}); session = await request("/api/crm/auth"); $("#login").classList.add("hidden"); $("#app").classList.remove("hidden"); $("#greeting").textContent = `Guten Tag, ${session.username}`; $("#admin-nav").classList.toggle("hidden", session.role !== "admin"); await load(); await loadCalendarStatus(); } catch (error) { $("#login-error").textContent = error.message; } };
     customerForm.onsubmit = async (event) => { event.preventDefault(); await closeCustomer(); };
-    customerForm.addEventListener("input", (event) => { if (event.target.name) scheduleCustomerSave(); });
+    customerForm.addEventListener("input", (event) => { if (event.target.name) { renderLinks(); scheduleCustomerSave(); } });
     customerForm.addEventListener("change", (event) => { if (event.target.name) scheduleCustomerSave(); });
     $("#add-activity").onclick = () => { const text = $("#activity-text").value.trim(); if (!text) return; draftActivities.unshift({id:crypto.randomUUID(), type:$("#activity-type").value, text, createdAt:new Date().toISOString()}); $("#activity-text").value = ""; renderDrafts(); scheduleCustomerSave(); };
     $("#add-task").onclick = () => { const text = $("#task-text").value.trim(); if (!text) return; draftTasks.push({id:crypto.randomUUID(), text, date:$("#task-date").value, done:false}); $("#task-text").value = ""; $("#task-date").value = ""; renderDrafts(); scheduleCustomerSave(); };
@@ -393,7 +526,7 @@
         event.preventDefault(); event.returnValue = "";
       }
     });
-    $("#cancel").onclick = () => closeCustomer(true); $("#task-cancel").onclick = () => $("#task-modal").classList.add("hidden"); $("#calendar-cancel").onclick = () => $("#calendar-modal").classList.add("hidden"); $("#task-form").onsubmit = saveStandaloneTask; $("#add-task-page").onclick = () => openTaskModal(); $("#add-calendar-event").onclick = () => openCalendarModal(); $("#add").onclick = () => openModal(); $("#add-dashboard").onclick = () => openModal(); $("#search").oninput = renderCustomers; $("#import-leads").onclick = () => $("#import-file").click(); $("#import-file").onchange = async (event) => { const [file] = event.target.files; if (!file) return; $("#import-status").textContent = "Import läuft …"; try { await importLeads(file); } catch (error) { $("#import-status").textContent = error.message; } finally { event.target.value = ""; } }; $("#nav").onclick = (event) => { if (event.target.dataset.view) { switchView(event.target.dataset.view); if (window.innerWidth <= 850) $(".sidebar").style.display = "none"; } }; document.querySelectorAll("[data-view]:not(#nav button)").forEach((button) => button.onclick = () => switchView(button.dataset.view)); $("#mobile-menu").onclick = () => { $(".sidebar").style.display = $(".sidebar").style.display === "block" ? "none" : "block"; }; $("#logout").onclick = async () => { if (!await closeCustomer()) return; await request("/api/crm/auth", {method:"DELETE"}); location.reload(); };
+    $("#cancel").onclick = () => closeCustomer(true); $("#task-cancel").onclick = () => $("#task-modal").classList.add("hidden"); $("#calendar-cancel").onclick = () => $("#calendar-modal").classList.add("hidden"); $("#task-form").onsubmit = saveStandaloneTask; $("#add-task-page").onclick = () => openTaskModal(); $("#add-calendar-event").onclick = () => openCalendarModal(); $("#add").onclick = () => openModal(); $("#add-dashboard").onclick = () => openModal(); $("#search").oninput = renderLeads; ["#f-label","#f-branche","#f-ads","#f-sort"].forEach((id) => $(id).onchange = renderLeads); $("#add-deal").onclick = () => openModal(null, "Erstkontakt"); $("#import-leads").onclick = () => $("#import-file").click(); $("#import-file").onchange = async (event) => { const [file] = event.target.files; if (!file) return; $("#import-status").textContent = "Import läuft …"; try { await importLeads(file); } catch (error) { $("#import-status").textContent = error.message; } finally { event.target.value = ""; } }; $("#nav").onclick = (event) => { if (event.target.dataset.view) { switchView(event.target.dataset.view); window.scrollTo(0, 0); if (window.innerWidth <= 850) $(".sidebar").style.display = "none"; } }; document.querySelectorAll("[data-view]:not(#nav button)").forEach((button) => button.onclick = () => switchView(button.dataset.view)); $("#mobile-menu").onclick = () => { $(".sidebar").style.display = $(".sidebar").style.display === "block" ? "none" : "block"; }; $("#logout").onclick = async () => { if (!await closeCustomer()) return; await request("/api/crm/auth", {method:"DELETE"}); location.reload(); };
     (async () => { try { session = await request("/api/crm/auth"); $("#login").classList.add("hidden"); $("#app").classList.remove("hidden"); $("#greeting").textContent = `Guten Tag, ${session.username}`; $("#admin-nav").classList.toggle("hidden", session.role !== "admin"); await load(); await loadCalendarStatus(); } catch { /* Login remains visible when there is no active session. */ } })();
   </script>
 </body>

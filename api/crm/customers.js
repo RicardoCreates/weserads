@@ -1,33 +1,7 @@
-import { ObjectId, MongoClient } from "mongodb";
+import { ObjectId } from "mongodb";
 import { requireAuth } from "./_auth.js";
 import { collection } from "./_db.js";
-
-function normalize(input) {
-  const fields = [
-    "leadId", "firma", "branche", "adresse", "kontakt", "telefon", "email", "ort",
-    "googleLink", "googleAdsStatus", "schaltetAds", "tracking", "status", "prioritaet",
-    "produkt", "notiz", "letzterKontakt", "naechsterSchritt", "naechstesDatum",
-    "quelle", "rechercheDatum", "wert", "farbe"
-  ];
-  const record = Object.fromEntries(
-    fields
-      .filter((field) => typeof input?.[field] === "string")
-      .map((field) => [field, input[field].trim()])
-  );
-  if (Array.isArray(input?.aktivitaeten)) record.aktivitaeten = input.aktivitaeten;
-  if (Array.isArray(input?.aufgaben)) record.aufgaben = input.aufgaben;
-  return record;
-}
-
-function withDefaults(row) {
-  return {
-    ...row,
-    status: row.status || "Neu",
-    produkt: row.produkt || "Kunden-Magnet 29€",
-    aktivitaeten: Array.isArray(row.aktivitaeten) ? row.aktivitaeten : [],
-    aufgaben: Array.isArray(row.aufgaben) ? row.aufgaben : []
-  };
-}
+import { normalize, validStatus, withDefaults } from "./_model.js";
 
 export default async function handler(req, res) {
   if (!requireAuth(req, res)) return;
@@ -43,6 +17,8 @@ export default async function handler(req, res) {
         createdAt: new Date(),
         updatedAt: new Date()
       };
+      if (!validStatus(record.status)) return res.status(400).json({ error: "Unbekannter Status." });
+      record.statusSeit = new Date().toISOString();
       if (!record.firma) return res.status(400).json({ error: "Der Firmenname ist erforderlich." });
       const result = await customers.insertOne(record);
       return res.status(201).json({ ...record, id: result.insertedId.toString() });
@@ -56,6 +32,10 @@ export default async function handler(req, res) {
     }
     const update = { ...normalize(req.body), updatedAt: new Date() };
     if (update.status === "") delete update.status;
+    if (update.status) {
+      if (!validStatus(update.status)) return res.status(400).json({ error: "Unbekannter Status." });
+      update.statusSeit = new Date().toISOString();
+    }
     await customers.updateOne({ _id: new ObjectId(id) }, { $set: update });
     const saved = await customers.findOne({ _id: new ObjectId(id) });
     return res.status(200).json({ ...withDefaults(saved || update), id });
