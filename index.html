@@ -228,6 +228,26 @@ details.karte{padding:0;margin-bottom:12px}summary{cursor:pointer;padding:21px 2
     .ads-consent-button--accept { background:#0B746D; border-color:#0B746D; }
     .cookie-settings-button--floating { background:#10283C; color:#fff; border-color:rgba(167,239,231,.32); }
 .nur-hell{display:none!important}.karte-icon,.icon{line-height:1}.paket.beliebt .beliebt-label{background:none}.kopf-zeile nav{margin-left:auto}.kontakt-box h2{margin-bottom:16px}details.karte p{font-size:16px}.kopf-aktionen{display:flex;gap:12px;align-items:center}@media(max-width:860px){.kopf-zeile nav{margin-left:0}}</style>
+  <style>
+    /* Knöpfe: flach wie auf der bisherigen Website, in beiden Ansichten gleich */
+    .knopf-orange, .knopf-weiss, .knopf-dunkel { display:inline-block; padding:14px 19px; border:0; border-radius:8px; font:800 13px/1.55 'Manrope',Arial,sans-serif; letter-spacing:-.01em; text-align:center; text-decoration:none; cursor:pointer; transition:background .2s ease, color .2s ease, box-shadow .2s ease; }
+    body .knopf-orange { background:#13A89E; color:#fff; border:0; box-shadow:0 8px 20px rgba(19,168,158,.2); }
+    body .knopf-orange:hover { background:#0E887F; transform:none; box-shadow:0 10px 24px rgba(19,168,158,.28); }
+    body .knopf-weiss, body .hero .knopf-weiss { background:#fff; color:#0D1B2A; border:1px solid #DCE3EA; }
+    body .hero .knopf-weiss:hover { background:#0D1B2A; color:#fff; }
+    body .paket .knopf-dunkel { background:#111318; color:#fff; border:1px solid #2B2D33; }
+    body .paket .knopf-dunkel:hover { background:#1D3348; }
+    html[data-theme="dark"] .paket .knopf-dunkel { border-color:#3D5266; }
+    body .paket .knopf-dunkel, body .paket .knopf-orange { align-self:flex-start; }
+    body .aktionsangebot .knopf-orange { background:#A7EFE7; color:#0D1B2A; white-space:nowrap; box-shadow:0 8px 24px rgba(167,239,231,.18); }
+    body .aktionsangebot .knopf-orange:hover { background:#D5FAF5; }
+    body .betreuung-weiter-link { display:inline-flex; align-items:center; gap:12px; max-width:100%; padding:10px 15px; border:1.5px solid #74C7BE; border-radius:10px; background:#DDF4F0; color:#0D1B2A; font-size:16px; font-weight:800; text-decoration:none; }
+    body .betreuung-weiter-link:hover { background:#CDEFE9; }
+    body .betreuung-weiter { margin:0 0 28px; } body .untertitel:has(+ .betreuung-weiter) { margin-bottom:22px; }
+    .betreuung-weiter-pfeil { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; flex:0 0 28px; border-radius:50%; background:#A7EFE7; }
+    .betreuung-weiter-pfeil::before { content:""; width:7px; height:7px; border-top:2px solid; border-right:2px solid; transform:translateX(-1px) rotate(45deg); }
+    @media(max-width:480px) { .kopf-aktionen .knopf-orange { padding:10px 12px; font-size:11px; white-space:nowrap; } .hero-knopfe a, .aktionsangebot .knopf-orange { width:100%; } }
+  </style>
   <script src="assets/theme.js"></script>
 </head>
 <body id="anfang">
