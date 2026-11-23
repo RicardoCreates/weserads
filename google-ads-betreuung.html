@@ -9,7 +9,7 @@
   <title>Google-Ads-Betreuung aus Höxter | WeserAds</title>
   <meta name="description" content="Persönliche Google-Ads-Betreuung aus Höxter: Search und Performance Max im Vergleich, transparente Auswertung und Pakete ab 399 € im Monat.">
   <link rel="canonical" href="https://weserads.de/google-ads-betreuung">
-  <meta name="theme-color" content="#F5F7F9">
+  <meta name="theme-color" content="#F5F7F9" data-theme-color="#F5F7F9">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="de_DE">
   <meta property="og:site_name" content="WeserAds">
@@ -50,7 +50,7 @@
     header { background:#fff; border-bottom:1px solid #DCE3EA; }
     .header-inner { display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:16px; padding-bottom:16px; }
     .site-logo img { display:block; width:170px; height:auto; }
-    nav { display:flex; flex-wrap:wrap; gap:20px; }
+    nav { align-items:center; display:flex; flex-wrap:wrap; gap:20px; }
     nav a { color:#334155; font-weight:700; text-decoration:none; }
     .hero { background:linear-gradient(145deg,#0D1B2A,#122A40); color:#fff; padding:80px 0; }
     .hero p { color:#C2CBD5; max-width:760px; font-size:18px; }
@@ -79,16 +79,45 @@
       .section { padding:48px 0; }
       .grid { grid-template-columns:1fr; }
     }
+      .theme-toggle { display:inline-grid; place-items:center; width:42px; height:42px; flex:0 0 42px; padding:0; border:1px solid #DCE3EA; border-radius:50%; background:transparent; color:#0D1B2A; cursor:pointer; }
+    .theme-toggle[hidden] { display:none; }
+    .theme-toggle:hover { border-color:#13A89E; }
+    .theme-toggle:focus-visible { outline:3px solid #13A89E; outline-offset:3px; }
+    .theme-toggle svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    .theme-toggle .sonne, html[data-theme="dark"] .theme-toggle .mond { display:none; }
+    html[data-theme="dark"] .theme-toggle .sonne { display:block; }
+    html[data-theme="dark"] .theme-toggle { color:#A7EFE7; border-color:rgba(167,239,231,.4); }
+    header .container { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+    .site-logo .nur-dunkel { display:none; } html[data-theme="dark"] .nur-dunkel { display:block; }
   </style>
+  <style data-theme-style="dark" media="(prefers-color-scheme: dark)">
+    :root { color-scheme:dark; --blau:#fff; --teal:#5FE0D4; --hell:#081421; --text:#B4C7D5; --grau:#B4C7D5; --rahmen:rgba(167,239,231,.18); }
+    body { background:radial-gradient(800px 520px at 8% 0%,rgba(19,168,158,.24),transparent 64%),#081421; color:#B4C7D5; }
+    h1,h2,h3 { color:#fff; } header { background:rgba(8,20,33,.97); border-color:rgba(167,239,231,.16); } nav a { color:#CFE0EA; }
+    .hero { background:radial-gradient(760px 520px at 8% 0%,rgba(19,168,158,.36),transparent 64%),#081421; }
+    .section-white { background:#0D1F30; } .card { background:#10283C; border-color:rgba(167,239,231,.2); border-radius:24px; } .intro,.card p { color:#B4C7D5; }
+    .text-link { color:#5FE0D4; } .button { background:#0B746D; } .contact { background:linear-gradient(145deg,#12494F,#132D47); border:1px solid rgba(167,239,231,.3); }
+    footer { background:#050D17; } .nur-hell { display:none !important; }
+    .nur-dunkel { display:block !important; }
+    .ads-consent-banner { background:#10283C; border-color:rgba(167,239,231,.32); color:#D4E3EA; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+    .ads-consent-title { color:#fff; } .ads-consent-copy p { color:#B4C7D5; } .ads-consent-copy a { color:#A7EFE7; }
+    .ads-consent-button { background:transparent; color:#fff; border-color:rgba(167,239,231,.45); }
+    .ads-consent-button--accept { background:transparent; color:#fff; border-color:rgba(167,239,231,.45); }
+    .ads-consent-button { background:#0B746D; border-color:#0B746D; }
+    .ads-consent-button--accept { background:#0B746D; border-color:#0B746D; }
+    .cookie-settings-button--floating { background:#10283C; color:#fff; border-color:rgba(167,239,231,.32); }
+  </style>
+  <script src="assets/theme.js"></script>
 </head>
 <body>
   <header>
     <div class="container header-inner">
-      <a class="site-logo" href="/" aria-label="WeserAds – Startseite"><img src="assets/weserads-logo.png" alt="" width="280" height="94"></a>
+      <a class="site-logo" href="/" aria-label="WeserAds – Startseite"><img class="nur-hell" src="assets/weserads-logo.png" alt="" width="280" height="94"><img class="nur-dunkel" src="assets/weserads-logo-hell.png" alt="" width="280" height="94"></a>
       <nav aria-label="Navigation">
         <a href="/">Startseite</a>
         <a href="/#pakete">Pakete</a>
         <a href="/#kontakt">Kontakt</a>
+        <button class="theme-toggle" type="button" hidden><svg class="mond" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.500 4 8.500 8.500 0 1 0 20 14.500Z"/></svg><svg class="sonne" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg></button>
       </nav>
     </div>
   </header>

@@ -30,10 +30,38 @@
     p { color:var(--grau); }
     a { color:var(--teal); }
     footer { border-top:1px solid var(--rahmen); padding:28px 0; color:var(--grau); font-size:14px; background:#fff; }
+      .theme-toggle { display:inline-grid; place-items:center; width:42px; height:42px; flex:0 0 42px; padding:0; border:1px solid #DCE3EA; border-radius:50%; background:transparent; color:#0D1B2A; cursor:pointer; }
+    .theme-toggle[hidden] { display:none; }
+    .theme-toggle:hover { border-color:#13A89E; }
+    .theme-toggle:focus-visible { outline:3px solid #13A89E; outline-offset:3px; }
+    .theme-toggle svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+    .theme-toggle .sonne, html[data-theme="dark"] .theme-toggle .mond { display:none; }
+    html[data-theme="dark"] .theme-toggle .sonne { display:block; }
+    html[data-theme="dark"] .theme-toggle { color:#A7EFE7; border-color:rgba(167,239,231,.4); }
+    header .container { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+    .site-logo .nur-dunkel { display:none; } html[data-theme="dark"] .nur-dunkel { display:block; }
   </style>
+  <style data-theme-style="dark" media="(prefers-color-scheme: dark)">
+    :root { color-scheme:dark; --blau:#fff; --teal:#5FE0D4; --hell:#081421; --text:#B4C7D5; --grau:#B4C7D5; --rahmen:rgba(167,239,231,.18); }
+    body { background:radial-gradient(800px 520px at 8% 0%,rgba(19,168,158,.24),transparent 64%),#081421; color:#B4C7D5; }
+    h1,h2,h3 { color:#fff; } header { background:rgba(8,20,33,.97); border-color:rgba(167,239,231,.16); } nav a { color:#CFE0EA; }
+    .hero { background:radial-gradient(760px 520px at 8% 0%,rgba(19,168,158,.36),transparent 64%),#081421; }
+    .section-white { background:#0D1F30; } .card { background:#10283C; border-color:rgba(167,239,231,.2); border-radius:24px; } .intro,.card p { color:#B4C7D5; }
+    .text-link { color:#5FE0D4; } .button { background:#0B746D; } .contact { background:linear-gradient(145deg,#12494F,#132D47); border:1px solid rgba(167,239,231,.3); }
+    footer { background:#050D17; } .nur-hell { display:none !important; }
+    .nur-dunkel { display:block !important; }
+    .ads-consent-banner { background:#10283C; border-color:rgba(167,239,231,.32); color:#D4E3EA; box-shadow:0 20px 60px rgba(0,0,0,.5); }
+    .ads-consent-title { color:#fff; } .ads-consent-copy p { color:#B4C7D5; } .ads-consent-copy a { color:#A7EFE7; }
+    .ads-consent-button { background:transparent; color:#fff; border-color:rgba(167,239,231,.45); }
+    .ads-consent-button--accept { background:transparent; color:#fff; border-color:rgba(167,239,231,.45); }
+    .ads-consent-button { background:#0B746D; border-color:#0B746D; }
+    .ads-consent-button--accept { background:#0B746D; border-color:#0B746D; }
+    .cookie-settings-button--floating { background:#10283C; color:#fff; border-color:rgba(167,239,231,.32); }
+  </style>
+  <script src="assets/theme.js"></script>
 </head>
 <body>
-  <header><div class="container"><a class="site-logo" href="index.html" aria-label="WeserAds - Startseite"><img src="assets/weserads-logo.png" alt="" width="280" height="94"></a></div></header>
+  <header><div class="container"><a class="site-logo" href="index.html" aria-label="WeserAds - Startseite"><img class="nur-hell" src="assets/weserads-logo.png" alt="" width="280" height="94"><img class="nur-dunkel" src="assets/weserads-logo-hell.png" alt="" width="280" height="94"></a><button class="theme-toggle" type="button" hidden><svg class="mond" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.500 4 8.500 8.500 0 1 0 20 14.500Z"/></svg><svg class="sonne" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg></button></div></header>
   <main><div class="container">
     <h1>Impressum</h1>
     <h2>Angaben gemäß § 5 DDG</h2>
