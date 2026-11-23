@@ -39,10 +39,10 @@ test("a manual choice is remembered and can return to the system setting", () =>
 });
 
 test("all public pages load the theme script and offer a toggle", () => {
-  for (const name of ["index.html", "google-ads-betreuung.html", "impressum.html", "datenschutz.html"]) {
+  for (const name of ["index.html", "google-ads-betreuung.html", "impressum.html", "datenschutz.html", "crm.html"]) {
     const html = read(name);
     assert.match(html, /assets\/theme\.js/);
     assert.match(html, /class="theme-toggle"/);
-    assert.match(html, /data-theme-style="dark"/);
+    assert.match(html, name === "crm.html" ? /html\[data-theme="light"\]/ : /data-theme-style="dark"/);
   }
 });
