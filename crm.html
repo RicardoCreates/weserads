@@ -57,10 +57,32 @@
     #calendar-modal{z-index:6}
     #login{background:radial-gradient(700px 360px at 85% 15%,rgba(19,168,158,.22) 0%,transparent 62%),#0d1b2a}
     .login-card h1{color:#0d1b2a}
+    #login{position:relative;overflow:hidden;padding:32px 18px;background:
+      radial-gradient(700px 520px at 12% 18%,rgba(14,165,233,.28),transparent 62%),
+      radial-gradient(620px 520px at 88% 82%,rgba(124,58,237,.4),transparent 62%),
+      #020b18}
+    #login::before{content:"";position:absolute;inset:5%;border:1px solid rgba(126,232,255,.62);border-radius:42px;background:
+      linear-gradient(135deg,rgba(43,212,255,.2),rgba(92,57,205,.27) 58%,rgba(17,194,228,.22));
+      box-shadow:0 0 42px rgba(34,211,238,.18),inset 0 0 70px rgba(93,92,255,.14);pointer-events:none}
+    .login-card{position:relative;width:min(100%,555px);padding:94px 38px 38px;border:1px solid rgba(183,225,255,.55);border-radius:38px;background:linear-gradient(145deg,rgba(80,201,255,.24),rgba(108,80,224,.24));box-shadow:0 24px 70px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.24);backdrop-filter:blur(20px);color:#fff}
+    .login-card::before{content:"";position:absolute;inset:0;border:1px solid rgba(203,232,255,.48);border-radius:38px;background:linear-gradient(145deg,rgba(80,201,255,.18),rgba(87,66,201,.16));transform:translate(8px,8px);z-index:-1;box-shadow:0 0 30px rgba(80,201,255,.13)}
+    .login-avatar{position:absolute;top:-20px;left:50%;display:grid;place-items:center;width:120px;height:120px;transform:translateX(-50%);border:1px solid rgba(190,229,255,.7);border-radius:50%;background:linear-gradient(145deg,rgba(68,176,255,.35),rgba(66,61,163,.52));box-shadow:0 0 24px rgba(91,197,255,.22),inset 0 1px 0 rgba(255,255,255,.3)}
+    .login-avatar svg{width:58px;height:58px;fill:#fff;filter:drop-shadow(0 2px 3px rgba(0,0,0,.15))}
+    .login-card h1{text-align:center;color:#fff;font-size:42px;line-height:1.1;margin-bottom:8px}
+    .login-card > p{text-align:center;color:#e3efff;font-size:18px;margin-bottom:30px}
+    .login-card .field{gap:7px;margin:0 0 18px}
+    .login-card .field label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    .login-card .field input{height:72px;padding:0 22px;border:1px solid rgba(207,231,255,.42);border-radius:20px;background:rgba(222,239,255,.2);color:#fff;font-size:19px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+    .login-card .field input::placeholder{color:#f0f7ff;opacity:.92}
+    .login-card .field input:focus{border-color:#8de9ff;box-shadow:0 0 0 3px rgba(97,219,255,.22),inset 0 1px 0 rgba(255,255,255,.18);outline:0}
+    .login-card .primary{width:100%;height:74px;border-radius:20px;background:linear-gradient(180deg,#fff,#eaf5ff);color:#071426;font-size:22px;box-shadow:0 10px 24px rgba(3,8,26,.22)}
+    .login-card .primary:hover{background:#fff;box-shadow:0 14px 30px rgba(3,8,26,.3)}
+    .login-card .error{color:#ffd2d2;text-align:center}
+    @media(max-width:600px){.login-card{padding:82px 22px 26px;border-radius:28px}.login-card::before{border-radius:28px}.login-card h1{font-size:34px}.login-card > p{font-size:16px}.login-avatar{width:100px;height:100px}.login-avatar svg{width:48px;height:48px}}
   </style>
 </head>
 <body>
-  <section id="login"><form class="card login-card" id="login-form"><h1>WeserAds CRM</h1><p>Privater CRM-Zugang</p><div class="field"><label for="username">Benutzername</label><input id="username" autocomplete="username" required></div><div class="field"><label for="password">Passwort</label><input id="password" type="password" autocomplete="current-password" required></div><button class="primary" type="submit">Anmelden</button><div class="error" id="login-error"></div></form></section>
+  <section id="login"><form class="card login-card" id="login-form"><div class="login-avatar" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.25"></circle><path d="M4.5 20c.35-3.55 3.2-5.8 7.5-5.8s7.15 2.25 7.5 5.8c.04.45-.32.8-.77.8H5.27c-.45 0-.81-.35-.77-.8Z"></path></svg></div><h1>Login</h1><p>Willkommen zurück, bitte anmelden</p><div class="field"><label for="username">Benutzername</label><input id="username" autocomplete="username" placeholder="Benutzername" required></div><div class="field"><label for="password">Passwort</label><input id="password" type="password" autocomplete="current-password" placeholder="Passwort" required></div><button class="primary" type="submit">Anmelden</button><div class="error" id="login-error"></div></form></section>
   <section id="app" class="hidden">
     <header class="top"><div class="wrap"><div><strong>WeserAds CRM</strong><p>Kunden, Pipeline und Aufgaben an einem Ort</p></div><button id="logout" type="button">Abmelden</button></div></header>
     <div class="app-shell">

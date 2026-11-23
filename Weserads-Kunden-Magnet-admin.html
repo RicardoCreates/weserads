@@ -49,13 +49,33 @@
     .bars { display:flex; align-items:flex-end; gap:2px; height:70px; margin-top:8px; }
     .bars i { flex:1; background:var(--teal); border-radius:2px 2px 0 0; min-height:2px; opacity:.85; }
     .empty { color:var(--muted); padding:20px 0; text-align:center; }
+    body:has(#login:not(.hidden)) > header { display:none; }
+    body:has(#login:not(.hidden)) main { max-width:none; min-height:100vh; padding:32px 18px; display:grid; place-items:center; background:
+      radial-gradient(700px 520px at 12% 18%,rgba(14,165,233,.28),transparent 62%),
+      radial-gradient(620px 520px at 88% 82%,rgba(124,58,237,.4),transparent 62%),#020b18; }
+    #login{position:relative;width:min(100%,555px);margin:0!important;padding:94px 38px 38px;border:1px solid rgba(183,225,255,.55);border-radius:38px;background:linear-gradient(145deg,rgba(80,201,255,.24),rgba(108,80,224,.24));box-shadow:0 24px 70px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.24);backdrop-filter:blur(20px);color:#fff}
+    #login::before{content:"";position:absolute;inset:0;border:1px solid rgba(203,232,255,.48);border-radius:38px;background:linear-gradient(145deg,rgba(80,201,255,.18),rgba(87,66,201,.16));transform:translate(8px,8px);z-index:-1;box-shadow:0 0 30px rgba(80,201,255,.13)}
+    .login-avatar{position:absolute;top:-20px;left:50%;display:grid;place-items:center;width:120px;height:120px;transform:translateX(-50%);border:1px solid rgba(190,229,255,.7);border-radius:50%;background:linear-gradient(145deg,rgba(68,176,255,.35),rgba(66,61,163,.52));box-shadow:0 0 24px rgba(91,197,255,.22),inset 0 1px 0 rgba(255,255,255,.3)}
+    .login-avatar svg{width:58px;height:58px;fill:#fff;filter:drop-shadow(0 2px 3px rgba(0,0,0,.15))}
+    #login h1{position:relative;text-align:center;color:#fff;font-size:42px;line-height:1.1;margin-bottom:8px}
+    #login .sub{text-align:center;color:#e3efff;font-size:18px;margin-bottom:30px}
+    #login .grid{display:grid;gap:18px}
+    #login label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    #login input{height:72px;padding:0 22px;border:1px solid rgba(207,231,255,.42);border-radius:20px;background:rgba(222,239,255,.2);color:#fff;font-size:19px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+    #login input::placeholder{color:#f0f7ff;opacity:.92}
+    #login input:focus{border-color:#8de9ff;box-shadow:0 0 0 3px rgba(97,219,255,.22),inset 0 1px 0 rgba(255,255,255,.18);outline:0}
+    #login button[type=submit]{width:100%;height:74px;border-radius:20px;background:linear-gradient(180deg,#fff,#eaf5ff);color:#071426;font-size:22px;box-shadow:0 10px 24px rgba(3,8,26,.22)}
+    #login button[type=submit]:hover{background:#fff;box-shadow:0 14px 30px rgba(3,8,26,.3)}
+    #loginMsg{text-align:center;color:#ffd2d2}
+    @media(max-width:600px){body:has(#login:not(.hidden)) main{padding:22px 14px}#login{padding:82px 22px 26px;border-radius:28px}#login::before{border-radius:28px}#login h1{font-size:34px}#login .sub{font-size:16px}.login-avatar{width:100px;height:100px}.login-avatar svg{width:48px;height:48px}}
   </style>
 </head>
 <body>
   <header><div><b>WeserAds</b> <span>· Kunden-Magnet Verwaltung</span></div><button class="ghost small hidden" id="logout">Abmelden</button></header>
   <main>
     <section class="card hidden" id="login" style="max-width:420px;margin:40px auto">
-      <h1>Anmelden</h1>
+      <div class="login-avatar" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.25"></circle><path d="M4.5 20c.35-3.55 3.2-5.8 7.5-5.8s7.15 2.25 7.5 5.8c.04.45-.32.8-.77.8H5.27c-.45 0-.81-.35-.77-.8Z"></path></svg></div>
+      <h1>Login</h1>
       <p class="sub">Mit deinen CRM-Zugangsdaten.</p>
       <form id="loginForm" class="grid" style="grid-template-columns:1fr">
         <div><label for="u">Benutzername</label><input id="u" autocomplete="username" required></div>
