@@ -402,7 +402,8 @@
       try {
         const status = await request("/api/crm/calendar/oauth?action=status");
         $("#calendar-status").textContent = status.connected ? "Verbunden mit dem primären Google Kalender." : status.configured ? "Noch nicht verbunden. Einmalig mit Ricardos Google-Konto verbinden." : "Noch nicht konfiguriert. Dafür müssen die Google-OAuth-Zugangsdaten hinterlegt werden.";
-        $("#connect-calendar").classList.toggle("hidden", status.connected || !status.configured);
+        $("#connect-calendar").textContent = status.connected ? "Google Kalender neu verbinden" : "Google Kalender verbinden";
+        $("#connect-calendar").classList.toggle("hidden", !status.configured);
       } catch (error) { $("#calendar-status").textContent = error.message; }
     }
     $("#calendar-form").onsubmit = async (event) => {

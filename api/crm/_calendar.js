@@ -82,7 +82,12 @@ export async function googleRequest(url, options = {}) {
       })
     });
     const refreshed = await response.json();
-    if (!response.ok || !refreshed.access_token) throw new Error("Google Kalender konnte nicht authentifiziert werden.");
+    if (!response.ok || !refreshed.access_token) {
+      console.error("Google-Token konnte nicht erneuert werden", response.status, refreshed.error);
+      throw new Error(refreshed.error === "invalid_grant"
+        ? "Die Google-Freigabe ist abgelaufen. Bitte unter CRM/Admin den Google Kalender neu verbinden."
+        : `Google Kalender konnte nicht authentifiziert werden (${refreshed.error || response.status}).`);
+    }
     await saveTokens({ ...refreshed, refresh_token: tokens.refresh_token });
     tokens = {...tokens, access_token: refreshed.access_token, expires_at: Date.now() + Number(refreshed.expires_in || 3600) * 1000};
   }
