@@ -4,7 +4,7 @@ import nodemailer from "nodemailer";
 import { requireAdmin } from "./_auth.js";
 import { collection } from "./_db.js";
 import { googleRequest } from "./_calendar.js";
-import { cleanAds, cleanJob, cleanPayload, validToken } from "./_agent.js";
+import { cleanAds, cleanGoals, cleanJob, cleanPayload, validToken } from "./_agent.js";
 
 const EVENTS = "https://www.googleapis.com/calendar/v3/calendars/primary/events";
 const OWN_MAIL = "kontakt@weserads.de";
@@ -62,6 +62,12 @@ async function execute(job) {
 
 async function decide(req, res) {
   const { id, decision, payload } = req.body || {};
+  if (decision === "goals") {
+    const goals = cleanGoals(payload);
+    if (!goals) return res.status(400).json({ error: "Ungültige Ziele." });
+    await (await collection("agent_state")).updateOne({ _id: "goals" }, { $set: goals }, { upsert: true });
+    return res.status(200).json(goals);
+  }
   if (decision === "pause" || decision === "resume") {
     await (await collection("agent_state")).updateOne({ _id: "settings" }, { $set: { paused: decision === "pause" } }, { upsert: true });
     return res.status(200).json({ ok: true });
@@ -110,9 +116,9 @@ export default async function handler(req, res) {
     if (!requireAdmin(req, res)) return;
     if (req.method === "GET") {
       const state = await collection("agent_state"), jobs = await collection("agent_jobs");
-      const [live, settings, open, done] = await Promise.all([state.findOne({ _id: "worker" }), state.findOne({ _id: "settings" }), jobs.find({ status: { $in: ["offen", "unklar"] } }).sort({ createdAt: -1 }).limit(60).toArray(), jobs.find({ status: "erledigt" }).sort({ doneAt: -1 }).limit(8).toArray()]);
+      const [live, settings, goals, open, done] = await Promise.all([state.findOne({ _id: "worker" }), state.findOne({ _id: "settings" }), state.findOne({ _id: "goals" }), jobs.find({ status: { $in: ["offen", "unklar"] } }).sort({ createdAt: -1 }).limit(60).toArray(), jobs.find({ status: "erledigt" }).sort({ doneAt: -1 }).limit(8).toArray()]);
       const out = (list) => list.map(({ _id, ...job }) => ({ ...job, id: _id }));
-      return res.status(200).json({ online: Boolean(live?.seenAt && Date.now() - live.seenAt.getTime() < 180000), seenAt: live?.seenAt || null, note: live?.note || "", load: live?.load || 0, paused: Boolean(settings?.paused), jobs: out(open), done: out(done) });
+      return res.status(200).json({ online: Boolean(live?.seenAt && Date.now() - live.seenAt.getTime() < 180000), seenAt: live?.seenAt || null, note: live?.note || "", load: live?.load || 0, paused: Boolean(settings?.paused), goals: goals ? { base: goals.base, start: goals.start, steps: goals.steps } : null, jobs: out(open), done: out(done) });
     }
     if (req.method === "POST") return await decide(req, res);
     return res.status(405).json({ error: "Methode nicht erlaubt." });

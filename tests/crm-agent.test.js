@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import crypto from "node:crypto";
-import { cleanAds, cleanJob, validToken } from "../api/crm/_agent.js";
+import { cleanAds, cleanGoals, cleanJob, validToken } from "../api/crm/_agent.js";
 import handler from "../api/crm/agent.js";
 
 const token = "a".repeat(43), hash = crypto.createHash("sha256").update(token).digest("hex");
@@ -42,4 +42,11 @@ test("proposals are validated", () => {
   assert.equal(event("2026-12-01", "11:00", "10:30"), null);
   assert.equal(cleanJob({ type: "delete", key: "k", title: "t", payload: {} }), null);
   assert.equal(cleanAds({ account: "1", campaigns: [{ name: "S", cost: -5 }] }).campaigns[0].cost, 0);
+});
+test("goals keep a valid start month and positive steps, and need an admin", async () => {
+  assert.deepEqual(cleanGoals({ base: "100", start: "2027-13", steps: [1, -2, "x", 300] }), { base: 100, start: "", steps: [1, 300] });
+  assert.equal(cleanGoals({ base: 1 }), null);
+  const res = response();
+  await handler({ method: "POST", headers: {}, body: { decision: "goals", payload: { base: 1, steps: [] } } }, res);
+  assert.equal(res.code, 403);
 });

@@ -56,3 +56,10 @@ export function cleanAds(input) {
     terms: (Array.isArray(input.terms) ? input.terms : []).slice(0, 50).map((t) => ({ term: line(t?.term, 120), cost: num(t?.cost), clicks: num(t?.clicks), conversions: num(t?.conversions) }))
   };
 }
+
+export function cleanGoals(input) {
+  const amount = (value) => Math.min(1e6, Math.round(num(value)));
+  const start = /^20\d{2}-(0[1-9]|1[0-2])$/.test(input?.start || "") ? input.start : "";
+  if (!Array.isArray(input?.steps)) return null;
+  return { base: amount(input.base), start, steps: input.steps.slice(0, 24).map(amount).filter(Boolean) };
+}
