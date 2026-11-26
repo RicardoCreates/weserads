@@ -31,7 +31,7 @@
       });
     };
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) { for (let i = 0; i < 40; i++) frame(); rain = { cv, fit }; return; }
-    rain = { cv, fit, id: setInterval(frame, 75) };
+    rain = { cv, fit, id: setInterval(frame, 110) };
   }
   function rainOff() { if (!rain) return; clearInterval(rain.id); removeEventListener("resize", rain.fit); rain.cv.remove(); rain = null; }
 
