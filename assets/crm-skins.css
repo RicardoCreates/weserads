@@ -1,0 +1,116 @@
+@font-face{font-family:"JetBrains Mono";font-weight:100 800;font-display:swap;src:url(/assets/fonts/jetbrainsmono-latin.woff2) format("woff2")}
+/* CRM-Themes: Neon (Standard), macOS Google-Blau, Synthwave ’84, Hacker, Aurora.
+   Alle Farben des CRM laufen über diese Bausteine. Auswahl über html[data-skin]. */
+:root{
+  --bg:#030b0f;--surf:#06161c;--field:#05181c;--modal1:#08262a;--modal2:#041317;
+  --z:#3df5c4;--z2:#13a89e;--tint:#a7efe7;--sky:var(--z);--violet:var(--z2);
+  --text:#e8fff8;--tx-hi:#fff;--tx-2:#c9e9e0;--muted:#93b8b0;--on-z:#03201a;
+  --line:color-mix(in srgb,var(--z) 16%,transparent);--line2:color-mix(in srgb,var(--z) 30%,transparent);
+  --glass:color-mix(in srgb,var(--z) 6%,transparent);--glass2:color-mix(in srgb,var(--z) 13%,transparent);
+  --btn:linear-gradient(180deg,#4dfacb,#22cfa3);--btn-hi:#6dffd8;--grad:linear-gradient(135deg,#1fd6ab,#0e7f6f);
+  --warn:#ffcf70;--bad:#ff8f93;--warn-tx:#f3e3bd;--bad-tx:#ffd0d2;--chart:#12a88a;--chart-hi:#1cc9a6;
+  --c-teal:#12a88a;--c-amber:#d08a1e;--c-blue:#4f8ff0;--c-coral:#e0605f;--c-violet:#9a7bea;--c-grey:#5f7a80;
+  --g-deal:#3df5c4;--g-kunde:#ffffff;--g-heiss:#ff8f93;--g-warm:#ffcf70;--g-lead:#4c9f93;--g-lost:#5a6b73;--g-dim:#174a42;
+  --shadow:0 14px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04)
+}
+html[data-skin=mac]{
+  --bg:#f5f5f7;--surf:#ffffff;--field:#ffffff;--modal1:#ffffff;--modal2:#f5f5f7;
+  --z:#1a73e8;--z2:#1967d2;--tint:#8ab4f8;
+  --text:#1d1d1f;--tx-hi:#1d1d1f;--tx-2:#3c3c43;--muted:#6e6e73;--on-z:#ffffff;
+  --line:rgba(0,0,0,.09);--line2:rgba(26,115,232,.32);--glass:rgba(0,0,0,.03);--glass2:rgba(26,115,232,.08);
+  --btn:linear-gradient(180deg,#4285f4,#1a73e8);--btn-hi:#1967d2;--grad:linear-gradient(135deg,#4285f4,#1a73e8);
+  --warn:#b06000;--bad:#d93025;--warn-tx:#7a4a00;--bad-tx:#a50e0e;--chart:#1a73e8;--chart-hi:#4285f4;
+  --c-teal:#1e8e3e;--c-amber:#f9ab00;--c-blue:#1a73e8;--c-coral:#d93025;--c-violet:#9334e6;--c-grey:#80868b;
+  --g-deal:#1a73e8;--g-kunde:#1d1d1f;--g-heiss:#d93025;--g-warm:#f9ab00;--g-lead:#8ab4f8;--g-lost:#bdc1c6;--g-dim:#d2e3fc;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 10px 30px rgba(0,0,0,.06);color-scheme:light
+}
+html[data-skin=synth]{
+  --bg:#1b1428;--surf:#2a2139;--field:#241b35;--modal1:#2a1e3f;--modal2:#1b1428;
+  --z:#ff7edb;--z2:#f92aad;--tint:#ffa6e9;
+  --text:#f8f0ff;--tx-hi:#ffffff;--tx-2:#e2d4f7;--muted:#b6a6d6;--on-z:#2a1036;
+  --btn:linear-gradient(90deg,#f92aad,#fe4450);--btn-hi:#ff5ec4;--grad:linear-gradient(135deg,#f92aad,#fe4450);
+  --warn:#fede5d;--bad:#fe4450;--warn-tx:#fff3b0;--bad-tx:#ffc2c8;--chart:#72f1b8;--chart-hi:#9dffd1;
+  --c-teal:#72f1b8;--c-amber:#fede5d;--c-blue:#36f9f6;--c-coral:#f97e72;--c-violet:#ff7edb;--c-grey:#848bbd;
+  --g-deal:#ff7edb;--g-kunde:#ffffff;--g-heiss:#fe4450;--g-warm:#fede5d;--g-lead:#36f9f6;--g-lost:#6c5c8a;--g-dim:#4a2a5a;
+  --shadow:0 14px 40px rgba(10,0,20,.45),0 0 24px rgba(249,42,173,.1)
+}
+html[data-skin=hacker]{
+  --bg:#01080d;--surf:#02121a;--field:#010c12;--modal1:#03141d;--modal2:#01080d;
+  --z:#3ee0ff;--z2:#0fa3c4;--tint:#8ff0ff;
+  --text:#c8f7ff;--tx-hi:#e6fdff;--tx-2:#9fdfee;--muted:#6fb3c4;--on-z:#011018;
+  --btn:linear-gradient(180deg,rgba(62,224,255,.24),rgba(62,224,255,.08));--btn-hi:rgba(62,224,255,.3);--grad:linear-gradient(135deg,#3ee0ff,#0fa3c4);
+  --warn:#ffe066;--bad:#ff6b7a;--warn-tx:#fff3b0;--bad-tx:#ffc2c8;--chart:#3ee0ff;--chart-hi:#8ff0ff;
+  --c-teal:#5dffa8;--c-amber:#ffe066;--c-blue:#3ee0ff;--c-coral:#ff6b7a;--c-violet:#7cc4ff;--c-grey:#3f7685;
+  --g-deal:#3ee0ff;--g-kunde:#e6fdff;--g-heiss:#ff6b7a;--g-warm:#ffe066;--g-lead:#5dffa8;--g-lost:#2b4f59;--g-dim:#0b3340;
+  --shadow:0 14px 40px rgba(0,0,0,.55),0 0 22px rgba(62,224,255,.1)
+}
+html[data-skin=aurora]{
+  --bg:#070b1e;--surf:#0e1430;--field:#0a1028;--modal1:#121a40;--modal2:#070b1e;
+  --z:#6dffc0;--z2:#a98bff;--tint:#a3ffd9;
+  --text:#eef0ff;--tx-hi:#ffffff;--tx-2:#c9cdf2;--muted:#a3a9d6;--on-z:#07101f;
+  --btn:linear-gradient(90deg,#6dffc0,#7fb2ff,#a98bff);--btn-hi:linear-gradient(90deg,#8dffd0,#9fc4ff,#bba3ff);--grad:linear-gradient(135deg,#6dffc0,#a98bff);
+  --warn:#ffd28a;--bad:#ff8fa3;--warn-tx:#ffe9c4;--bad-tx:#ffd0da;--chart:#6dffc0;--chart-hi:#a3ffd9;
+  --c-teal:#6dffc0;--c-amber:#ffd28a;--c-blue:#7fb2ff;--c-coral:#ff8fa3;--c-violet:#a98bff;--c-grey:#6f76a8;
+  --g-deal:#6dffc0;--g-kunde:#ffffff;--g-heiss:#ff8fa3;--g-warm:#ffd28a;--g-lead:#7fb2ff;--g-lost:#3d4470;--g-dim:#1d2a55;
+  --shadow:0 14px 40px rgba(0,0,20,.45)
+}
+
+/* Schriften */
+html[data-skin=mac] body,html[data-skin=mac] :is(h1,h2,h3,.stat strong,.s-kpi strong){font-family:-apple-system,"SF Pro Display","SF Pro Text",system-ui,sans-serif}
+html[data-skin=hacker] body,html[data-skin=hacker] :is(h1,h2,h3,button,input,select,textarea,.stat strong,.s-kpi strong,.s-strip strong){font-family:"JetBrains Mono",ui-monospace,Menlo,monospace!important;letter-spacing:0}
+
+/* Effektebene hinter dem CRM */
+.cfx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+#app,#login{position:relative;z-index:1}
+.cfx canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.5}
+html[data-skin=synth] .cfx::before{content:"";position:absolute;left:58%;bottom:8%;width:620px;height:310px;transform:translateX(-50%);border-radius:310px 310px 0 0;background:linear-gradient(180deg,#fede5d,#f97e72 45%,#f92aad);opacity:.16;-webkit-mask:repeating-linear-gradient(180deg,#000 0 14px,transparent 14px 20px)}
+html[data-skin=synth] .cfx::after{content:"";position:absolute;left:-20%;right:-20%;bottom:0;height:30%;background:repeating-linear-gradient(90deg,rgba(255,126,219,.55) 0 2px,transparent 2px 64px),repeating-linear-gradient(0deg,rgba(255,126,219,.55) 0 2px,transparent 2px 34px);transform:perspective(420px) rotateX(62deg);transform-origin:bottom;opacity:.5;animation:cfxgrid 2.4s linear infinite;filter:drop-shadow(0 0 4px #f92aad)}
+@keyframes cfxgrid{to{background-position:0 0,0 34px}}
+html[data-skin=aurora] .cfx::before,html[data-skin=aurora] .cfx::after{content:"";position:absolute;width:70%;height:60%;border-radius:50%;filter:blur(90px);opacity:.36;animation:cfxaur 18s ease-in-out infinite alternate}
+html[data-skin=aurora] .cfx::before{left:-10%;top:-20%;background:radial-gradient(closest-side,#6dffc0,transparent)}
+html[data-skin=aurora] .cfx::after{right:-15%;top:-10%;background:radial-gradient(closest-side,#a98bff,transparent);animation-delay:-9s}
+@keyframes cfxaur{0%{transform:translate(0,0) scale(1)}50%{transform:translate(12%,8%) scale(1.15)}100%{transform:translate(-6%,14%) scale(.95)}}
+@media (prefers-reduced-motion:reduce){.cfx::before,.cfx::after{animation:none!important}}
+
+/* Feinschliff je Theme */
+html[data-skin=mac] body{background:radial-gradient(900px 600px at 30% 0%,rgba(26,115,232,.07),transparent 60%),var(--bg)}
+html[data-skin=mac] .sidebar{background:rgba(232,232,237,.85);backdrop-filter:saturate(180%) blur(20px)}
+html[data-skin=mac] .card{background:#fff;box-shadow:var(--shadow)}
+html[data-skin=mac] .nav button.active{background:var(--z);color:#fff;box-shadow:none}
+html[data-skin=mac] .nav button.active svg{stroke:#fff}
+html[data-skin=mac] .primary{color:#fff;box-shadow:0 2px 8px rgba(26,115,232,.3)}
+html[data-skin=mac] .brand img{filter:invert(1) hue-rotate(180deg) brightness(.35)}
+html[data-skin=mac] #view-zentrale,html[data-skin=mac] #view-postfach{color:var(--text)}
+html[data-skin=mac] .z-map{background:radial-gradient(circle at 50% 50%,rgba(26,115,232,.08),#fff 62%)!important}
+html[data-skin=synth] :is(h2,.brand){text-shadow:0 0 14px rgba(249,42,173,.55)}
+html[data-skin=synth] .primary,html[data-skin=synth] .pgo,html[data-skin=synth] .zgo{color:#fff!important;box-shadow:0 0 20px rgba(249,42,173,.5)}
+html[data-skin=hacker] .primary,html[data-skin=hacker] .zgo,html[data-skin=hacker] .pgo{color:var(--z)!important;box-shadow:0 0 16px rgba(62,224,255,.4),inset 0 0 10px rgba(62,224,255,.15)}
+html[data-skin=hacker] :is(h2,.s-kpi strong,.stat strong){text-shadow:0 0 12px rgba(62,224,255,.55)}
+html[data-skin=aurora] .primary,html[data-skin=aurora] .zgo,html[data-skin=aurora] .pgo{color:var(--on-z)!important}
+html[data-skin=aurora] :is(.s-kpi strong,.stat strong,.z-kpis b){background:linear-gradient(90deg,#6dffc0,#a98bff);-webkit-background-clip:text;background-clip:text;color:transparent!important}
+html[data-skin=aurora] .sidebar{background:rgba(9,14,36,.72);backdrop-filter:blur(14px)}
+
+/* Theme-Auswahl */
+.skin-btn{display:grid;place-items:center;width:34px;height:34px;padding:0;border:1px solid var(--line2);border-radius:10px;background:var(--glass);color:var(--tx-2);cursor:pointer;flex:none}
+.skin-btn:hover{border-color:var(--z);color:var(--z)}
+.skin-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.skin-pop{position:fixed;z-index:80;display:grid;gap:3px;padding:8px;border:1px solid var(--line2);border-radius:14px;background:var(--modal1);box-shadow:var(--shadow);min-width:210px}
+.skin-pop[hidden]{display:none}
+.skin-pop b{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:4px 8px}
+.skin-pop button{display:flex;align-items:center;gap:10px;border:0;background:none;color:var(--text);padding:8px 10px;border-radius:9px;font:600 13.5px inherit;text-align:left;cursor:pointer}
+.skin-pop button:hover{background:var(--glass2)}
+.skin-pop button[aria-pressed=true]{background:var(--glass2);box-shadow:inset 3px 0 0 var(--z)}
+.skin-pop i{width:16px;height:16px;border-radius:50%;flex:none;box-shadow:0 0 0 1px rgba(127,127,127,.35)}
+.skin-switch *{transition:none!important}
+html[data-skin=mac] .nav em{background:rgba(26,115,232,.12)!important;color:#1a73e8!important}
+html[data-skin=mac] .nav button.active em{background:rgba(255,255,255,.25)!important;color:#fff!important}
+html[data-skin=mac] .nav em[data-count="tasks"]{background:rgba(217,48,37,.12)!important;color:#d93025!important}
+/* macOS: Schilder für hellen Grund */
+html[data-skin=mac] .badge{background:rgba(26,115,232,.1)!important;border-color:rgba(26,115,232,.25)!important;color:#1967d2!important}
+html[data-skin=mac] .badge.label-heiss{background:rgba(217,48,37,.1)!important;border-color:rgba(217,48,37,.3)!important;color:#c5221f!important}
+html[data-skin=mac] .badge.label-warm{background:rgba(249,171,0,.14)!important;border-color:rgba(176,96,0,.3)!important;color:#b06000!important}
+html[data-skin=mac] .badge.label-kalt{background:rgba(26,115,232,.1)!important;border-color:rgba(26,115,232,.3)!important;color:#1967d2!important}
+html[data-skin=mac] .badge.call-ok{background:rgba(30,142,62,.1)!important;border-color:rgba(30,142,62,.3)!important;color:#137333!important}
+html[data-skin=mac] .badge.call-no{background:rgba(0,0,0,.05)!important;border-color:rgba(0,0,0,.15)!important;color:#5f6368!important}
+/* Pipeline-Karten: Knopf rutscht bei schmalen Spalten in die nächste Zeile statt über den Rand */
+.stage-card .foot{flex-wrap:wrap}.stage-card .foot>*{min-width:0}.stage-card .foot button{margin-left:auto}

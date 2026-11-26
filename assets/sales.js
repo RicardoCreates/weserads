@@ -2,6 +2,8 @@
 (() => {
   const root = document.querySelector("#view-sales"), $s = (q) => root.querySelector(q);
   const C = {teal:"#12a88a", amber:"#d08a1e", blue:"#4f8ff0", coral:"#e0605f", violet:"#9a7bea", grey:"#5f7a80"};
+  const readC = () => { const cs = getComputedStyle(document.documentElement); for (const k of Object.keys(C)) { const v = cs.getPropertyValue(`--c-${k}`).trim(); if (v) C[k] = v; } };
+  readC();
   const PACKS = [["START","Google Ads START",C.teal],["WACHSTUM","Google Ads WACHSTUM",C.amber],["PROFI","Google Ads PROFI",C.blue],["Kunden-Magnet","Kunden-Magnet",C.coral]];
   const WEEK = 6048e5;
   /* Ziel: bis zur Förderung der Bestand, danach die Stufen ab Startmonat, nie unter dem Bestand. Nach der letzten Stufe bleibt diese. */
@@ -71,7 +73,7 @@
     const won = all.filter((r) => r.status === "Kunde"), now = new Date(), months = Array.from({length:12}, (_, i) => new Date(now.getFullYear(), now.getMonth() - 11 + i, 1));
     const v = months.map((m) => { const end = new Date(m.getFullYear(), m.getMonth() + 1, 1).getTime(); return sum(won.filter((r) => (when(r.statusSeit) || when(r.createdAt)) < end)); });
     const top = nice(Math.max(...v, goal) * 1.08), x = (i) => 50 + i * 30, y = (n) => 165 - n / top * 140, p = v.map((n, i) => `${x(i)},${y(n)}`).join(" "), name = (m) => m.toLocaleDateString("de-DE", {month:"short"}).replace(".", "");
-    $s("#s-line").innerHTML = won.length ? `<svg class="s-line" viewBox="0 0 400 200" role="img" aria-label="Monatlicher Umsatz, zuletzt ${euro(v[11])}">${[0, .5, 1].map((k) => `<line class="g" x1="50" x2="380" y1="${y(top * k)}" y2="${y(top * k)}"/><text x="44" y="${y(top * k) + 4}" text-anchor="end">${euro(top * k)}</text>`).join("")}${goal ? `<line x1="50" x2="380" y1="${y(goal)}" y2="${y(goal)}" stroke="${C.amber}" stroke-width="2"/><text x="54" y="${y(goal) - 6}">${esc(goalText)}</text>` : ""}<polygon points="50,165 ${p} 380,165" fill="${C.teal}" opacity=".14"/><polyline points="${p}" fill="none" stroke="${C.teal}" stroke-width="2" stroke-linejoin="round"/>${v.map((n, i) => `<rect x="${x(i) - 15}" y="20" width="30" height="148" fill="transparent"${tip(`${name(months[i])} ${months[i].getFullYear()}: ${euro(n)}`)}/>`).join("")}<circle cx="380" cy="${y(v[11])}" r="5" fill="${C.teal}" stroke="#06161c" stroke-width="2"/><text class="end" x="390" y="${y(v[11]) - 12}" text-anchor="end">${euro(v[11])}</text>${months.map((m, i) => i % 2 ? `<text x="${x(i)}" y="188" text-anchor="middle">${name(m)}</text>` : "").join("")}</svg>` : `<div class="empty">Der Verlauf beginnt mit dem ersten Kunden.</div>`;
+    $s("#s-line").innerHTML = won.length ? `<svg class="s-line" viewBox="0 0 400 200" role="img" aria-label="Monatlicher Umsatz, zuletzt ${euro(v[11])}">${[0, .5, 1].map((k) => `<line class="g" x1="50" x2="380" y1="${y(top * k)}" y2="${y(top * k)}"/><text x="44" y="${y(top * k) + 4}" text-anchor="end">${euro(top * k)}</text>`).join("")}${goal ? `<line x1="50" x2="380" y1="${y(goal)}" y2="${y(goal)}" stroke="${C.amber}" stroke-width="2"/><text x="54" y="${y(goal) - 6}">${esc(goalText)}</text>` : ""}<polygon points="50,165 ${p} 380,165" fill="${C.teal}" opacity=".14"/><polyline points="${p}" fill="none" stroke="${C.teal}" stroke-width="2" stroke-linejoin="round"/>${v.map((n, i) => `<rect x="${x(i) - 15}" y="20" width="30" height="148" fill="transparent"${tip(`${name(months[i])} ${months[i].getFullYear()}: ${euro(n)}`)}/>`).join("")}<circle cx="380" cy="${y(v[11])}" r="5" fill="${C.teal}" stroke="var(--surf)" stroke-width="2"/><text class="end" x="390" y="${y(v[11]) - 12}" text-anchor="end">${euro(v[11])}</text>${months.map((m, i) => i % 2 ? `<text x="${x(i)}" y="188" text-anchor="middle">${name(m)}</text>` : "").join("")}</svg>` : `<div class="empty">Der Verlauf beginnt mit dem ersten Kunden.</div>`;
   }
   function side(all) {
     const list = group(all.filter((r) => r.status === "Lead"), clean).slice(0, 4), m = list[0]?.[1] || 1, deals = all.filter(isDeal), noVal = deals.filter((r) => !val(r)).length, noTask = deals.filter((r) => !nextTask(r)).length, late = all.flatMap((r) => r.aufgaben || []).filter((t) => !t.done && t.date && t.date < day()).length;
@@ -100,5 +102,6 @@
   root.addEventListener("pointermove", (e) => { const t = e.target.closest("[data-tip]"); if (t) show(t.dataset.tip, e.clientX, e.clientY); else box.hidden = true; });
   root.addEventListener("pointerleave", () => { box.hidden = true; });
   root.addEventListener("focusin", (e) => { const t = e.target.closest("[data-tip]"); if (t) { const r = t.getBoundingClientRect(); show(t.dataset.tip, r.left, r.bottom); } }); root.addEventListener("focusout", () => { box.hidden = true; });
+  window.addEventListener("crm-skin", () => { readC(); PACKS.forEach((p, i) => { p[2] = [C.teal, C.amber, C.blue, C.coral][i]; }); if (rows.length) window.renderSales(); });
   if (rows.length) window.renderSales();
 })();

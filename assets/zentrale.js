@@ -3,6 +3,18 @@
   const root = document.querySelector("#view-zentrale"), still = matchMedia("(prefers-reduced-motion: reduce)");
   const GROUPS = [["deal","Deals","#3df5c4"],["kunde","Kunden","#ffffff"],["heiss","Heiße Leads","#ff8f93"],["warm","Warme Leads","#ffcf70"],["lead","Weitere Leads","#4c9f93"],["lost","Verloren","#5a6b73"]];
   const color = Object.fromEntries(GROUPS.map(([key,,value]) => [key, value]));
+  /* Farben aus dem aktiven Theme (assets/crm-skins.css) */
+  const Z = {};
+  const hexA = (hex, a) => { const h = hex.replace("#",""), n = parseInt(h.length === 3 ? h.replace(/./g,"$&$&") : h, 16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; };
+  const zA = (a) => hexA(Z.z || "#3df5c4", a);
+  function readSkin() {
+    const cs = getComputedStyle(document.documentElement), v = (n, d) => (cs.getPropertyValue(n).trim() || d);
+    Z.z = v("--z", "#3df5c4"); Z.hi = v("--tx-hi", "#ffffff"); Z.tx2 = v("--tx-2", "#c9e9e0"); Z.dim = v("--g-dim", "#174a42"); Z.warn = v("--warn", "#ffcf70"); Z.onz = v("--on-z", "#03201a");
+    if (!/^#[0-9a-f]{3,6}$/i.test(Z.z)) Z.z = "#3df5c4";
+    for (const g of GROUPS) { const c = v(`--g-${g[0]}`, g[2]); g[2] = c; color[g[0]] = c; }
+  }
+  readSkin();
+  window.addEventListener("crm-skin", () => { readSkin(); try { panels(); } catch {} });
   const group = (row) => row.status === "Kunde" ? "kunde" : row.status === "Verloren" ? "lost" : stages.includes(row.status) ? "deal" : row.label === "Heiß" ? "heiss" : row.label === "Warm" ? "warm" : "lead";
   const order = Object.fromEntries(GROUPS.map(([key], index) => [key, index]));
   root.innerHTML = `<div class="z-head"><div><h2>Kommandozentrale</h2><span class="z-live"><i></i><span id="z-live"></span></span></div><div class="actions"><button class="zb" id="z-full" type="button">Vollbild</button><button class="zb zgo" id="z-load" type="button">Daten aktualisieren</button></div></div>
@@ -76,29 +88,29 @@
     if (!W) return;
     const moving = !still.matches, t = moving ? now/1000 : 0, intro = moving ? Math.min(1,(now-born)/1500) : 1, ease = 1-(1-intro)**3, {R,inner,hub} = geo();
     ctx.setTransform(ratio,0,0,ratio,0,0); ctx.clearRect(0,0,W,H); ctx.translate(W/2+px,H/2+py); ctx.scale(zoom,zoom);
-    const glow = ctx.createRadialGradient(0,0,0,0,0,inner*1.25); glow.addColorStop(0,"rgba(61,245,196,.3)"); glow.addColorStop(1,"rgba(61,245,196,0)"); ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(0,0,inner*1.25,0,7); ctx.fill();
+    const glow = ctx.createRadialGradient(0,0,0,0,0,inner*1.25); glow.addColorStop(0,zA(.3)); glow.addColorStop(1,zA(0)); ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(0,0,inner*1.25,0,7); ctx.fill();
     [[inner,.45],[inner*.94,.14],[hub,.28],[R,.1]].forEach(([r,o]) => { ctx.strokeStyle = `rgba(61,245,196,${o})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(0,0,r*ease,0,7); ctx.stroke(); });
-    if (moving) { const s = t*.5%(Math.PI*2); ctx.strokeStyle = "rgba(61,245,196,.75)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0,0,inner,s,s+.7); ctx.stroke(); ctx.beginPath(); ctx.arc(0,0,hub,-s*1.6,-s*1.6+.4); ctx.stroke(); }
+    if (moving) { const s = t*.5%(Math.PI*2); ctx.strokeStyle = zA(.75); ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0,0,inner,s,s+.7); ctx.stroke(); ctx.beginPath(); ctx.arc(0,0,hub,-s*1.6,-s*1.6+.4); ctx.stroke(); }
     const gap = nodes.length ? Math.PI*2/nodes.length : 1, bar = Math.max(1.3,Math.min(9,gap*inner*.52)), room = gap*R*zoom;
     nodes.forEach((n) => {
       const dim = filter && filter !== n.g, on = hover === n, x = Math.cos(n.a), y = Math.sin(n.a), r0 = inner+8, end = r0+(R-r0)*n.len*ease;
       ctx.globalAlpha = dim ? .1 : 1; ctx.lineCap = "round"; ctx.lineWidth = bar;
-      ctx.strokeStyle = "rgba(61,245,196,.09)"; ctx.beginPath(); ctx.moveTo(x*r0,y*r0); ctx.lineTo(x*R*ease,y*R*ease); ctx.stroke();
+      ctx.strokeStyle = zA(.09); ctx.beginPath(); ctx.moveTo(x*r0,y*r0); ctx.lineTo(x*R*ease,y*R*ease); ctx.stroke();
       ctx.strokeStyle = color[n.g]; if (on || n.g === "deal" || n.g === "kunde") { ctx.shadowColor = color[n.g]; ctx.shadowBlur = on ? 22 : 10; }
       ctx.beginPath(); ctx.moveTo(x*r0,y*r0); ctx.lineTo(x*end,y*end); ctx.stroke(); ctx.shadowBlur = 0;
       if (n.g === "deal" || n.g === "kunde" || on) {
         ctx.lineWidth = on ? 1.6 : .7; ctx.globalAlpha = dim ? .05 : on ? .95 : .4; ctx.beginPath(); ctx.moveTo(x*hub,y*hub); ctx.lineTo(x*r0,y*r0); ctx.stroke();
-        if (moving && !dim) { const k = (t*.35+n.phase)%1, d = hub+(end-hub)*k; ctx.globalAlpha = 1-k*.6; ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(x*d,y*d,2.1,0,7); ctx.fill(); }
+        if (moving && !dim) { const k = (t*.35+n.phase)%1, d = hub+(end-hub)*k; ctx.globalAlpha = 1-k*.6; ctx.fillStyle = Z.hi; ctx.beginPath(); ctx.arc(x*d,y*d,2.1,0,7); ctx.fill(); }
       }
       if (!dim && (on || W >= 600) && (on || n.g === "deal" || n.g === "kunde" || room > 10)) {
-        ctx.globalAlpha = ease; ctx.save(); ctx.rotate(n.a); ctx.font = `${on ? 700 : 500} ${Math.max(5,Math.min(11,11/Math.sqrt(zoom)))}px Manrope,sans-serif`; ctx.fillStyle = on ? "#fff" : color[n.g]; const s = String(n.row.firma || ""), label = s.length > 17 ? s.slice(0,16)+"…" : s;
+        ctx.globalAlpha = ease; ctx.save(); ctx.rotate(n.a); ctx.font = `${on ? 700 : 500} ${Math.max(5,Math.min(11,11/Math.sqrt(zoom)))}px Manrope,sans-serif`; ctx.fillStyle = on ? Z.hi : color[n.g]; const s = String(n.row.firma || ""), label = s.length > 17 ? s.slice(0,16)+"…" : s;
         if (x < 0) { ctx.rotate(Math.PI); ctx.textAlign = "right"; ctx.fillText(label,-R-7,3); } else { ctx.textAlign = "left"; ctx.fillText(label,R+7,3); } ctx.restore();
       }
     });
     ctx.globalAlpha = ease;
-    stages.forEach((s,i) => { const a = -Math.PI/2+i/stages.length*Math.PI*2+t*.04, n = rows.filter((row) => row.status === s).length, r = 5+Math.min(9,n*1.5), x = Math.cos(a)*hub, y = Math.sin(a)*hub; ctx.fillStyle = n ? "#3df5c4" : "#174a42"; ctx.shadowColor = "#3df5c4"; ctx.shadowBlur = n ? 14 : 0; ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fill(); ctx.shadowBlur = 0; ctx.fillStyle = "#c9e9e0"; ctx.font = "600 10px Manrope,sans-serif"; ctx.textAlign = "center"; ctx.fillText(`${s.split(" /")[0]} ${n}`,x,y+r+13); });
-    const core = R*.11*(1+Math.sin(t*2)*.04), cg = ctx.createRadialGradient(0,0,0,0,0,core*1.5); cg.addColorStop(0,"#fff"); cg.addColorStop(.35,"#3df5c4"); cg.addColorStop(1,"rgba(19,168,158,0)"); ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(0,0,core*1.5,0,7); ctx.fill();
-    ctx.fillStyle = "#03201a"; ctx.font = `700 ${Math.max(12,core*.6)}px Sora,sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(rows.length,0,1); ctx.textBaseline = "alphabetic"; ctx.globalAlpha = 1;
+    stages.forEach((s,i) => { const a = -Math.PI/2+i/stages.length*Math.PI*2+t*.04, n = rows.filter((row) => row.status === s).length, r = 5+Math.min(9,n*1.5), x = Math.cos(a)*hub, y = Math.sin(a)*hub; ctx.fillStyle = n ? Z.z : Z.dim; ctx.shadowColor = "#3df5c4"; ctx.shadowBlur = n ? 14 : 0; ctx.beginPath(); ctx.arc(x,y,r,0,7); ctx.fill(); ctx.shadowBlur = 0; ctx.fillStyle = Z.tx2; ctx.font = "600 10px Manrope,sans-serif"; ctx.textAlign = "center"; ctx.fillText(`${s.split(" /")[0]} ${n}`,x,y+r+13); });
+    const core = R*.11*(1+Math.sin(t*2)*.04), cg = ctx.createRadialGradient(0,0,0,0,0,core*1.5); cg.addColorStop(0,Z.hi); cg.addColorStop(.35,Z.z); cg.addColorStop(1,zA(0)); ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(0,0,core*1.5,0,7); ctx.fill();
+    ctx.fillStyle = Z.onz; ctx.font = `700 ${Math.max(12,core*.6)}px Sora,sans-serif`; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(rows.length,0,1); ctx.textBaseline = "alphabetic"; ctx.globalAlpha = 1;
     if (moving) frame = requestAnimationFrame(draw);
   }
   const kick = () => { if (!frame) frame = requestAnimationFrame(draw); };
@@ -138,7 +150,7 @@
   function kiPanel() {
     $z("#z-ki").hidden = !ki; if (!ki) return;
     $z("#z-kn").textContent = ki.jobs.length || "";
-    $z("#z-ks").style.cssText = ki.online && !ki.paused ? "" : "background:#ffcf70;box-shadow:none;animation:none";
+    $z("#z-ks").style.cssText = ki.online && !ki.paused ? "" : `background:${Z.warn};box-shadow:none;animation:none`;
     $z("#z-kt").textContent = ki.paused ? "Von dir pausiert" : ki.online ? `Mac verbunden, ${ki.note || "bereit"}, ${ki.load} % Rechenzeit` : ki.seenAt ? `Pausiert: Mac nicht erreichbar seit ${new Date(ki.seenAt).toLocaleString("de-DE",{dateStyle:"short",timeStyle:"short"})}` : "Mac noch nicht gekoppelt";
     $z("#z-kp").textContent = ki.paused ? "Fortsetzen" : "Pausieren";
     if ($z("#z-kj").contains(document.activeElement) && /TEXTAREA|INPUT/.test(document.activeElement.tagName)) return;
